@@ -1,0 +1,314 @@
+<!DOCTYPE html><html class="theme-next gemini use-motion" lang="ZH | EN"><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="google-site-verification" content="AKuwh4i11uWg0wOl_cM7AI_dHqOHOLKYfCxKc8Lfv6E"><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4"><link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222"><meta name="keywords" content="翻译,浏览器,history,"><link rel="alternate" href="/atom.xml" title="Kinboy's note" type="application/atom+xml"><meta name="description" content="原文: A little bit of history If you wish to understand React Router, you must first study history. More specifically, the history package, which provides the core functionality for React Router. It ena"><meta name="keywords" content="翻译,浏览器,history"><meta property="og:type" content="article"><meta property="og:title" content="浏览器的history"><meta property="og:url" content="http://kinboyw.github.io/2018/09/25/a-little-bit-of-history/index.html"><meta property="og:site_name" content="Kinboy&#39;s note"><meta property="og:description" content="原文: A little bit of history If you wish to understand React Router, you must first study history. More specifically, the history package, which provides the core functionality for React Router. It ena"><meta property="og:locale" content="ZH | EN"><meta property="og:updated_time" content="2019-07-15T10:05:10.371Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="浏览器的history"><meta name="twitter:description" content="原文: A little bit of history If you wish to understand React Router, you must first study history. More specifically, the history package, which provides the core functionality for React Router. It ena"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Gemini",version:"5.1.4",sidebar:{position:"left",display:"post",offset:12,b2t:!0,scrollpercent:!0,onmobile:!1},fancybox:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},duoshuo:{userId:"0",author:"Author"},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"I didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><link rel="canonical" href="http://kinboyw.github.io/2018/09/25/a-little-bit-of-history/"><title>浏览器的history | Kinboy's note</title><script type="text/javascript">var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?c9c2b9e915e6bb8ec323a2f98c0c98d8";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><body itemscope itemtype="http://schema.org/WebPage" lang="ZH | EN"><div class="container sidebar-position-left page-post-detail"><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"></span><span class="site-title">Kinboy's note</span><span class="logo-line-after"></span></a></div><h1 class="site-subtitle" itemprop="description">前端漫记</h1></div><div class="site-nav-toggle"><button></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><br>Home</a><li class="menu-item menu-item-about"><a href="/rscard/" rel="section"><br>About</a><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><br>Tags</a><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><br>Categories</a><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><br>Archives</a><li class="menu-item menu-item-top"><a href="/top/" rel="section"><br>Top</a><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><br>Search</a></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"></span><span class="popup-btn-close"></span><div class="local-search-input-wrapper"><input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input"></div></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://kinboyw.github.io/2018/09/25/a-little-bit-of-history/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="kinboy"><meta itemprop="description" content><meta itemprop="image" content="/images/avatar.png"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Kinboy's note"></span><header class="post-header"><h2 class="post-title" itemprop="name headline">浏览器的history</h2><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Posted on</span> <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-25T13:24:33+08:00">2018-09-25</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">In</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/翻译/" itemprop="url" rel="index"><span itemprop="name">翻译</span></a></span> , <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FE/" itemprop="url" rel="index"><span itemprop="name">FE</span></a></span> , <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FE/History/" itemprop="url" rel="index"><span itemprop="name">History</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span><a href="/2018/09/25/a-little-bit-of-history/#comments" itemprop="discussionUrl"></a></span><div class="post-wordcount"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Words count in article&#58;</span> <span title="Words count in article">4.3k</span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">Reading time &asymp;</span> <span title="Reading time">21</span></div></div></header><div class="post-body" itemprop="articleBody"><p>原文: <a href="https://medium.com/@pshrmn/a-little-bit-of-history-f245306f48dd" target="_blank" rel="noopener">A little bit of history</a><p>If you wish to understand React Router, you must first study history. More specifically, the <a href="https://github.com/ReactTraining/history" target="_blank" rel="noopener">history</a> package, which provides the core functionality for React Router. It enables projects to easily add location based navigation on the client-side, which is essential for single page applications.<blockquote><p>如果你想要理解 React Router，那你必须先学习 history。具体来说，是 <a href="https://github.com/ReactTraining/history" target="_blank" rel="noopener">history</a> 包，它提供了 React Router 的核心功能。它允许项目轻松的在客户端添加基于位置(location)的导航，这对但页面应用来说是至关重要的。</blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre><td class="code"><pre><span class="line">npm install --save history</span><br></pre></table></figure><p>There are three types of history: browser, hash, and memory. The history package exports methods to create each type.<blockquote><p>共有3种类型的history：browser，hash，和memory。history包导出了用于创建每种类型的方法。</blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre><td class="code"><pre><span class="line">import &#123;</span><br><span class="line">  createBrowserHistory,</span><br><span class="line">  createHashHistory,</span><br><span class="line">  createMemoryHistory</span><br><span class="line">&#125; from &apos;history&apos;</span><br></pre></table></figure><p>If you are using React Router, it can automatically create history objects for you, so you may never have to actually interact with history directly. Still, it is important to understand the differences between each type of history so that you can determine which one is right for your project.<blockquote><p>如果你使用 React Router，它能自动创建history对象，所以你可能永远不必与history直接交互。然而，理解history的几种类型之间的差异还是很重要的，这样你才能决定哪一种能适用于你的项目。</blockquote><h3 id="What-is-history-什么是history？">What is history? 什么是history？</h3><p>No matter which type of history you create, you will end up with an object that has nearly the same properties and methods.<blockquote><p>不论你创建了哪种类型的history，你都将得到一个具有几乎相同属性和方法的对象。</blockquote><h4 id="Location-位置">Location 位置</h4><p>The most important property of a history object is the location. The location object reflects “where” your application currently is. It contains a number of properties that are derived from a URL. These are <code>pathname</code> , <code>search</code> [1], and <code>hash</code>.<blockquote><p>history 对象最重要的属性是location。location对象反映了你的应用程序当前所在的位置。它包含了从URL派生过来的若干属性。即 <code>pathname</code> , <code>search</code>[1] ,和 <code>hash</code>。</blockquote><p>Additionally, each location has a unique <code>key</code> property associated with it. This key can be used to identify and store data specific to a location.<blockquote><p>另外，每个location都有一个唯一的 <code>key</code> 属性关联与之关联。这个 <code>key</code> 可以被用于标识和存储与特定location相关的数据</blockquote><p>Finally, a location can have <code>state</code> associated with it. This provides a means of attaching data to a location that is not present in the URL.<blockquote><p>最后，一个location还能有一个 <code>state</code> 与之关联。它提供了一种将数据附加到URL中没有出现的位置的方法。</blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  pathname: &apos;/here&apos;,</span><br><span class="line">  search: &apos;?key=value&apos;,</span><br><span class="line">  hash: &apos;#extra-information&apos;,</span><br><span class="line">  state: &#123; modal: true &#125;,</span><br><span class="line">  key: &apos;abc123&apos;</span><br><span class="line">&#125;</span><br></pre></table></figure><p>When a history object is created, it will need an initial location. How this is determined is different for each type of history. For example, the browser history will parse the current URL.<blockquote><p>当一个 history 对象被创建，它就会需要一个初始的 location。在各种类型的 history 中，如何确定这个初始位置是不同的。例如，<code>browser history</code>会将当前的URL转换为当前 location。</blockquote><h4 id="One-location-to-rule-them-all">One location to rule them all?</h4><p>While there is only one current location that we can access, the history object keeps track of an array of locations. The ability to add locations and move throughout the location array is what makes history “history”. If history only knew about the current location, it would be more aptly named “present”.<blockquote><p>虽然我们只能访问一个当前位置，但是 history 对象会跟踪一组 location 。能在 location 数组中完成添加和移动的能力让 history 成为真正的 “history”。如果 history 只知道当前的 location，那么它被叫成 “present” 可能会更合适一点。</blockquote><p>In addition to an array of locations, the history also maintains an index value, which refers to the position of current location in the array.<blockquote><p>除了一组 location ，history 还维护了一个 index 索引值，它指向了 location 数组中当前 location 的位置。</blockquote><p>For the memory history, these are explicitly defined. For both the browser and hash histories, the array and index is controlled by the browser and cannot be directly accessed [2].<blockquote><p>对与 memory history ，这些是明确定义的额。对于 browser 和 hash history，location 数组和 index 索引值都是被浏览器控制并且不可直接访问的[2]。</blockquote><h4 id="Navigation-导航">Navigation 导航</h4><p>An object with a location property isn’t particularly exciting. Where a history object starts to become interesting is with the navigation methods. Navigation methods allow you to change the current location.<blockquote><p>一个具有 location 属性的对象没什么值得令人兴奋的。history 对象有趣的地方在于 导航（navigation） 方法。导航方法允许你改变当前的 location。</blockquote><h4 id="Push">Push</h4><p>The <code>push</code> method allows you to go to a new location. This will add a new location to the array after the current location. When this happens, any “future” locations (ones that exist in the array after the current location because of use of the back button) will be dropped.<blockquote><p><code>push</code>方法让你能跳转到一个新的location。它会在 location 数组中的当前 location 的后面添加一个新的 location。当这种情况发生时，任何 “future” location（那些由于使用了后退按钮在数组中位于 current location 之后的 location） 将被删除。</blockquote><p>By default, when you click on a <code>&lt;Link&gt;</code> from React Router, it will use <code>history.push</code> to navigate.<blockquote><p>默认情况下，当你从 React Router 点击一个<code>&lt;Link&gt;</code>，它将使用 <code>history.push</code>来进行导航。</blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre><td class="code"><pre><span class="line">history.push(&#123; pathname: &apos;/new-place&apos; &#125;)</span><br></pre></table></figure><h4 id="Replace">Replace</h4><p>The <code>replace</code> method is similar to <code>push</code>, but instead of adding a new location, it will replace the location at the current index. “Future” locations will not be dropped.<blockquote><p><code>replace</code> 方法与 <code>push</code> 相似，但是不同于添加一个新的 location ，它会替换当前 index 索引位置上的 location。“Future” location 将不会被删除。</blockquote><p>Redirects are a good time to use <code>replace</code>. This is what React Router’s<code>&lt;Redirect&gt;</code> component uses.<blockquote><p>重定向是使用 <code>replace</code> 的好时机。React Router的 <code>&lt;Redirect&gt;</code> 也使用它。</blockquote><p>For example, if you are on one page and click a link that navigates to a second page, that second page might redirect to a third page. If the redirect uses <code>push</code>, clicking the back button from the third will bring you back to the second page (which potentially would redirect you back to the third page again). Instead, by using <code>replace</code>, going back from the third page will take you to the first.<blockquote><p>例如，如果你在一个页面上点击了一个 link 导航到第二个页面上，第二个页面可能重定向到第三个页面。如果重定向使用了 <code>push</code> ，在第三个页面点击后退按钮将会带你回到第二个页面（第二个页面可能会再次将你重定向到第三个页面上）。相反，使用 <code>replace</code> 从第三页将带你回到第一页。</blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre><td class="code"><pre><span class="line">history.replace(&#123; pathname: &apos;/go-here-instead&apos; &#125;)</span><br></pre></table></figure><h4 id="Go-go-go">Go, go, go</h4><p>Finally, there are three related methods: <code>goBack</code>, <code>goForward</code>, and <code>go</code>.<blockquote><p>最后，有三个相关的方法：<code>goBack</code> ，<code>goForward</code> ，and <code>go</code>。</blockquote><p><code>goBack</code> goes back one page. This essentially decrements the index in the locations array by one.<blockquote><p><code>goBack</code> 回退一页。它实质上将 location 数组上的 index 减 1。</blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre><td class="code"><pre><span class="line">history.goBack()</span><br></pre></table></figure><p><code>goForward</code> is the opposite of <code>goBack</code>, going forward one page. It will only work when there are “future” locations to go to, which happens when the user has clicked the back button.<blockquote><p>与 <code>goBack</code> 相反，<code>过Forward</code> 前进一页。它仅在有 <code>future</code> location 时起作用，当用户点击了后退按钮时会出现这种情况。</blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre><td class="code"><pre><span class="line">history.goForward()</span><br></pre></table></figure><p><code>go</code> is a more powerful combination of <code>goBack</code> and <code>goForward</code> . Negative numbers passed to the method will be used to go backwards in the array, and positive numbers will be used to go forward.<blockquote><p><code>go</code> 是 <code>goBack</code> 与 <code>goForward</code> 的更强大的组合。传给这个方法的负数会被用于在数组中回退，整数会被用于前进。</blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre><td class="code"><pre><span class="line">history.go(-3)</span><br></pre></table></figure><h4 id="Listen">Listen!</h4><p>History uses the <a href="https://en.wikipedia.org/wiki/Observer_pattern" target="_blank" rel="noopener">observer pattern</a> to allow outside code to be notified when the location changes.<blockquote><p>history 使用<a href="https://en.wikipedia.org/wiki/Observer_pattern" target="_blank" rel="noopener"><code>观察者模式（observer pattern）</code></a> 来允许外部代码在 location 改变时接收通知。</blockquote><p>Each history object has a <code>listen</code> method, which takes a function as its argument. That function will be added to an array of listener functions that the history stores. Any time the location changes (whether this is by your code calling one of the history methods or because a user clicked a browser button), the history object will call all of its listener functions. This allows you to setup code that will update whenever the location changes.<blockquote><p>每种 history 对象都有一个 <code>listen</code> 方法，接收一个 function 作为参数。这个 function 将被添加到一个 history 存储的监听函数数组中。一旦 location 变动（不论是你的代码调用了一个 history 方法还是一个用户点击了浏览器按钮），history 对象将会调用所有的监听函数。这允许你编写一些在 location 变化时更新的代码。</blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre><td class="code"><pre><span class="line">const youAreHere = document.getElementById(&apos;youAreHere&apos;)</span><br><span class="line">history.listen(function(location) &#123;</span><br><span class="line">  youAreHere.textContent = location.pathname</span><br><span class="line">&#125;)</span><br></pre></table></figure><p>A React Router’s router component will subscribe to its history object so that it can re-render whenever the location changes.<blockquote><p>React Router 的路由组件会订阅他的 history 对象，这样无论合适 location 发生了变化，它都能重新渲染。</blockquote><h4 id="Linking-things-together">Linking things together</h4><p>Each history type also has a <code>createHref</code> method that can take a location object and output a URL.<blockquote><p>每种类型的 history 都有一个 <code>createHref</code>方法，接收一个 location 对象，输出一个 URL。</blockquote><p>Internally, history can navigate using location objects. However, any code that is unaware of the history package, such as anchor elements (<code>&lt;a&gt;</code>), does not know what location objects are. In order to generate HTML that will still properly navigate without knowledge of history, we must be able to generate real URLs.<blockquote><p>在内部，history 可以用 location 对象导航。但是，任何不接触 history 包的代码，例如锚元素（<code>&lt;a&gt;</code>）,都不知道 location 对象是什么。为了生成在不了解 history 的情况下仍然能够正确导航的 HTML，我们必须生成真实的 URL。</blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre><td class="code"><pre><span class="line">const location = &#123;</span><br><span class="line">  pathname: &apos;/one-fish&apos;,</span><br><span class="line">  search: &apos;?two=fish&apos;,</span><br><span class="line">  hash: &apos;#red-fish-blue-fish&apos;</span><br><span class="line">&#125;</span><br><span class="line">const url = history.createHref(location)</span><br><span class="line">const link = document.createElement(&apos;a&apos;)</span><br><span class="line">a.href = url</span><br><span class="line">// &lt;a href=&apos;/one-fish?two=fish#red-fish-blue-fish&apos;&gt;&lt;/a&gt;</span><br></pre></table></figure><hr><p>That covers the essential history API. There are a couple more properties and methods, but the above should be enough to have a solid understanding of how to work with a history object.<blockquote><p>这覆盖了必要的 history API。还有一些属性和方法，但是上面这些应该足够让你充分了解如何使用 history 对象。</blockquote><h3 id="With-our-powers-combined">With our powers combined</h3><p>There are some differences between the history types that you will need to consider when deciding which is best suited for your project. Between the three of them, any use case should be covered.<blockquote><p>在决定哪种类型最适合你的项目时，有一些 history 类型之间的差异你需要考虑。这三种类型，应该能够覆盖任何用例。</blockquote><h4 id="In-the-Browser">In the Browser</h4><p>Browser and hash histories are both intended to be used in a browser. They interact with the <a href="https://developer.mozilla.org/en-US/docs/Web/API/History" target="_blank" rel="noopener">history</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Location" target="_blank" rel="noopener">location</a> web APIs so that the current location is the same as the one displayed in your browser’s address bar.<blockquote><p>Browser 和 hash history 都是在浏览器中使用的。它们与 <a href="https://developer.mozilla.org/en-US/docs/Web/API/History" target="_blank" rel="noopener">history</a> 和 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Location" target="_blank" rel="noopener">location</a> web API交互，所以 current location 与浏览器地址栏中显示的是一样的。</blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre><td class="code"><pre><span class="line">const browserHistory = createBrowserHistory()</span><br><span class="line">const hashHistory = createHashHistory()</span><br></pre></table></figure><p>The biggest difference between the two is how they create a location from a URL. The browser history uses the full URL [3], while the hash history only uses the portion of the URL located after the first hash symbol.<blockquote><p>这两者最大的不同是它们如何从一个 URL 创建 location。browser history 将会使用完整 URL[3]，然而 hash history 只会用 URL 中位于第一个 hash 符号（#）之后的部分。</blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre><td class="code"><pre><span class="line">// Given the following URL</span><br><span class="line">url = &apos;http://www.example.com/this/is/the/path?key=value#hash&apos;</span><br><span class="line">// a browser history creates the location object:</span><br><span class="line">&#123;</span><br><span class="line">  pathname: &apos;/this/is/the/path&apos;,</span><br><span class="line">  search: &apos;?key=value&apos;,</span><br><span class="line">  hash: &apos;#hash&apos;</span><br><span class="line">&#125;</span><br><span class="line">// a hash history creates the location object:</span><br><span class="line">&#123;</span><br><span class="line">  pathname: &apos;hash&apos;,</span><br><span class="line">  search: &apos;&apos;,</span><br><span class="line">  hash: &apos;&apos;</span><br><span class="line">&#125;</span><br></pre></table></figure><h4 id="Hashing-things-out">Hashing things out</h4><p>Why would you ever want to use a hash history? When you navigate to a URL, in theory there is a corresponding file on your server.<blockquote><p>为什么你会想要使用 hash history？当你导航到一个 URL，理论上你的服务器上应该有一个相应的文件。</blockquote><p>For servers that can respond to dynamic requests, the requested file does not actually have to exist. Instead, the server will examine the requested URL and decide what HTML to respond with.<blockquote><p>对那些能够响应动态请求的服务器来说，被请求的文件不必实际存在。相反，服务器会检查请求的 URL ，然后决定返回什么 HTML。</blockquote><p>However, a static file server can only return the files that exist on the disk. The most dynamic thing that a static server can do is to return the <code>index.html</code> file from a directory when the URL only specifies the directory.<blockquote><p>然而一个静态文件服务器只能返回服务器上存在的文件。静态服务器能做到的最动态的事情就是当 URL只指定到一个目录的时候返回这个目录下的 <code>index.html</code>文件。</blockquote><p><strong>Update 4/25/18</strong>: I wrote a small article about <a href="https://medium.com/@pshrmn/single-page-applications-and-the-server-32a23d67936" target="_blank" rel="noopener">Single-Page Applications and the Server</a> that should help clarify the different ways a single-page application can be hosted.<blockquote><p><strong>Update 4/25/18</strong>: 我写了一篇小文关于<a href="https://medium.com/@pshrmn/single-page-applications-and-the-server-32a23d67936" target="_blank" rel="noopener">Single-Page Applications and the Server</a>，应该能够帮助阐明单页面应用程序能够托管的不同方法。</blockquote><p>Given the limitations imposed by a static file server, the simplest solution [4] for serving your application is to only have one “real” location on your server to fetch your HTML from. Of course, only having one location means only having one URL for your application, which would defeat the purpose of using history. To get around this limitation, the hash history uses the hash section of the URL to set and read locations.<blockquote><p>考虑到静态文件服务器施加的限制，为你的应用程序提供服务的最简单的解决方案[4]就是在服务器上只有一个真实的 location 来获取 HTML。当然，只有一个位置意味着你的应用程序只有一个 URL，这破坏了 history 的目的。为了解决这个限制，hash history 使用 URL 的 hash 部分来设置和读取 location。</blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre><td class="code"><pre><span class="line">// If example.com uses a static file server, these URLs would</span><br><span class="line">// both fetch html from /my-site/index.html</span><br><span class="line">http://www.example.com/my-site#/one</span><br><span class="line">http://www.example.com/my-site#/two</span><br><span class="line">// However, with a hash history, an application&apos;s location will be</span><br><span class="line">// different for each URL because the location is derived from</span><br><span class="line">// the hash section of the URL</span><br><span class="line">&#123; pathname: &apos;/one&apos; &#125;</span><br><span class="line">&#123; pathname: &apos;/two&apos; &#125;</span><br></pre></table></figure><p>While the hash history works well, it can be considered a bit of a hack because of its reliance on the storing all of the path information in the hash of a URL. Therefore, it should only be considered when your website does not have a dynamic server to server your HTML.<blockquote><p>虽然 hash history 工作得很好，但是由于它依赖与将所有 location 信息保存在 URL 的 hash 中，因此可以认为这种方法有一点点 hack。所以当你的网站没有动态服务器来服务你的 HTML 时可以考虑这种方法。</blockquote><h4 id="Memory-The-Catch-all-History">Memory: The Catch-all History</h4><p>The best thing about memory location is that you can use it anywhere that you can run JavaScript.<blockquote><p>关于 memory history 的最好的事情是你能在任何可以运行 JavaScript 的地方使用它。</blockquote><p>A simple example is that you can use it in unit tests run via Node. That allows you to test code that relies on a history object without having to actually test with a browser.<blockquote><p>一个简单的例子是你可以在 Node 中运行的单元测试中使用它。这允许你测试一些依赖 history 对象的代码而不必真的用一个浏览器来测试。</blockquote><p>More importantly, you can also use a memory history in mobile apps. A memory history is used by <code>react-router-native</code> to enable location based navigation in <code>react-native</code> apps.<blockquote><p>更重要的是，你也可以在移动端 app 中使用它。memory history 被<code>react-router-native</code> 用于允许在<code>react-native</code>app中使用基于 location 的导航。</blockquote><p>If you really wanted, you could even use a memory history in the browser (although you would be losing the integration with the address bar).<blockquote><p>如果你真的想，你甚至可以在浏览器中使用 memory history（但是你会失去与地址栏的集成）。</blockquote><p>The biggest difference between the memory history and the browser and hash histories is that it maintains its own in-memory array of locations. When creating a memory history you can pass information to setup the initial state. This state would be an array of locations and the index of the “current” location in that array [5]. This is different from the browser and hash histories, which rely on the browser to already be storing the array of locations.<blockquote><p>memory history 与 browser 和 hash history最大的不同在于它在内存中维护了自己而 location 数组。当创建一个 memory history 的时候你可以传递来设置初始状态。这个状态将是一个 location 数组和这个数组中的 “current” location 的索引[5]。这与 browser 和 hash history不同，后两个依赖于浏览器已经存储了 location 数组。</blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre><td class="code"><pre><span class="line">const history = createMemoryHistory(&#123;</span><br><span class="line">  initialEntries: [&apos;/&apos;, &apos;/next&apos;, &apos;/last&apos;],</span><br><span class="line">  initialIndex: 0</span><br><span class="line">&#125;)</span><br></pre></table></figure><hr><p>While you can roll your own history equivalent code, there are a lot of little gotchas in how browsers handle navigation that can cause a headache. Instead, it is probably easier to rely on history to think about these things for you.<blockquote><p>虽然你可以创造出自己的 history 等效的代码，但是又很多关于浏览器如何处理导航的小问题会让人头痛。相反，利用 history 对象来思考这些事情可能会更简单。</blockquote><p>No matter which history type you end up choosing you will end up with a simple to implement, but powerful way to perform navigation and location-based rendering in your application.<blockquote><p>不论你最后选用了哪一种 history 类型，你都将得到一个简单易用，但是在应用程序中处理导航和基于位置的渲染的强大方法。</blockquote><h3 id="Notes">Notes</h3><p>[1] The <code>search</code> property is a string instead of a parsed object. This is because there are different search string parsing packages that handle some cases slightly differently. Instead of imposing one way to parse search strings, history leaves it up to you to decide how to parse the string. If you are looking for a way to parse search strings, some popular options are <a href="https://www.npmjs.com/package/qs" target="_blank" rel="noopener">qs</a>, <a href="https://www.npmjs.com/package/query-string" target="_blank" rel="noopener">query-string</a>, <a href="https://www.npmjs.com/package/querystring" target="_blank" rel="noopener">querystring</a>, and the native <a href="https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams" target="_blank" rel="noopener">URLSearchParams</a>.<p>[2] This restriction is out of security. The browser’s history’s location array contains more than just the locations that have been visited within your application. Allowing access to this list would leak information about a user’s browsing history that websites should not be allowed access to.<p>[3] By default, the browser history creates location objects whose <code>pathname</code> is the URL’s full pathname. However, you can specify a basename for a history, in which case a portion of the full pathname will be effectively ignored.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre><td class="code"><pre><span class="line">const history = createBrowserHistory(&#123; basename: &apos;/path&apos; &#125;)</span><br><span class="line">// given the url: http://www.example.com/path/here</span><br><span class="line">// the history object will create the location</span><br><span class="line">&#123; pathname: &apos;/here&apos;, ... &#125;</span><br></pre></table></figure><p>[4] Theoretically you could serve the same HTML file from every valid URL in your application. If all of your URLs are static, this <em>could</em> work, but it would create lots of redundant files. If any of your URLs use parameters to match a large number of possible values, this is infeasible.<p>[5] If you do not provide a memory history with initial locations and index, it will fallback to default values:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre><td class="code"><pre><span class="line">entries = [&#123; pathname: &apos;/&apos; &#125;]</span><br><span class="line">index = 0</span><br></pre></table></figure><p>This might be good enough for most applications, but being able to pre-populate the history can be very useful for things like session restoration.<ul><li><a href="https://medium.com/tag/javascript?source=post" target="_blank" rel="noopener">JavaScript</a><li><a href="https://medium.com/tag/react?source=post" target="_blank" rel="noopener">React</a><li><a href="https://medium.com/tag/react-router?source=post" target="_blank" rel="noopener">React Router</a></ul></div><div><div class="my_post_copyright"><script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script><script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js" integrity="sha256-iBcUE/x23aI6syuqF7EeT/+JFBxjPs5zeFJEXxumwb0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js" integrity="sha256-JirYRqbf+qzfqVtEE4GETyHlAbiCpC005yBTa4rj6xg=" crossorigin="anonymous"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css" integrity="sha256-zuyRv+YsWwh1XR5tsrZ7VCfGqUmmPmqBjIvJgQWoSDo=" crossorigin="anonymous"><p><span>本文标题:</span>浏览器的history<p><span>文章作者:</span>kinboy<p><span>发布时间:</span>2018年09月25日 - 13:24:33<p><span>最后更新:</span>2019年07月15日 - 18:05:10<p><span>原始链接:</span><a href="/2018/09/25/a-little-bit-of-history/" title="浏览器的history">http://kinboyw.github.io/2018/09/25/a-little-bit-of-history/</a><span class="copy-path" title="点击复制文章链接"></span><p><span>许可协议:</span> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</div><script>var clipboard=new Clipboard(".fa-clipboard");clipboard.on("success",$(function(){$(".fa-clipboard").click(function(){swal({title:"",text:"复制成功",html:!1,timer:500,showConfirmButton:!1})})}))</script></div><div><div><div style="text-align:center;color:#ccc;font-size:14px">------ Passage Ending ------</div></div></div><div><ul class="post-copyright"><li class="post-copyright-author"><strong>Post author:</strong> kinboy<li class="post-copyright-link"><strong>Post link:</strong> <a href="http://kinboyw.github.io/2018/09/25/a-little-bit-of-history/" title="浏览器的history">http://kinboyw.github.io/2018/09/25/a-little-bit-of-history/</a><li class="post-copyright-license"><strong>Copyright Notice:</strong> All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.</ul></div><footer class="post-footer"><div class="post-tags"><a href="/tags/翻译/" rel="tag"># 翻译</a> <a href="/tags/浏览器/" rel="tag"># 浏览器</a> <a href="/tags/history/" rel="tag"># history</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2018/09/07/CentOS7.4配置网关路由服务器/" rel="next" title="CentOS 7.4 配置路由网关服务器">CentOS 7.4 配置路由网关服务器</a></div><div class="post-nav-prev post-nav-item"><a href="/2018/09/28/Simple-Page Applications And Server/" rel="prev" title="单页面应用与服务器">单页面应用与服务器</a></div></div></footer></div></article></div></div><div class="comments" id="comments"><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">Table of Contents<li class="sidebar-nav-overview" data-target="site-overview-wrap">Overview</ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="kinboy"><p class="site-author-name" itemprop="name">kinboy</div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">66</span> <span class="site-state-item-name">posts</span></a></div><div class="site-state-item site-state-categories"><a href="/categories/index.html"><span class="site-state-item-count">31</span> <span class="site-state-item-name">categories</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/index.html"><span class="site-state-item-count">52</span> <span class="site-state-item-name">tags</span></a></div></nav><div class="feed-link motion-element"><a href="/atom.xml" rel="alternate">RSS</a></div><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/kinboyw" target="_blank" title="GitHub">GitHub</a></span><span class="links-of-author-item"><a href="mailto:kinboy9275@gmail.com" target="_blank" title="E-Mail"> E-Mail</a></span></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#What-is-history-什么是history？"><span class="nav-number">1.</span> <span class="nav-text">What is history? 什么是history？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Location-位置"><span class="nav-number">1.1.</span> <span class="nav-text">Location 位置</span></a><li class="nav-item nav-level-4"><a class="nav-link" href="#One-location-to-rule-them-all"><span class="nav-number">1.2.</span> <span class="nav-text">One location to rule them all?</span></a><li class="nav-item nav-level-4"><a class="nav-link" href="#Navigation-导航"><span class="nav-number">1.3.</span> <span class="nav-text">Navigation 导航</span></a><li class="nav-item nav-level-4"><a class="nav-link" href="#Push"><span class="nav-number">1.4.</span> <span class="nav-text">Push</span></a><li class="nav-item nav-level-4"><a class="nav-link" href="#Replace"><span class="nav-number">1.5.</span> <span class="nav-text">Replace</span></a><li class="nav-item nav-level-4"><a class="nav-link" href="#Go-go-go"><span class="nav-number">1.6.</span> <span class="nav-text">Go, go, go</span></a><li class="nav-item nav-level-4"><a class="nav-link" href="#Listen"><span class="nav-number">1.7.</span> <span class="nav-text">Listen!</span></a><li class="nav-item nav-level-4"><a class="nav-link" href="#Linking-things-together"><span class="nav-number">1.8.</span> <span class="nav-text">Linking things together</span></a></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#With-our-powers-combined"><span class="nav-number">2.</span> <span class="nav-text">With our powers combined</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#In-the-Browser"><span class="nav-number">2.1.</span> <span class="nav-text">In the Browser</span></a><li class="nav-item nav-level-4"><a class="nav-link" href="#Hashing-things-out"><span class="nav-number">2.2.</span> <span class="nav-text">Hashing things out</span></a><li class="nav-item nav-level-4"><a class="nav-link" href="#Memory-The-Catch-all-History"><span class="nav-number">2.3.</span> <span class="nav-text">Memory: The Catch-all History</span></a></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#Notes"><span class="nav-number">3.</span> <span class="nav-text">Notes</span></a></ol></div></div></section><div class="back-to-top"><span id="scrollpercent"><span>0</span>%</span></div></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2019</span><span class="with-love"></span> <span class="author" itemprop="copyrightHolder">kinboy</span><br><img src="/images/beian.png"> <span style="width:300px;margin:0 auto;padding:20px 0"><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42011102002861" style="display:inline-block;text-decoration:none;height:20px;line-height:20px"><img src style="float:left"><p style="float:left;height:20px;line-height:20px;margin:0 0 0 5px;color:#939393">鄂公网安备 42011102002861号</p></a></span></div></div></footer></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type="text/javascript" src="/lib/three/three.min.js"></script><script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script><script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><script id="dsq-count-scr" src="https://kinboy-wang.disqus.com/count.js" async></script><script type="text/javascript">var disqus_config=function(){this.page.url="http://kinboyw.github.io/2018/09/25/a-little-bit-of-history/",this.page.identifier="2018/09/25/a-little-bit-of-history/",this.page.title="浏览器的history"},d=document,s=d.createElement("script");s.src="https://kinboy-wang.disqus.com/embed.js",s.setAttribute("data-timestamp",""+ +new Date),(d.head||d.body).appendChild(s)</script><script type="text/javascript">// Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });</script><script>!function(){var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}()</script>

@@ -1,0 +1,314 @@
+<!DOCTYPE html><html class="theme-next gemini use-motion" lang="ZH | EN"><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="google-site-verification" content="AKuwh4i11uWg0wOl_cM7AI_dHqOHOLKYfCxKc8Lfv6E"><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4"><link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222"><meta name="keywords" content="FE,JavaScript,"><link rel="alternate" href="/atom.xml" title="Kinboy's note" type="application/atom+xml"><meta name="description" content="原文：Ten minute introduction to MobX and React MobX 是一个简单的，可扩展并且经过实战考研的状态管理解决方案。这篇教程将会花10分钟时间教会你关于 MobX 的全部重要概念。MobX 是一个独立的库，但是大多数人会将它和 React 组合使用，本篇教程也将关注这种组合的用法。"><meta name="keywords" content="FE,JavaScript"><meta property="og:type" content="article"><meta property="og:title" content="十分钟介绍 MobX 和 React"><meta property="og:url" content="http://kinboyw.github.io/2019/03/24/十分钟介绍-MobX-和-React/index.html"><meta property="og:site_name" content="Kinboy&#39;s note"><meta property="og:description" content="原文：Ten minute introduction to MobX and React MobX 是一个简单的，可扩展并且经过实战考研的状态管理解决方案。这篇教程将会花10分钟时间教会你关于 MobX 的全部重要概念。MobX 是一个独立的库，但是大多数人会将它和 React 组合使用，本篇教程也将关注这种组合的用法。"><meta property="og:locale" content="ZH | EN"><meta property="og:image" content="https://mobx.js.org/getting-started-assets/overview.png"><meta property="og:updated_time" content="2019-07-15T10:05:10.391Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="十分钟介绍 MobX 和 React"><meta name="twitter:description" content="原文：Ten minute introduction to MobX and React MobX 是一个简单的，可扩展并且经过实战考研的状态管理解决方案。这篇教程将会花10分钟时间教会你关于 MobX 的全部重要概念。MobX 是一个独立的库，但是大多数人会将它和 React 组合使用，本篇教程也将关注这种组合的用法。"><meta name="twitter:image" content="https://mobx.js.org/getting-started-assets/overview.png"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Gemini",version:"5.1.4",sidebar:{position:"left",display:"post",offset:12,b2t:!0,scrollpercent:!0,onmobile:!1},fancybox:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},duoshuo:{userId:"0",author:"Author"},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"I didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><link rel="canonical" href="http://kinboyw.github.io/2019/03/24/十分钟介绍-MobX-和-React/"><title>十分钟介绍 MobX 和 React | Kinboy's note</title><script type="text/javascript">var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?c9c2b9e915e6bb8ec323a2f98c0c98d8";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><body itemscope itemtype="http://schema.org/WebPage" lang="ZH | EN"><div class="container sidebar-position-left page-post-detail"><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"></span><span class="site-title">Kinboy's note</span><span class="logo-line-after"></span></a></div><h1 class="site-subtitle" itemprop="description">前端漫记</h1></div><div class="site-nav-toggle"><button></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><br>Home</a><li class="menu-item menu-item-about"><a href="/rscard/" rel="section"><br>About</a><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><br>Tags</a><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><br>Categories</a><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><br>Archives</a><li class="menu-item menu-item-top"><a href="/top/" rel="section"><br>Top</a><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><br>Search</a></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"></span><span class="popup-btn-close"></span><div class="local-search-input-wrapper"><input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input"></div></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-categories" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://kinboyw.github.io/2019/03/24/十分钟介绍-MobX-和-React/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="kinboy"><meta itemprop="description" content><meta itemprop="image" content="/images/avatar.png"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Kinboy's note"></span><header class="post-header"><h2 class="post-title" itemprop="name headline">十分钟介绍 MobX 和 React</h2><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Posted on</span> <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-24T13:45:00+08:00">2019-03-24</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">In</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FE/" itemprop="url" rel="index"><span itemprop="name">FE</span></a></span> , <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FE/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span><a href="/2019/03/24/十分钟介绍-MobX-和-React/#comments" itemprop="discussionUrl"></a></span><div class="post-wordcount"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Words count in article&#58;</span> <span title="Words count in article">3.6k</span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">Reading time &asymp;</span> <span title="Reading time">14</span></div></div></header><div class="post-body" itemprop="articleBody"><p>原文：<a href="https://mobx.js.org/getting-started.html" target="_blank" rel="noopener">Ten minute introduction to MobX and React</a><p><a href="https://github.com/mobxjs/mobx" target="_blank" rel="noopener"><code>MobX</code></a> 是一个简单的，可扩展并且经过实战考研的状态管理解决方案。这篇教程将会花10分钟时间教会你关于 MobX 的全部重要概念。MobX 是一个独立的库，但是大多数人会将它和 React 组合使用，本篇教程也将关注这种组合的用法。</p><h3 id="核心概念">核心概念</h3><p>状态是每个应用程序的核心，没有比使用不一致的状态，或者四处分散且不能同步的本地变量组成的状态更容易创造出充满错误和不可管理的应用程序了。因此很多状态管理解决方案都会限制修改状态的方式，例如使用不可变状态。但是这样做会引入新的问题；数据需要规范化，参照完整性就不能得到保证，于是就不再可能使用像原型这样强大的概念。*<p>MobX 通过解决了根本问题使得数据管理再次变得简单：它保证了不可能创造出不一致状态。实现的策略很简单：确定一切能够从应用程序的状态继承的，都将从应用程序的状态继承。并且自动完成继承。<p>概念上，MobX 对待你的应用程序与电子表格类似。<p><img src="https://mobx.js.org/getting-started-assets/overview.png" alt="img"><ol><li>首先，应用程序中有 state（状态）。即构成应用程序的数据模型中的对象，数组，基础值，引用组成的图表。这些值是你应用程序的数据单元<li>然后有 derivations（求导）。基本上是指所有能够根据应用程序的 state 自动计算出的值。这些 derivation， 或者计算值的范围可以是从简单值类型，例如未完成的 todo 数量，到复杂类型例如 todo 的可视化 HTML 表示。电子表格中的等价物：那些公式和应用程序的图表。<li><em>Reaction</em>（反应）和 derivation 十分相似。主要的差异在于 react 不会创造得出一个值，而是通过自动运行来执行一些任务。通常是 I/O 相关的。它们用来确定 DOM 被更新，或者网络请求会在正确的时间自动执行等。<li>最后是 action（动作）。action 是所有能够改变状态的东西。MobX 将会确保所有通过 ation 对状态所做的修改都能自动被所有的 derivation 和 reaction 处理。同步并且无干扰。</ol><h3 id="一个简单的-todo-store">一个简单的 todo store</h3><p>原理说得够多了，实践操作一下可能会比认真阅读上面那些东西学到更多。为了从头开始，我们先创建一个非常简单的 ToDo store。注意下方的所有代码块都是可编辑的，点击 <code>run code</code> 按钮执行代码。下面是一个非常直接的 <code>TodoStore</code> ，用来管理一个 todo 集合。还没有引入 MobX。<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TodoStore</span> </span>&#123;</span><br><span class="line">    todos = [];</span><br><br><span class="line">    <span class="keyword">get</span> completedTodosCount() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.todos.filter(</span><br><span class="line">            todo =&gt; todo.completed === <span class="literal">true</span></span><br><span class="line">        ).length;</span><br><span class="line">    &#125;</span><br><br><span class="line">    report() &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.todos.length === <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"&lt;none&gt;"</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">`Next todo: "<span class="subst">$&#123;<span class="keyword">this</span>.todos[<span class="number">0</span>].task&#125;</span>". `</span> +</span><br><span class="line">            <span class="string">`Progress: <span class="subst">$&#123;<span class="keyword">this</span>.completedTodosCount&#125;</span>/<span class="subst">$&#123;<span class="keyword">this</span>.todos.length&#125;</span>`</span>;</span><br><span class="line">    &#125;</span><br><br><span class="line">    addTodo(task) &#123;</span><br><span class="line">        <span class="keyword">this</span>.todos.push(&#123;</span><br><span class="line">            task: task,</span><br><span class="line">            completed: <span class="literal">false</span>,</span><br><span class="line">            assignee: <span class="literal">null</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><br><span class="line"><span class="keyword">const</span> todoStore = <span class="keyword">new</span> TodoStore();</span><br></pre></table></figure><p>我们创建了一个 <code>todoStore</code> 的实例，实例中包含了 <code>todo</code> 的集合。给这个 todoStore 添加一些对象。为了确保看到修改的效果，我们在每次改变之后调用 <code>todoStore.report</code> 来输出日志。注意 report 故意始终只打印第一个任务。这使得这个例子非常人工，但是你将会在下面看到它能很好地证明 MobX 的依赖追踪是多么的动态。<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre><td class="code"><pre><span class="line">todoStore.addTodo(<span class="string">"read MobX tutorial"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(todoStore.report());</span><br><br><span class="line">todoStore.addTodo(<span class="string">"try MobX"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(todoStore.report());</span><br><br><span class="line">todoStore.todos[<span class="number">0</span>].completed = <span class="literal">true</span>;</span><br><span class="line"><span class="built_in">console</span>.log(todoStore.report());</span><br><br><span class="line">todoStore.todos[<span class="number">1</span>].task = <span class="string">"try MobX in own project"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(todoStore.report());</span><br><br><span class="line">todoStore.todos[<span class="number">0</span>].task = <span class="string">"grok MobX tutorial"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(todoStore.report());</span><br></pre></table></figure><h3 id="变得响应式">变得响应式</h3><p>目前，这部分代码还没有什么特别之处。但是如果我们不必显示执行 <code>report</code> ，而是可以只用声明我们想要它在每一次状态改变时都被触发执行呢？这样能够将我们从负责在代码库中任何可能影响 report 结果的地方调用 <code>report</code> 的工作中解放出来。我们只需要确定最后的 report 被打印出来。但是不想花费精力来维护部分代码。<p>幸运的是这正是 MobX 能够为你做的。自动执行代码只取决于状态。所以我们的 <code>report</code> 方法自动更新，就像电子表格中的图表一样。为了实现这一点，<code>TodoStore</code> 必须变成可观察的，这样 MobX 就能够追踪所有产生的修改。我们修改一下这个类来实现这样的功能。<p>同样，<code>completedTodosCount</code> 属性可以自动从 todo 列表继承。通过使用 <code>@observable</code> 和 <code>@computed</code> 装饰器，我们能够在一个对象中引入可观察属性：<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ObservableTodoStore</span> </span>&#123;</span><br><span class="line">    @observable todos = [];</span><br><span class="line">    @observable pendingRequests = <span class="number">0</span>;</span><br><br><span class="line">    <span class="keyword">constructor</span>() &#123;</span><br><span class="line">        mobx.autorun(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="keyword">this</span>.report));</span><br><span class="line">    &#125;</span><br><br><span class="line">    @computed <span class="keyword">get</span> completedTodosCount() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.todos.filter(</span><br><span class="line">            todo =&gt; todo.completed === <span class="literal">true</span></span><br><span class="line">        ).length;</span><br><span class="line">    &#125;</span><br><br><span class="line">    @computed <span class="keyword">get</span> report() &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.todos.length === <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"&lt;none&gt;"</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">`Next todo: "<span class="subst">$&#123;<span class="keyword">this</span>.todos[<span class="number">0</span>].task&#125;</span>". `</span> +</span><br><span class="line">            <span class="string">`Progress: <span class="subst">$&#123;<span class="keyword">this</span>.completedTodosCount&#125;</span>/<span class="subst">$&#123;<span class="keyword">this</span>.todos.length&#125;</span>`</span>;</span><br><span class="line">    &#125;</span><br><br><span class="line">    addTodo(task) &#123;</span><br><span class="line">        <span class="keyword">this</span>.todos.push(&#123;</span><br><span class="line">            task: task,</span><br><span class="line">            completed: <span class="literal">false</span>,</span><br><span class="line">            assignee: <span class="literal">null</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><br><br><span class="line"><span class="keyword">const</span> observableTodoStore = <span class="keyword">new</span> ObservableTodoStore();</span><br></pre></table></figure><p>就是它！我们将一些属性标记为 <code>@observable</code> 来通知 MobX 这些值可能随时变化。计算用 <code>@computed</code> 装饰以标识这些可以从 state 继承。<p><code>pendingRequests</code> 和 <code>assignee</code> 属性目前还没有使用，但是会在这个教程的后面的部分用到。为了简洁，本页的所有示例都是用 ES6，JSX 和装饰器。但是不用担心，MobX 中的所有装饰器在 <a href="https://mobx.js.org/best/decorators.html" target="_blank" rel="noopener">ES5</a> 中都有对等的概念。<p>在构造函数中，我们创建了一个用来打印 <code>report</code> 的方法，并用 <code>autorun</code>包裹起来。Autorun 创建一个运行一次的 reaction，创建之后每当应用程序内部使用的任意可观察数据发生改变时自动再次执行。因为 <code>report</code> 使用了 可观察的 <code>todos</code> 属性，它将会在任何合适的时候打印 report 。下一个列表中会证实这一点。点击 <code>run</code> 按钮运行代码：<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre><td class="code"><pre><span class="line">observableTodoStore.addTodo(<span class="string">"read MobX tutorial"</span>);</span><br><span class="line">observableTodoStore.addTodo(<span class="string">"try MobX"</span>);</span><br><span class="line">observableTodoStore.todos[<span class="number">0</span>].completed = <span class="literal">true</span>;</span><br><span class="line">observableTodoStore.todos[<span class="number">1</span>].task = <span class="string">"try MobX in own project"</span>;</span><br><span class="line">observableTodoStore.todos[<span class="number">0</span>].task = <span class="string">"grok MobX tutorial"</span>;</span><br></pre></table></figure><p>很有趣对吧？<code>report</code> 自动地，同步地打印出来，不会泄漏中间值。如果仔细观察日志，你会发现第四行没有产生新的日志行。因为 report 没有因为重命名而真正地改变，尽管后端的数据的确改变了。另一方面，改变第一条 todo 的名称的确更新了 report，因为更新的名称出现在了 report 中。这很好地证明了不只是 <code>todos</code> 数组被 <code>autorun</code> 观察了，todo 数组元素的内部属性也被观察了。<h3 id="让-React-变得响应式">让 React 变得响应式</h3><p>好的，目前我们实现了一个很蠢的响应式 report。是时候用这个同样的 store 实现一个响应式的用户界面了。React 组件（不管名字如何）并不是开箱即用的响应式。<code>mobx-react</code> 包中的 <code>@observer</code> 装饰器通过将 React 组件的 <code>render</code> 方法包裹在 <code>autorun</code> 中解决了这个问题，自动保持组件与 state 同步。这在概念上和我们前面处理 <code>report</code> 的方式没什么不同。<p>下面的清单定义了一些 React 组件。其中唯一与 MobX 有个的东西就是 <code>@observer</code> 装饰器。这些就足以保证每个组件在数据发生变化时能够独立完成重渲染。你不再需要调用 <code>setState</code> ，也不需要搞清楚如何使用选择期或者需要配置的高阶组件来订阅应用程序状态的正确部分。基本上所有的组件都变得更加聪明了。然而他们是以一种愚蠢的陈述性的方式声明的。<p>点击 <code>run code</code> 按钮来看看下面代码的运行结果。下面的代码列表是可编辑的，所以请随意玩耍。可以试试移除所有的 <code>@observer</code> 调用，或者只移除装饰 <code>TodoView</code> 的那个。右边预览区域的数字会在每次组件重新渲染时高亮。<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre><td class="code"><pre><span class="line">@observer</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TodoList</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">const</span> store = <span class="keyword">this</span>.props.store;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &#123; store.report &#125;</span><br><span class="line">        &lt;ul&gt;</span><br><span class="line">        &#123; store.todos.map(</span><br><span class="line">          (todo, idx) =&gt; <span class="xml"><span class="tag">&lt;<span class="name">TodoView</span> <span class="attr">todo</span>=<span class="string">&#123;</span> <span class="attr">todo</span> &#125; <span class="attr">key</span>=<span class="string">&#123;</span> <span class="attr">idx</span> &#125; /&gt;</span></span></span><br><span class="line"><span class="xml">        ) &#125;</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line">        &#123; store.pendingRequests &gt; <span class="number">0</span> ? <span class="xml"><span class="tag">&lt;<span class="name">marquee</span>&gt;</span>Loading...<span class="tag">&lt;/<span class="name">marquee</span>&gt;</span></span> : <span class="literal">null</span> &#125;</span><br><span class="line">        &lt;button onClick=&#123; <span class="keyword">this</span>.onNewTodo &#125;&gt;New Todo&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">        &lt;small&gt; (double-click a todo to edit)&lt;/</span>small&gt;</span><br><span class="line">        &lt;RenderCounter /&gt;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="regexp">  onNewTodo = () =&gt; &#123;</span></span><br><span class="line"><span class="regexp">    this.props.store.addTodo(prompt('Enter a new todo:','coffee plz'));</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="regexp">@observer</span></span><br><span class="line"><span class="regexp">class TodoView extends React.Component &#123;</span></span><br><span class="line"><span class="regexp">  render() &#123;</span></span><br><span class="line"><span class="regexp">    const todo = this.props.todo;</span></span><br><span class="line"><span class="regexp">    return (</span></span><br><span class="line"><span class="regexp">      &lt;li onDoubleClick=&#123; this.onRename &#125;&gt;</span></span><br><span class="line"><span class="regexp">        &lt;input</span></span><br><span class="line"><span class="regexp">          type='checkbox'</span></span><br><span class="line"><span class="regexp">          checked=&#123; todo.completed &#125;</span></span><br><span class="line"><span class="regexp">          onChange=&#123; this.onToggleCompleted &#125;</span></span><br><span class="line"><span class="regexp">        /</span>&gt;</span><br><span class="line">        &#123; todo.task &#125;</span><br><span class="line">        &#123; todo.assignee</span><br><span class="line">          ? <span class="xml"><span class="tag">&lt;<span class="name">small</span>&gt;</span>&#123; todo.assignee.name &#125;<span class="tag">&lt;/<span class="name">small</span>&gt;</span></span></span><br><span class="line">          : <span class="literal">null</span></span><br><span class="line">        &#125;</span><br><span class="line">        &lt;RenderCounter /&gt;</span><br><span class="line">      &lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">    );</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="regexp">  onToggleCompleted = () =&gt; &#123;</span></span><br><span class="line"><span class="regexp">    const todo = this.props.todo;</span></span><br><span class="line"><span class="regexp">    todo.completed = !todo.completed;</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="regexp">  onRename = () =&gt; &#123;</span></span><br><span class="line"><span class="regexp">    const todo = this.props.todo;</span></span><br><span class="line"><span class="regexp">    todo.task = prompt('Task name', todo.task) || todo.task;</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="regexp">ReactDOM.render(</span></span><br><span class="line"><span class="regexp">  &lt;TodoList store=&#123; observableTodoStore &#125; /</span>&gt;,</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">'reactjs-app'</span>)</span><br><span class="line">);</span><br></pre></table></figure><p>下面的代码很好地展示了我们除了更新数据以外不需要做其他任何事情。MobX 将会自动地从 store 中的状态继承并更新用户界面。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">const</span> store = observableTodoStore;</span><br><span class="line">store.todos[<span class="number">0</span>].completed = !store.todos[<span class="number">0</span>].completed;</span><br><span class="line">store.todos[<span class="number">1</span>].task = <span class="string">"Random todo "</span> + <span class="built_in">Math</span>.random();</span><br><span class="line">store.todos.push(&#123; <span class="attr">task</span>: <span class="string">"Find a fine cheese"</span>, <span class="attr">completed</span>: <span class="literal">true</span> &#125;);</span><br><span class="line"><span class="comment">// etc etc.. add your own statements here...</span></span><br></pre></table></figure><h3 id="使用引用">使用引用</h3><p>上面我们已经创建了可观察对象（基于原型的对象和纯对象），数组和基础值。你可能想知道，MobX 中如何处理引用？我的状态能否形成一个图？在前面的清单中你可能已经注意到了 todos 中包含了 <code>assignee</code> 属性。我们通过引入另一个包含了people的 “store“ （好吧，这只是一个美化的数组）来给他们赋值，然后分派任务给他们。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">var</span> peopleStore = mobx.observable([</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">"Michel"</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">"Me"</span> &#125;</span><br><span class="line">]);</span><br><span class="line">observableTodoStore.todos[<span class="number">0</span>].assignee = peopleStore[<span class="number">0</span>];</span><br><span class="line">observableTodoStore.todos[<span class="number">1</span>].assignee = peopleStore[<span class="number">1</span>];</span><br><span class="line">peopleStore[<span class="number">0</span>].name = <span class="string">"Michel Weststrate"</span>;</span><br></pre></table></figure><p>我们现在有两个独立的 store 了。一个包含了 people，一个包含了 todos。当我们将一个 <code>assignee</code> 指配给一个 people store 中的人时，我们只是指配了一个引用。这些改变回自动被 <code>TodoView</code> 获取。有了 MobX 以后就不用先对数据进行标准化也不用写选择器来保证组件被更新。事实上 store 中保存的数据是什么都不重要了。只要对象被变成了可观察的，MobX 就能够追踪他们。真正的 JavaScript 引用将起作用。如果他们是和 derivation 有关系的，那么 MobX 将会自动追踪他们。为了测试这一点，试试在下面的的输入框内改变你的名字（要确保先点击了上面的 <code>run code</code> 按钮）<hr><p>Your name:<hr><p>顺便一提，上面输入框的 HTML 很简单：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre><td class="code"><pre><span class="line">&lt;input onkeyup=&quot;peopleStore[1].name = event.target.value&quot; /&gt;</span><br></pre></table></figure><h3 id="异步-action">异步 action</h3><p>因为我们的 Todo 应用程序中的每一部分都是从 state 派生出的，所以 state 什么时候改变都不重要。这使得创建异步 action 非常直接。直接点击下面的按钮（多次点击）来模仿异步加载新的 todo 项：<hr><p>Load todo<hr><p>这部分背后的代码也相当直接。我们从更新 store 属性 <code>pendingRequests</code> 开始来让 UI 反应出当前加载状态。一旦加载结束，我们就更新 store 中的 todos，并且减少 <code>pendingRequests</code> 计数器。直接对比这个代码段和前面的 <code>TodoList</code> 定义来看看 pendingRequests 是如何运用的。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre><td class="code"><pre><span class="line">observableTodoStore.pendingRequests++;</span><br><span class="line">setTimeout(function() &#123;</span><br><span class="line">    observableTodoStore.addTodo(&apos;Random Todo &apos; + Math.random());</span><br><span class="line">    observableTodoStore.pendingRequests--;</span><br><span class="line">&#125;, 2000);</span><br></pre></table></figure><h3 id="开发工具">开发工具</h3><p><a href="https://github.com/mobxjs/mobx-react-devtools" target="_blank" rel="noopener"><code>mobx-react-devtools</code></a> 提供了开发工具，显示在屏幕的右上方并且可以被任意 MobX + ReactJS 应用使用。点击第一个按钮将会高亮每一个正在被重渲染的 <code>@observer</code> 组件。如果点击第二个按钮，然后再点击预览中的任意一个组件，这个组件的依赖树就会显示出来，这样你可以准确地观察任意给定时刻正在被观察的数据。<h3 id="结论">结论</h3><p>以上就是全部了！没有反复套用的模板。只是一些组成我们的整个 UI 的简单的，声明式的组件。这些组件都是完全地，响应式地从我们的 state 中派生出来的。你现在可以在你的应用程序中使用 <code>mobx</code> 和 <code>mobx-react</code> 了。学到这里简单的总结一下：<ol><li>使用 <code>@observable</code> 装饰器或者 <code>observable(object 或者 array)</code> 方法来为 MobX 创建出可追踪对象。<li><code>@computed</code> 装饰器可以被用来创建能够自动从 state 中派生出值的方法。<li>使用 <code>autorun</code> 来自动运行依赖于一些 ovservable state 的方法。这对于输出日志，发起网络请求等是很有用的。<li>使用 <code>mobx-react</code> 中的 <code>@observer</code> 装饰器来让你的 React 组件变得真正响应式。他们将会自动并且高效地更新。即使应用于具有大量数据的大型复杂应用。</ol><p>可以随意调试上面的可编辑代码块来感受一下 MobX 是如何对你的修改作出反应的。例如你可以在 <code>report</code> 方法被调用时添加日志描述。或者完全不显示 <code>report</code> 看看是如何影响 <code>TodoList</code> 渲染的。或者只在特定情况下显示。<h3 id="MobX-不是一个状态容器">MobX 不是一个状态容器</h3><p>人们镜常用 MobX 来替代 Redux。 但是请注意 MobX 只是用来解决一个技术问题的库，不是一个框架，甚至内部没有包含状态容器。从这个意义上来说，上面的例子都是人为的。建议使用适当的工程实践，例如在方法中封装逻辑，在 store 或者 controller 中组织他们等等。或者如 HackerNews 所述：<blockquote><p><em>“MobX, it’s been mentioned elsewhere but I can’t help but sing its praises. Writing in MobX means that using controllers/ dispatchers/ actions/ supervisors or another form of managing dataflow returns to being an architectural concern you can pattern to your application’s needs, rather than being something that’s required by default for anything more than a Todo app.”</em></blockquote><h3 id="Learn-more">Learn more</h3><p>Intrigued? Here are some useful resources:<ul><li><a href="https://github.com/mobxjs/mobx" target="_blank" rel="noopener">MobX on GitHub</a><li><a href="https://mobxjs.github.io/mobx" target="_blank" rel="noopener">Api documentation</a><li>(Blog) <a href="https://www.mendix.com/tech-blog/making-react-reactive-pursuit-high-performing-easily-maintainable-react-apps/" target="_blank" rel="noopener">Making React reactive: the pursuit of high performing, easily maintainable React apps</a><li>(Blog) <a href="https://medium.com/@mweststrate/becoming-fully-reactive-an-in-depth-explanation-of-mobservable-55995262a254#.4kvwpd2nh" target="_blank" rel="noopener">Becoming fully reactive: an in-depth explanation of Mobservable</a></ul><hr><ul><li><a href="https://jsfiddle.net/mweststrate/wv3yopo0/" target="_blank" rel="noopener">JSFiddle</a> with a simple todo app<li><a href="https://github.com/mobxjs/mobx-react-typescript-boilerplate" target="_blank" rel="noopener">MobX, React, TypeScript boilerplate</a><li><a href="https://github.com/mobxjs/mobx-react-boilerplate" target="_blank" rel="noopener">MobX, React, Babel boilerplate</a><li><a href="https://github.com/mobxjs/mobx-reactive2015-demo" target="_blank" rel="noopener">MobX demo from Reactive2015 conference</a><li><a href="https://github.com/mobxjs/mobx-react-todomvc" target="_blank" rel="noopener">MobX + React TodoMVC</a></ul></div><div><div class="my_post_copyright"><script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script><script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js" integrity="sha256-iBcUE/x23aI6syuqF7EeT/+JFBxjPs5zeFJEXxumwb0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js" integrity="sha256-JirYRqbf+qzfqVtEE4GETyHlAbiCpC005yBTa4rj6xg=" crossorigin="anonymous"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css" integrity="sha256-zuyRv+YsWwh1XR5tsrZ7VCfGqUmmPmqBjIvJgQWoSDo=" crossorigin="anonymous"><p><span>本文标题:</span>十分钟介绍 MobX 和 React<p><span>文章作者:</span>kinboy<p><span>发布时间:</span>2019年03月24日 - 13:45:00<p><span>最后更新:</span>2019年07月15日 - 18:05:10<p><span>原始链接:</span><a href="/2019/03/24/十分钟介绍-MobX-和-React/" title="十分钟介绍 MobX 和 React">http://kinboyw.github.io/2019/03/24/十分钟介绍-MobX-和-React/</a><span class="copy-path" title="点击复制文章链接"></span><p><span>许可协议:</span> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</div><script>var clipboard=new Clipboard(".fa-clipboard");clipboard.on("success",$(function(){$(".fa-clipboard").click(function(){swal({title:"",text:"复制成功",html:!1,timer:500,showConfirmButton:!1})})}))</script></div><div><div><div style="text-align:center;color:#ccc;font-size:14px">------ Passage Ending ------</div></div></div><div><ul class="post-copyright"><li class="post-copyright-author"><strong>Post author:</strong> kinboy<li class="post-copyright-link"><strong>Post link:</strong> <a href="http://kinboyw.github.io/2019/03/24/十分钟介绍-MobX-和-React/" title="十分钟介绍 MobX 和 React">http://kinboyw.github.io/2019/03/24/十分钟介绍-MobX-和-React/</a><li class="post-copyright-license"><strong>Copyright Notice:</strong> All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.</ul></div><footer class="post-footer"><div class="post-tags"><a href="/tags/FE/" rel="tag"># FE</a> <a href="/tags/JavaScript/" rel="tag"># JavaScript</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2019/03/21/为什么没有CSS4，解释CSS-level/" rel="next" title="为什么没有CSS4，解释CSS level">为什么没有CSS4，解释CSS level</a></div><div class="post-nav-prev post-nav-item"><a href="/2019/03/26/GitFlow-工作流/" rel="prev" title="GitFlow 工作流">GitFlow 工作流</a></div></div></footer></div></article></div></div><div class="comments" id="comments"><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">Table of Contents<li class="sidebar-nav-overview" data-target="site-overview-wrap">Overview</ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="kinboy"><p class="site-author-name" itemprop="name">kinboy</div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">66</span> <span class="site-state-item-name">posts</span></a></div><div class="site-state-item site-state-categories"><a href="/categories/index.html"><span class="site-state-item-count">31</span> <span class="site-state-item-name">categories</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/index.html"><span class="site-state-item-count">52</span> <span class="site-state-item-name">tags</span></a></div></nav><div class="feed-link motion-element"><a href="/atom.xml" rel="alternate">RSS</a></div><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/kinboyw" target="_blank" title="GitHub">GitHub</a></span><span class="links-of-author-item"><a href="mailto:kinboy9275@gmail.com" target="_blank" title="E-Mail"> E-Mail</a></span></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#核心概念"><span class="nav-number">1.</span> <span class="nav-text">核心概念</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#一个简单的-todo-store"><span class="nav-number">2.</span> <span class="nav-text">一个简单的 todo store</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#变得响应式"><span class="nav-number">3.</span> <span class="nav-text">变得响应式</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#让-React-变得响应式"><span class="nav-number">4.</span> <span class="nav-text">让 React 变得响应式</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#使用引用"><span class="nav-number">5.</span> <span class="nav-text">使用引用</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#异步-action"><span class="nav-number">6.</span> <span class="nav-text">异步 action</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#开发工具"><span class="nav-number">7.</span> <span class="nav-text">开发工具</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#结论"><span class="nav-number">8.</span> <span class="nav-text">结论</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#MobX-不是一个状态容器"><span class="nav-number">9.</span> <span class="nav-text">MobX 不是一个状态容器</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#Learn-more"><span class="nav-number">10.</span> <span class="nav-text">Learn more</span></a></ol></div></div></section><div class="back-to-top"><span id="scrollpercent"><span>0</span>%</span></div></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2019</span><span class="with-love"></span> <span class="author" itemprop="copyrightHolder">kinboy</span><br><img src="/images/beian.png"> <span style="width:300px;margin:0 auto;padding:20px 0"><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42011102002861" style="display:inline-block;text-decoration:none;height:20px;line-height:20px"><img src style="float:left"><p style="float:left;height:20px;line-height:20px;margin:0 0 0 5px;color:#939393">鄂公网安备 42011102002861号</p></a></span></div></div></footer></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type="text/javascript" src="/lib/three/three.min.js"></script><script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script><script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><script id="dsq-count-scr" src="https://kinboy-wang.disqus.com/count.js" async></script><script type="text/javascript">var disqus_config=function(){this.page.url="http://kinboyw.github.io/2019/03/24/十分钟介绍-MobX-和-React/",this.page.identifier="2019/03/24/十分钟介绍-MobX-和-React/",this.page.title="十分钟介绍 MobX 和 React"},d=document,s=d.createElement("script");s.src="https://kinboy-wang.disqus.com/embed.js",s.setAttribute("data-timestamp",""+ +new Date),(d.head||d.body).appendChild(s)</script><script type="text/javascript">// Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });</script><script>!function(){var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}()</script>

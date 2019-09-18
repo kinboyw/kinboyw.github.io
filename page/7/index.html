@@ -1,0 +1,314 @@
+<!DOCTYPE html><html class="theme-next gemini use-motion" lang="ZH | EN"><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="google-site-verification" content="AKuwh4i11uWg0wOl_cM7AI_dHqOHOLKYfCxKc8Lfv6E"><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4"><link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222"><meta name="keywords" content="kinboy,Kinboy,Front-end Develop,Linux,Technical blog"><link rel="alternate" href="/atom.xml" title="Kinboy's note" type="application/atom+xml"><meta name="description" content="FE | Linux"><meta name="keywords" content="前端"><meta property="og:type" content="website"><meta property="og:title" content="Kinboy&#39;s note"><meta property="og:url" content="http://kinboyw.github.io/page/7/index.html"><meta property="og:site_name" content="Kinboy&#39;s note"><meta property="og:description" content="FE | Linux"><meta property="og:locale" content="ZH | EN"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Kinboy&#39;s note"><meta name="twitter:description" content="FE | Linux"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Gemini",version:"5.1.4",sidebar:{position:"left",display:"post",offset:12,b2t:!0,scrollpercent:!0,onmobile:!1},fancybox:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},duoshuo:{userId:"0",author:"Author"},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"I didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><link rel="canonical" href="http://kinboyw.github.io/page/7/"><title>Kinboy's note</title><script type="text/javascript">var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?c9c2b9e915e6bb8ec323a2f98c0c98d8";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><body itemscope itemtype="http://schema.org/WebPage" lang="ZH | EN"><div class="container sidebar-position-left page-home"><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"></span><span class="site-title">Kinboy's note</span><span class="logo-line-after"></span></a></div><h1 class="site-subtitle" itemprop="description">前端漫记</h1></div><div class="site-nav-toggle"><button></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><br>Home</a><li class="menu-item menu-item-about"><a href="/rscard/" rel="section"><br>About</a><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><br>Tags</a><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><br>Categories</a><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><br>Archives</a><li class="menu-item menu-item-top"><a href="/top/" rel="section"><br>Top</a><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><br>Search</a></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"></span><span class="popup-btn-close"></span><div class="local-search-input-wrapper"><input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input"></div></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><section id="posts" class="posts-expand"><article class="post post-type-normal" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://kinboyw.github.io/2018/07/22/SVN-to-Git-prepping-for-the-migration/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="kinboy"><meta itemprop="description" content><meta itemprop="image" content="/images/avatar.png"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Kinboy's note"></span><header class="post-header"><h2 class="post-title" itemprop="name headline"><a class="post-title-link" href="/2018/07/22/SVN-to-Git-prepping-for-the-migration/" itemprop="url">SVN 到 Git，迁移的准备工作</a></h2><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Posted on</span> <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-22T13:24:33+08:00">2018-07-22</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">In</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span><a href="/2018/07/22/SVN-to-Git-prepping-for-the-migration/#comments" itemprop="discussionUrl"></a></span><div class="post-wordcount"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Words count in article&#58;</span> <span title="Words count in article">4k</span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">Reading time &asymp;</span> <span title="Reading time">15</span></div></div></header><div class="post-body" itemprop="articleBody"><p>原文：<a href="https://www.atlassian.com/git/tutorials/svn-to-git-prepping-your-team-migration#for-administrators" target="_blank" rel="noopener">SVN to Git - prepping for the migration</a><p>在<a href="https://www.atlassian.com/git/tutorials/why-git" target="_blank" rel="noopener">Why Git</a>中，我们讨论了Git可以帮助您的团队变得更加敏捷的多种方式。一旦你已经决定转换，下一步就是弄清楚如何将已有的开发工作流迁移到Git。<p>这篇文章解释了你在将团队从SVN转换为Git时可能会遭遇到的最大变化。在迁移过程中最重要的事情是要记住Git不是SVN。为了理解Git的全部潜力，请尽力拥抱版本控制的新思想。<p><a href="https://www.atlassian.com/git/tutorials/svn-to-git-prepping-your-team-migration#for-administrators" target="_blank" rel="noopener">For administrators</a> <a href="https://www.atlassian.com/git/tutorials/svn-to-git-prepping-your-team-migration#basic-git-commands" target="_blank" rel="noopener">Basic Git commands</a> <a href="https://www.atlassian.com/git/tutorials/svn-to-git-prepping-your-team-migration#git-migration-tools" target="_blank" rel="noopener">Git Migration Tools</a> <a href="https://www.atlassian.com/git/tutorials/svn-to-git-prepping-your-team-migration#for-developers" target="_blank" rel="noopener">For developers</a><h2 id="For-administrators-对管理员">For administrators 对管理员</h2><p>采用Git可能需要几天到几个月的时间，具体取决于团队的规模。本节介绍了在培训员工使用 Git 以及从 SVN 迁移仓库到 Git过程中工程经理需要注意的问题。<div class="post-button text-center"><a class="btn" href="/2018/07/22/SVN-to-Git-prepping-for-the-migration/#more" rel="contents">Read more &raquo;</a></div></div><footer class="post-footer"></footer></div></article><article class="post post-type-normal" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://kinboyw.github.io/2018/07/21/Setting-up-a-repository/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="kinboy"><meta itemprop="description" content><meta itemprop="image" content="/images/avatar.png"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Kinboy's note"></span><header class="post-header"><h2 class="post-title" itemprop="name headline"><a class="post-title-link" href="/2018/07/21/Setting-up-a-repository/" itemprop="url">创建一个Git仓库</a></h2><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Posted on</span> <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-21T13:24:33+08:00">2018-07-21</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">In</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span><a href="/2018/07/21/Setting-up-a-repository/#comments" itemprop="discussionUrl"></a></span><div class="post-wordcount"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Words count in article&#58;</span> <span title="Words count in article">2.9k</span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">Reading time &asymp;</span> <span title="Reading time">11</span></div></div></header><div class="post-body" itemprop="articleBody"><p><a href="https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-init" target="_blank" rel="noopener">git init</a> <a href="https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-clone" target="_blank" rel="noopener">git clone</a> <a href="https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-config" target="_blank" rel="noopener">git config</a><p>本教程主要覆盖的几点如下:<ul><li>初始化一个新的 Git repo<li>克隆一个已有的 Git Repo<li>向 Repo 提交一个文件的修改版本<li>对 Git Repo 进行一些远程协作的配置<li>常用的 Git 版本控制命令</ul><p>在本章结束后，你应该就能够创建一个 Git Repo，使用 Git 常用的命令，提交修改的文件，查看工程的修改历史以及连接一个 Git 托管服务（如 Bitbucket）<div class="post-button text-center"><a class="btn" href="/2018/07/21/Setting-up-a-repository/#more" rel="contents">Read more &raquo;</a></div></div><footer class="post-footer"></footer></div></article><article class="post post-type-normal" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://kinboyw.github.io/2018/07/17/How-Does-Browser-Work/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="kinboy"><meta itemprop="description" content><meta itemprop="image" content="/images/avatar.png"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Kinboy's note"></span><header class="post-header"><h2 class="post-title" itemprop="name headline"><a class="post-title-link" href="/2018/07/17/How-Does-Browser-Work/" itemprop="url">浏览器是如何工作的</a></h2><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Posted on</span> <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-17T13:24:33+08:00">2018-07-17</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">In</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/翻译/" itemprop="url" rel="index"><span itemprop="name">翻译</span></a></span> , <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FE/" itemprop="url" rel="index"><span itemprop="name">FE</span></a></span> , <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FE/Browser/" itemprop="url" rel="index"><span itemprop="name">Browser</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span><a href="/2018/07/17/How-Does-Browser-Work/#comments" itemprop="discussionUrl"></a></span><div class="post-wordcount"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Words count in article&#58;</span> <span title="Words count in article">13.4k</span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">Reading time &asymp;</span> <span title="Reading time">78</span></div></div></header><div class="post-body" itemprop="articleBody"><p>Web browsers are probably the most widely used software. In this book I will explain how they work behind the scenes. We will see what happens when you type ‘google.com’ in the address bar until you see the Google page on the browser screen.<blockquote><p>浏览器可能是使用最广泛的软件了。我将在这本书里解释浏览器后台是如何工作的。我们将会看到从你在浏览器的地址栏里敲下 ‘google.com’ 直到你看到浏览器窗口里显示出Google的网页之间发生了什么。</blockquote><h3 id="The-browsers-we-will-talk-about-我们将要谈到的浏览器">The browsers we will talk about 我们将要谈到的浏览器</h3><p>There are five major browsers used today - Internet Explorer, Firefox, Safari, Chrome and Opera.<br>I will give examples from the open source browsers - Firefox,Chrome and Safari, which is partly open source.<br>According to the <a href="http://www.w3schools.com/browsers/browsers_stats.asp" target="_blank" rel="noopener">W3C browser statistics</a>, currently(October 2009), the usage share of Firefox, Safari and Chrome together is nearly 60%.<p>So nowdays open source browsers are a substantial part of the browser business。<blockquote><p>当今主流的浏览器一共有5种，分别是 Internet Explorer, FireFox, Safari, Chrome 以及 Opera。</blockquote><blockquote><p>我将从一些开源浏览器种给出示例，FireFox，Chrome，Safari这几种是部分开源的。</blockquote><blockquote><p>根据<a href="http://www.w3schools.com/browsers/browsers_stats.asp" target="_blank" rel="noopener">W3C 浏览器统计</a>，目前（2009年10月），FireFox，Safari以及Chrome一共占据了浏览器将近60%的市场份额。</blockquote><p>所以现在开源浏览器是浏览器业务的重要组成部分。<div class="post-button text-center"><a class="btn" href="/2018/07/17/How-Does-Browser-Work/#more" rel="contents">Read more &raquo;</a></div></div><footer class="post-footer"></footer></div></article><article class="post post-type-normal" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://kinboyw.github.io/2018/07/14/Explorer-JavaScript-For-in-loops/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="kinboy"><meta itemprop="description" content><meta itemprop="image" content="/images/avatar.png"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Kinboy's note"></span><header class="post-header"><h2 class="post-title" itemprop="name headline"><a class="post-title-link" href="/2018/07/14/Explorer-JavaScript-For-in-loops/" itemprop="url">探索 JavaScript For-in 循环</a></h2><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Posted on</span> <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-14T19:23:42+08:00">2018-07-14</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">In</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/翻译/" itemprop="url" rel="index"><span itemprop="name">翻译</span></a></span> , <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FE/" itemprop="url" rel="index"><span itemprop="name">FE</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span><a href="/2018/07/14/Explorer-JavaScript-For-in-loops/#comments" itemprop="discussionUrl"></a></span><div class="post-wordcount"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Words count in article&#58;</span> <span title="Words count in article">2.4k</span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">Reading time &asymp;</span> <span title="Reading time">9</span></div></div></header><div class="post-body" itemprop="articleBody"><p>For-in 循环是对象属性迭代技术中唯一一项可以跨浏览器的。 关于使用 <code>for-in</code> 循环迭代数组的危险性以及何时使用 <code>hasOwnPropert</code> 过滤器的文章有很多，但是美中不足的是，关于这些普遍使用的语言结构的文章又出奇的不完整。本文尝试着填补一些空白，希望能对读者有所帮助。<h2 id="基础">基础</h2><p>ES 5 规范详细说明了 <code>for-in</code> 语句的两种不同的语法：<h3 id="1-for-var-variable-in-objectExpression-statement">1. for (var variable in objectExpression) {statement}</h3><p>第一种是我们熟悉的格式。等号右边的 <code>objectExpression</code> 可以是任意可计算为 JavaScript 对象的表达式。如果我们在等号右边给定了原始类型，那么它将会被包装成对象。然后逐一迭代包装对象的属性。在每一次迭代中，对象属性的名称将被赋值给声明的迭代变量，如果存在表达式，会对表达式进行计算。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">var</span> myObj = &#123;<span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span>&#125;, myKeys = [];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> property <span class="keyword">in</span> myObj) &#123;</span><br><span class="line">    myKeys.push(property);</span><br><span class="line">&#125;</span><br><span class="line">myKeys; <span class="comment">//['a','b','c'];</span></span><br></pre></table></figure><div class="post-button text-center"><a class="btn" href="/2018/07/14/Explorer-JavaScript-For-in-loops/#more" rel="contents">Read more &raquo;</a></div></div><footer class="post-footer"></footer></div></article><article class="post post-type-normal" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://kinboyw.github.io/2018/07/11/ike-scan扫描服务端的ike加密算法/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="kinboy"><meta itemprop="description" content><meta itemprop="image" content="/images/avatar.png"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Kinboy's note"></span><header class="post-header"><h2 class="post-title" itemprop="name headline"><a class="post-title-link" href="/2018/07/11/ike-scan扫描服务端的ike加密算法/" itemprop="url">ike-scan扫描ipsec vpn服务端ike加密算法</a></h2><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Posted on</span> <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-11T21:15:05+08:00">2018-07-11</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">In</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span><a href="/2018/07/11/ike-scan扫描服务端的ike加密算法/#comments" itemprop="discussionUrl"></a></span><div class="post-wordcount"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Words count in article&#58;</span> <span title="Words count in article">1.8k</span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">Reading time &asymp;</span> <span title="Reading time">11</span></div></div></header><div class="post-body" itemprop="articleBody"><p>原文：<a href="https://github.com/nm-l2tp/network-manager-l2tp/wiki/Known-Issues#querying-vpn-server-for-its-ikev1-algorithm-proposals" target="_blank" rel="noopener">IPsec IKEv1 algorithms</a><h2 id="IPsec-IKEv1-Algorithms">IPsec IKEv1 Algorithms</h2><h3 id="Weak-Legacy-Algorithms">Weak Legacy Algorithms</h3><p>As mentioned in the <a href="https://github.com/nm-l2tp/network-manager-l2tp#issue-with-vpn-servers-only-proposing-ipsec-ikev1-weak-legacy-algorithms" target="_blank" rel="noopener">README.md</a> file, there is a general consensus that the following legacy algorithms are now considered weak or broken in regards to security and should be phased out and replaced with stronger algorithms:<h5 id="Encryption-Algorithms">Encryption Algorithms :</h5><ul><li>3DES<li>Blowfish</ul><h5 id="Integrity-Algorithms">Integrity Algorithms :</h5><ul><li>MD5<li>SHA1</ul><h5 id="Diffie-Hellman-Groups">Diffie Hellman Groups :</h5><ul><li>MODP768<li>MODP1024<li>MODP1536</ul><div class="post-button text-center"><a class="btn" href="/2018/07/11/ike-scan扫描服务端的ike加密算法/#more" rel="contents">Read more &raquo;</a></div></div><footer class="post-footer"></footer></div></article><article class="post post-type-normal" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://kinboyw.github.io/2018/07/02/HTTP Header Field Definitions/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="kinboy"><meta itemprop="description" content><meta itemprop="image" content="/images/avatar.png"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Kinboy's note"></span><header class="post-header"><h2 class="post-title" itemprop="name headline"><a class="post-title-link" href="/2018/07/02/HTTP Header Field Definitions/" itemprop="url">Header Field Definitions</a></h2><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Posted on</span> <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-02T17:25:21+08:00">2018-07-02</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">In</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/翻译/" itemprop="url" rel="index"><span itemprop="name">翻译</span></a></span> , <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FE/" itemprop="url" rel="index"><span itemprop="name">FE</span></a></span> , <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FE/HTTP/" itemprop="url" rel="index"><span itemprop="name">HTTP</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span><a href="/2018/07/02/HTTP Header Field Definitions/#comments" itemprop="discussionUrl"></a></span><div class="post-wordcount"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Words count in article&#58;</span> <span title="Words count in article">17.9k</span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">Reading time &asymp;</span> <span title="Reading time">111</span></div></div></header><div class="post-body" itemprop="articleBody"><p>part of <a href="https://www.w3.org/Protocols/rfc2616/rfc2616.html" target="_blank" rel="noopener">Hypertext Transfer Protocol – HTTP/1.1</a><br>RFC 2616 Fielding, et al.<h2 id="14-Header-Field-Definitions">14 Header Field Definitions</h2><p>This section defines the syntax and semantics of all standard HTTP/1.1 header fields. For entity-header fields, both sender and recipient refer to either the client or the server, depending on who sends and who receives the entity.<blockquote><p>这部分定义了所有标准 HTTP/1.1 头部字段的语法和语义。对 实体头部字段，发送者和接收者指客户端或者服务器，取决于谁发送以及谁接收实体</blockquote><h3 id="14-1-Accept">14.1 Accept</h3><p>The Accept request-header field can be used to specify certain media types which are acceptable for the response. Accept headers can be used to indicate that the request is specifically limited to a small set of desired types, as in the case of a request for an in-line image.<blockquote><p>Accept 请求头可以被用于指定可接收的请求响应中的媒体类型。Accept 头部可以用于指示请求只限于特定一小组所需的类型，例如在在请求一个内嵌图片的时候可以指定图片的格式等。</blockquote><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre><td class="code"><pre><span class="line">Accept         = "Accept" ":"</span><br><span class="line">                 #( media-range [ accept-params ] )</span><br><span class="line">media-range    = ( "*/*"</span><br><span class="line">                 | ( type "/" "*" )</span><br><span class="line">                 | ( type "/" subtype )</span><br><span class="line">                 ) *( ";" parameter )</span><br><span class="line">accept-params  = ";" "q" "=" qvalue *( accept-extension )</span><br><span class="line">accept-extension = ";" token [ "=" ( token | quoted-string ) ]</span><br></pre></table></figure><div class="post-button text-center"><a class="btn" href="/2018/07/02/HTTP Header Field Definitions/#more" rel="contents">Read more &raquo;</a></div></div><footer class="post-footer"></footer></div></article></section><nav class="pagination"><a class="extend prev" rel="prev" href="/page/6/"></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span></nav></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><section class="site-overview-wrap sidebar-panel sidebar-panel-active"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="kinboy"><p class="site-author-name" itemprop="name">kinboy</div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">66</span> <span class="site-state-item-name">posts</span></a></div><div class="site-state-item site-state-categories"><a href="/categories/index.html"><span class="site-state-item-count">31</span> <span class="site-state-item-name">categories</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/index.html"><span class="site-state-item-count">52</span> <span class="site-state-item-name">tags</span></a></div></nav><div class="feed-link motion-element"><a href="/atom.xml" rel="alternate">RSS</a></div><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/kinboyw" target="_blank" title="GitHub">GitHub</a></span><span class="links-of-author-item"><a href="mailto:kinboy9275@gmail.com" target="_blank" title="E-Mail"> E-Mail</a></span></div></div></section><div class="back-to-top"><span id="scrollpercent"><span>0</span>%</span></div></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2019</span><span class="with-love"></span> <span class="author" itemprop="copyrightHolder">kinboy</span><br><img src="/images/beian.png"> <span style="width:300px;margin:0 auto;padding:20px 0"><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42011102002861" style="display:inline-block;text-decoration:none;height:20px;line-height:20px"><img src style="float:left"><p style="float:left;height:20px;line-height:20px;margin:0 0 0 5px;color:#939393">鄂公网安备 42011102002861号</p></a></span></div></div></footer></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type="text/javascript" src="/lib/three/three.min.js"></script><script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script><script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><script id="dsq-count-scr" src="https://kinboy-wang.disqus.com/count.js" async></script><script type="text/javascript">// Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });</script><script>!function(){var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}()</script>

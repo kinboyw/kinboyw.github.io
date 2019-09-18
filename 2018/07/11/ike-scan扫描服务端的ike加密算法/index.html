@@ -1,0 +1,314 @@
+<!DOCTYPE html><html class="theme-next gemini use-motion" lang="ZH | EN"><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="google-site-verification" content="AKuwh4i11uWg0wOl_cM7AI_dHqOHOLKYfCxKc8Lfv6E"><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4"><link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222"><meta name="keywords" content="vpn,ipsec,ike-scan,"><link rel="alternate" href="/atom.xml" title="Kinboy's note" type="application/atom+xml"><meta name="description" content="原文：IPsec IKEv1 algorithms IPsec IKEv1 AlgorithmsWeak Legacy AlgorithmsAs mentioned in the README.md file, there is a general consensus that the following legacy algorithms are now considered weak or b"><meta name="keywords" content="vpn,ipsec,ike-scan"><meta property="og:type" content="article"><meta property="og:title" content="ike-scan扫描ipsec vpn服务端ike加密算法"><meta property="og:url" content="http://kinboyw.github.io/2018/07/11/ike-scan扫描服务端的ike加密算法/index.html"><meta property="og:site_name" content="Kinboy&#39;s note"><meta property="og:description" content="原文：IPsec IKEv1 algorithms IPsec IKEv1 AlgorithmsWeak Legacy AlgorithmsAs mentioned in the README.md file, there is a general consensus that the following legacy algorithms are now considered weak or b"><meta property="og:locale" content="ZH | EN"><meta property="og:updated_time" content="2019-07-15T10:05:10.372Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="ike-scan扫描ipsec vpn服务端ike加密算法"><meta name="twitter:description" content="原文：IPsec IKEv1 algorithms IPsec IKEv1 AlgorithmsWeak Legacy AlgorithmsAs mentioned in the README.md file, there is a general consensus that the following legacy algorithms are now considered weak or b"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Gemini",version:"5.1.4",sidebar:{position:"left",display:"post",offset:12,b2t:!0,scrollpercent:!0,onmobile:!1},fancybox:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},duoshuo:{userId:"0",author:"Author"},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"I didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><link rel="canonical" href="http://kinboyw.github.io/2018/07/11/ike-scan扫描服务端的ike加密算法/"><title>ike-scan扫描ipsec vpn服务端ike加密算法 | Kinboy's note</title><script type="text/javascript">var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?c9c2b9e915e6bb8ec323a2f98c0c98d8";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><body itemscope itemtype="http://schema.org/WebPage" lang="ZH | EN"><div class="container sidebar-position-left page-post-detail"><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"></span><span class="site-title">Kinboy's note</span><span class="logo-line-after"></span></a></div><h1 class="site-subtitle" itemprop="description">前端漫记</h1></div><div class="site-nav-toggle"><button></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><br>Home</a><li class="menu-item menu-item-about"><a href="/rscard/" rel="section"><br>About</a><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><br>Tags</a><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><br>Categories</a><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><br>Archives</a><li class="menu-item menu-item-top"><a href="/top/" rel="section"><br>Top</a><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><br>Search</a></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"></span><span class="popup-btn-close"></span><div class="local-search-input-wrapper"><input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input"></div></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://kinboyw.github.io/2018/07/11/ike-scan扫描服务端的ike加密算法/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="kinboy"><meta itemprop="description" content><meta itemprop="image" content="/images/avatar.png"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Kinboy's note"></span><header class="post-header"><h2 class="post-title" itemprop="name headline">ike-scan扫描ipsec vpn服务端ike加密算法</h2><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Posted on</span> <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-11T21:15:05+08:00">2018-07-11</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">In</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span><a href="/2018/07/11/ike-scan扫描服务端的ike加密算法/#comments" itemprop="discussionUrl"></a></span><div class="post-wordcount"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Words count in article&#58;</span> <span title="Words count in article">1.8k</span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">Reading time &asymp;</span> <span title="Reading time">11</span></div></div></header><div class="post-body" itemprop="articleBody"><p>原文：<a href="https://github.com/nm-l2tp/network-manager-l2tp/wiki/Known-Issues#querying-vpn-server-for-its-ikev1-algorithm-proposals" target="_blank" rel="noopener">IPsec IKEv1 algorithms</a><h2 id="IPsec-IKEv1-Algorithms">IPsec IKEv1 Algorithms</h2><h3 id="Weak-Legacy-Algorithms">Weak Legacy Algorithms</h3><p>As mentioned in the <a href="https://github.com/nm-l2tp/network-manager-l2tp#issue-with-vpn-servers-only-proposing-ipsec-ikev1-weak-legacy-algorithms" target="_blank" rel="noopener">README.md</a> file, there is a general consensus that the following legacy algorithms are now considered weak or broken in regards to security and should be phased out and replaced with stronger algorithms:<h5 id="Encryption-Algorithms">Encryption Algorithms :</h5><ul><li>3DES<li>Blowfish</ul><h5 id="Integrity-Algorithms">Integrity Algorithms :</h5><ul><li>MD5<li>SHA1</ul><h5 id="Diffie-Hellman-Groups">Diffie Hellman Groups :</h5><ul><li>MODP768<li>MODP1024<li>MODP1536</ul><p>Legacy algorithms that are considered weak or broken are regularly removed from the default set of allowed algorithms with newer releases of strongSwan and Libreswan. As of strongSwan 5.4.0 and Libreswan 3.20, the above algorithms (apart from SHA1 and MODP1536 for Libreswan which still includes them for backwards compatibility) have been or in some cases already been removed from the default set of allowed algorithms.<p>If you are not sure, or want to confirm which IPsec IKEv1 phase 1 algorithms your VPN server server proposes, see the section on how to <a href="https://github.com/nm-l2tp/network-manager-l2tp/wiki/Known-Issues#querying-vpn-server-for-its-ikev1-algorithm-proposals" target="_blank" rel="noopener">query the VPN server</a>.<p>If the VPN server is only proposing weak or broken algorithms, it is recommended that it be reconfigured to propose stronger algorithms, e.g. AES, SHA2 and MODP2048.<h3 id="Compatibility-with-VPN-servers-using-weak-legacy-IPsec-IKEv1-algorithms">Compatibility with VPN servers using weak legacy IPsec IKEv1 algorithms</h3><p>NetworkManager-l2tp as of version 1.2.6 uses the Libreswan or strongSwan default set of allowed algorithms for phase 1 and phase 2 proposal negotiations. This means VPN servers that are using only legacy ciphers that strongSwan or Libreswan now consider broken will result in a failed connection, unless user specified algorithms to supplement or override the default set of algorithms are used for phase 1 and 2.<p>Please see <em>Example workaround for 3DES, SHA1 and MODP1024 broken algorithms</em> section in the source code’s <a href="https://github.com/nm-l2tp/network-manager-l2tp#example-workaround-for-3des-sha1-and-modp1024-broken-algorithms" target="_blank" rel="noopener">README.md</a> file for an example workaround for the 3DES, SHA1 and MODP1024 broken algorithms that many L2TP/IPsec VPN servers are still proposing.<h3 id="Querying-VPN-server-for-its-IKEv1-algorithm-proposals">Querying VPN server for its IKEv1 algorithm proposals</h3><p>Install the <code>ike-scan</code> package which most Linux distributions provide and then run the following script (with further details on how below the script) :<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre><td class="code"><pre><span class="line">#!/bin/sh</span><br><br><span class="line"># Encryption algorithms: 3des=5, aes128=7/128, aes192=7/192, aes256=7/256</span><br><span class="line">ENCLIST=&quot;5 7/128 7/192 7/256&quot;</span><br><span class="line"># Hash algorithms: md5=1, sha1=2, sha256=5, sha384=6, sha512=7</span><br><span class="line">HASHLIST=&quot;1 2 5 6 7&quot;</span><br><span class="line"># Diffie-Hellman groups: 1, 2, 5, 14, 15, 19, 20, 21</span><br><span class="line">GROUPLIST=&quot;1 2 5 14 15 19 20 21&quot;</span><br><span class="line"># Authentication method: Preshared Key=1</span><br><span class="line">AUTH=1</span><br><br><span class="line">for ENC in $ENCLIST; do</span><br><span class="line">   for HASH in $HASHLIST; do</span><br><span class="line">       for GROUP in $GROUPLIST; do</span><br><span class="line">          echo ike-scan --trans=$ENC,$HASH,$AUTH,$GROUP -M &quot;$@&quot;</span><br><span class="line">          ike-scan --trans=$ENC,$HASH,$AUTH,$GROUP -M &quot;$@&quot;</span><br><span class="line">      done</span><br><span class="line">   done</span><br><span class="line">done</span><br></pre></table></figure><p>Let’s assume the above script has been copied and pasted to a file called <code>ike-scan.sh</code>, to run the script, issue something like the following on the command-line. Note: <code>ike-scan</code> needs UDP port 500 to be free, this can be achieved by stopping any running IPsec service (e.g. <code>sudo ipsec stop</code>). Replace <code>123.54.76.9</code> in the below with your VPN server and we’ll grep for <code>SA</code> (i.e. IPSec Security Association) which is the main thing we are interested in.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre><td class="code"><pre><span class="line">sudo ipsec stop</span><br><span class="line">chmod a+rx ./ike-scan.sh</span><br><span class="line">sudo ./ike-scan.sh 123.54.76.9 | grep SA</span><br></pre></table></figure><p>It may take a few minutes for the script to run to completion and the output shall look something like:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre><td class="code"><pre><span class="line">SA=(Enc=3DES Hash=SHA1 Auth=PSK Group=2:modp1024 LifeType=Seconds LifeDuration(4)=0x00007080)</span><br><span class="line">SA=(Enc=AES Hash=SHA1 Auth=PSK Group=14:modp2048 KeyLength=128 LifeType=Seconds LifeDuration(4)=0x00007080</span><br></pre></table></figure><p>From the above example script output, it would mean the following phase 1 &amp; 2 algorithms options could be set in the IPsec dialog box advanced options:<ul><li><strong>Phase1 Algorithms:</strong> aes128-sha1-modp2048,3des-sha1-modp1024<li><strong>Phase2 Algorithms:</strong> aes128-sha1,3des-md5</ul><h3 id="Overriding-and-not-just-supplementing-the-default-cipher">Overriding and not just supplementing the default cipher</h3><p>For strongSwan, but not Libreswan, in some cases you may need to put an exclamation mark (<code>!</code>) at the end of the phase 1 or 2 settings to override and not just supplement the default ciphers. For example, some Cisco Unity VPN servers may require:<ul><li><strong>Phase1 Algorithms:</strong> aes128-sha1-modp1024,3des-sha1-modp1024!<li><strong>Phase2 Algorithms:</strong> aes128-sha1,3des-md5</ul><h3 id="KDE-Plasma-lt-5-11-and-legacy-IPsec-IKEv1-ciphers">KDE Plasma &lt; 5.11 and legacy IPsec IKEv1 ciphers</h3><p><a href="https://cgit.kde.org/plasma-nm.git/" target="_blank" rel="noopener">KDE Plasma-nm</a> (&lt; version 5.11) front end for NetworkManager-l2tp doesn’t have the text boxes for user defined IPsec phase 1 and 2 algorithms, <a href="https://bugs.kde.org/show_bug.cgi?id=380859" target="_blank" rel="noopener">KDE bug# 380859</a>. With Plasma 5.11 support has been added with <a href="https://cgit.kde.org/plasma-nm.git/commit/?id=1adb364664753f342c7b221687ca68ce4a5ec79e" target="_blank" rel="noopener">commit# 1adb364</a>.<p>Current KDE Plasma &lt; 5.11 workarounds for IPsec phase 1 and 2 algorithms support include:<ul><li>backport the <a href="https://cgit.kde.org/plasma-nm.git/patch/?id=1adb364664753f342c7b221687ca68ce4a5ec79e" target="_blank" rel="noopener">Plasma-nm patch</a> for NetworkManager-l2tp 1.2.6 UI support.<li>Use newer KDE backported packages for your linux distribution if available.</ul><h2 id="“Layer-2-Tunneling-Protocol-L2TP-”-not-showing-up"><em>“Layer 2 Tunneling Protocol (L2TP)”</em> not showing up</h2><p>After installing NetworkManager-l2tp from either the source code or a prebuilt binary package, if “Layer 2 Tunnelling Protocol (L2TP)” does not show up when trying to add a VPN connection, try one of the following:<ul><li><code>sudo systemctl restart NetworkManager</code><li><code>sudo service network-manager restart</code><li>logout/login<li>reboot</ul><h2 id="Unable-to-save-password">Unable to save password</h2><p>Logout/login or reboot if the saved password isn’t being rembered and you are seeing something like the following in the <code>journalctl</code> output, :<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre><td class="code"><pre><span class="line">gnome-shell[2143]: JS LOG: Invalid VPN service type (cannot find authentication binary)</span><br><span class="line">...  NetworkManager[1234]: &lt;error&gt; ... von-connection...: Failed to request VPN secrets #3: No agents were available for this request.</span><br></pre></table></figure><p>This bug has been fixed with newer gnome-shell versions see GNOME <a href="https://bugzilla.gnome.org/show_bug.cgi?id=773893" target="_blank" rel="noopener">bug# 773893</a> and Fedora gnome-shell <a href="https://bugzilla.redhat.com/show_bug.cgi?id=1389107" target="_blank" rel="noopener">bug# 1389107</a><h2 id="Unable-to-create-or-edit-a-L2TP-VPN-connection">Unable to create or edit a L2TP VPN connection</h2><p>Unless you are using KDE (Plasma-nm) or the command-line (<code>/usr/bin/nmcli</code>), you will be using a GNOME based NetworkManager connection editor to create or edit VPN connections.<p>If you are using pre-build binary packages, please ensure you have installed the <code>NetworkManager-l2tp-gnome</code> or <code>network-manager-l2tp-gnome</code> package which provides the necessary files for use with a GNOME based NetworkManager connection editor, otherwise you may see a variation of the following error :<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre><td class="code"><pre><span class="line">Could not load editor VPN plugin for &apos;org.freedesktop.NetworkManager.l2tp&apos;</span><br><span class="line">(missing plugin file &quot;/usr/lib64/NetworkManager/libnm-vpn-plugin-l2tp-editor.so&quot;).</span><br></pre></table></figure><h2 id="Issue-with-not-stopping-system-xl2tpd-service">Issue with not stopping system xl2tpd service</h2><p>NetworkManager-l2tp starts its own instance of an xl2tpd process and if the system xl2tpd service is running, its own xl2tpd instance won’t be able to use UDP port 1701, so will use an ephemeral port (i.e. random high port).<p>Although the use of an ephemeral port is described in <em>“Securing L2TP using IPsec”</em> <a href="https://www.ietf.org/rfc/rfc3193.txt" target="_blank" rel="noopener">RFC3193</a>written by Microsoft and Cisco, there are some L2TP/IPsec servers and/or firewalls that will have issues with the use of an ephemeral port.<p>Stopping the system xl2tpd service should free UDP port 1701 and on systemd based Linux distributions, the xl2tpd service can be stopped with the following:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre><td class="code"><pre><span class="line">sudo systemctl stop xl2tpd</span><br></pre></table></figure><p>If stopping the xl2tpd service fixes your VPN connection issue, you can disable the xl2tpd service from starting at boot time with :<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre><td class="code"><pre><span class="line">sudo systemctl disable xl2tpd</span><br></pre></table></figure><h2 id="Orphaned-pppd-process">Orphaned pppd process</h2><p>With xl2tpd ≤ 1.3.6 (and in particular Linux distributions’ xl2tpd packages that don’t have xl2tpd <a href="https://github.com/xelerance/xl2tpd/commit/a193e02c741168a9b9072b523f2d6faf14a049da" target="_blank" rel="noopener">commit# a193e02</a> backported which fixes a NULL-pointer deference bug), a pppd process will be left behind when tearing down a VPN connection because the parent xl2tpd process crashes before it has a chance at reaping the child pppd process.<p>Ubuntu 16.04 and 16.10 have updated xl2tpd 1.3.6 packages that contains the fix (<a href="https://bugs.launchpad.net/ubuntu/+source/xl2tpd/+bug/1677990" target="_blank" rel="noopener">Ubuntu bug# 1677990</a>).<h2 id="EAP-peer-reports-authentication-failure">EAP: peer reports authentication failure</h2><p>If you see <code>EAP: peer reports authentication failure</code> in the <code>journalctl</code> output (or elsewhere), then in the VPN connection’s PPP Settings dialog box, untick <em>EAP</em> in the authentication methods list. In some situations, the <em>Use Point-to-Point encryption (MPPE)</em> checkbox may also need to be ticked.<h2 id="DNS-resolution-issues">DNS resolution issues</h2><h3 id="local-hostname-resolution">.local hostname resolution</h3><p>There are unfortunately many Microsoft Windows networks that still use <code>.local</code> for internal hostnames that are resolved using <em>unicast</em> DNS even though Microsoft no longer recommends using <code>.local</code>. The use of <em>unicast</em> DNS for resolving <code>.local</code> has fallen into disfavor as mobile devices, printers and other devices supporting Zeroconf (aka Bonjour) have become increasingly common and they use <em>multicast</em> DNS (mDNS) for resolving hostnames ending in <code>.local</code>.<p>In <code>/etc/nsswitch.conf</code> most Linux distributions put <code>mdns4_minimal</code> ahead of <code>dns</code> in the <code>hosts:</code>line which often looks something like:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre><td class="code"><pre><span class="line">hosts:    files mdns4_minimal [NOTFOUND=return] dns</span><br></pre></table></figure><p>With the above <code>nsswitch.conf</code> hosts configuration, <code>.local</code> hostname resolution will return NOTFOUND if the hostname can not be found in mDNS.<p>If you must VPN to a network using <code>.local</code> with <em>unicast</em> DNS and not too concerned about potential Zeroconf performance issues, one workaround is to to move <code>dns</code> before <code>mdns4_minimal</code> in the <code>hosts:</code> line.<h3 id="NetworkManager-≤-1-6-2-and-Systemd-resolved-ignoring-VPN-server’s-DNS">NetworkManager ≤ 1.6.2 and Systemd-resolved ignoring VPN server’s DNS</h3><p>NetworkManager 1.6 introduced support for the systemd-resolved local DNS forwarder backend. Some Linux distributions have switched from DNSMasq to Systemd-resolved for DNS. Unfortunately with NetworkManager ≤ 1.6.2 because the <em>ppp</em> interfaces isn’t <em>“managed”</em> by NetworkManager the VPN server’s DNS configuration is being ignored as described in <a href="https://bugzilla.gnome.org/show_bug.cgi?id=779087" target="_blank" rel="noopener">GNOME bug# 779087</a>.<p>A workaround is to rollback to using DNSMasq:<ol><li>Edit <code>/etc/NetworkManager/NetworkManager.conf</code> and add the following line under the <code>[main]</code> section:</ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre><td class="code"><pre><span class="line">dns=dnsmasq</span><br></pre></table></figure><ol><li>Backup the Systemd <code>resolv.conf</code> file (NetworkManager should create a new one):</ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre><td class="code"><pre><span class="line">sudo mv /etc/resolv.conf /etc/resolv.conf.systemd</span><br></pre></table></figure><ol><li>Disable and stop the systemd-resolved service:</ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre><td class="code"><pre><span class="line">sudo systemctl disable systemd-resolved</span><br><span class="line">sudo systemctl stop systemd-resolved</span><br></pre></table></figure><ol><li>Restart network-manager</ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre><td class="code"><pre><span class="line">sudo systemctl restart NetworkManager</span><br></pre></table></figure><h2 id="Ubuntu-AppArmor-issue-with-strongSwan">Ubuntu AppArmor issue with strongSwan</h2><p>For Ubuntu versions &lt; 16.04, strongSwan’s <code>charon</code> and <code>stroke</code> daemons are prevented from performing correctly as child processes under NetworkManager-l2tp due to an <a href="https://bugs.launchpad.net/bugs/1587886" target="_blank" rel="noopener">AppArmor name space issue involving NetworkManager</a> and the AppArmor profiles for <code>charon</code> and <code>stroke</code>. The simplest workaround is to disable the <code>charon</code> and <code>stroke</code> AppArmor profiles :<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre><td class="code"><pre><span class="line">sudo ln -s /etc/apparmor.d/usr.lib.ipsec.charon /etc/apparmor.d/<span class="built_in">disable</span>/</span><br><span class="line">sudo apparmor_parser -R /etc/apparmor.d/usr.lib.ipsec.charon</span><br><span class="line">sudo ln -s /etc/apparmor.d/usr.lib.ipsec.stroke /etc/apparmor.d/<span class="built_in">disable</span>/</span><br><span class="line">sudo apparmor_parser -R /etc/apparmor.d/usr.lib.ipsec.stroke</span><br></pre></table></figure><p>With Ubuntu 16.04 (Xenial Xerus), the issue is fixed by upgrading to strongswan 5.3.5-1ubuntu3.1 (or later).<p>With Ubuntu 16.10 (Yakkety Yak), the issue is fixed by upgrading to strongswan 5.3.5-1ubuntu4.1 (or later).<p>With Ubuntu 17.04 and later, there is no strongSwan AppArmor issue.<h2 id="openSUSE-and-SUSE-Linux-Enterprise-Server">openSUSE and SUSE Linux Enterprise Server</h2><p>For NetworkManager-l2tp to work, please ensure the Wicked service is disabled and NetworkManager service enable:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre><td class="code"><pre><span class="line">sudo systemctl stop wicked</span><br><span class="line">sudo systemctl disable wicked</span><br><span class="line">sudo systemctl enable NetworkManager</span><br><span class="line">sudo systemctl start NetworkManager</span><br></pre></table></figure></div><div><div class="my_post_copyright"><script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script><script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js" integrity="sha256-iBcUE/x23aI6syuqF7EeT/+JFBxjPs5zeFJEXxumwb0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js" integrity="sha256-JirYRqbf+qzfqVtEE4GETyHlAbiCpC005yBTa4rj6xg=" crossorigin="anonymous"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css" integrity="sha256-zuyRv+YsWwh1XR5tsrZ7VCfGqUmmPmqBjIvJgQWoSDo=" crossorigin="anonymous"><p><span>本文标题:</span>ike-scan扫描ipsec vpn服务端ike加密算法<p><span>文章作者:</span>kinboy<p><span>发布时间:</span>2018年07月11日 - 21:15:05<p><span>最后更新:</span>2019年07月15日 - 18:05:10<p><span>原始链接:</span><a href="/2018/07/11/ike-scan扫描服务端的ike加密算法/" title="ike-scan扫描ipsec vpn服务端ike加密算法">http://kinboyw.github.io/2018/07/11/ike-scan扫描服务端的ike加密算法/</a><span class="copy-path" title="点击复制文章链接"></span><p><span>许可协议:</span> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</div><script>var clipboard=new Clipboard(".fa-clipboard");clipboard.on("success",$(function(){$(".fa-clipboard").click(function(){swal({title:"",text:"复制成功",html:!1,timer:500,showConfirmButton:!1})})}))</script></div><div><div><div style="text-align:center;color:#ccc;font-size:14px">------ Passage Ending ------</div></div></div><div><ul class="post-copyright"><li class="post-copyright-author"><strong>Post author:</strong> kinboy<li class="post-copyright-link"><strong>Post link:</strong> <a href="http://kinboyw.github.io/2018/07/11/ike-scan扫描服务端的ike加密算法/" title="ike-scan扫描ipsec vpn服务端ike加密算法">http://kinboyw.github.io/2018/07/11/ike-scan扫描服务端的ike加密算法/</a><li class="post-copyright-license"><strong>Copyright Notice:</strong> All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.</ul></div><footer class="post-footer"><div class="post-tags"><a href="/tags/vpn/" rel="tag"># vpn</a> <a href="/tags/ipsec/" rel="tag"># ipsec</a> <a href="/tags/ike-scan/" rel="tag"># ike-scan</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2018/07/02/HTTP Header Field Definitions/" rel="next" title="Header Field Definitions">Header Field Definitions</a></div><div class="post-nav-prev post-nav-item"><a href="/2018/07/14/Explorer-JavaScript-For-in-loops/" rel="prev" title="探索 JavaScript For-in 循环">探索 JavaScript For-in 循环</a></div></div></footer></div></article></div></div><div class="comments" id="comments"><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">Table of Contents<li class="sidebar-nav-overview" data-target="site-overview-wrap">Overview</ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="kinboy"><p class="site-author-name" itemprop="name">kinboy</div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">66</span> <span class="site-state-item-name">posts</span></a></div><div class="site-state-item site-state-categories"><a href="/categories/index.html"><span class="site-state-item-count">31</span> <span class="site-state-item-name">categories</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/index.html"><span class="site-state-item-count">52</span> <span class="site-state-item-name">tags</span></a></div></nav><div class="feed-link motion-element"><a href="/atom.xml" rel="alternate">RSS</a></div><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/kinboyw" target="_blank" title="GitHub">GitHub</a></span><span class="links-of-author-item"><a href="mailto:kinboy9275@gmail.com" target="_blank" title="E-Mail"> E-Mail</a></span></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#IPsec-IKEv1-Algorithms"><span class="nav-number">1.</span> <span class="nav-text">IPsec IKEv1 Algorithms</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Weak-Legacy-Algorithms"><span class="nav-number">1.1.</span> <span class="nav-text">Weak Legacy Algorithms</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Encryption-Algorithms"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">Encryption Algorithms :</span></a><li class="nav-item nav-level-5"><a class="nav-link" href="#Integrity-Algorithms"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">Integrity Algorithms :</span></a><li class="nav-item nav-level-5"><a class="nav-link" href="#Diffie-Hellman-Groups"><span class="nav-number">1.1.0.3.</span> <span class="nav-text">Diffie Hellman Groups :</span></a></ol></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#Compatibility-with-VPN-servers-using-weak-legacy-IPsec-IKEv1-algorithms"><span class="nav-number">1.2.</span> <span class="nav-text">Compatibility with VPN servers using weak legacy IPsec IKEv1 algorithms</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#Querying-VPN-server-for-its-IKEv1-algorithm-proposals"><span class="nav-number">1.3.</span> <span class="nav-text">Querying VPN server for its IKEv1 algorithm proposals</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#Overriding-and-not-just-supplementing-the-default-cipher"><span class="nav-number">1.4.</span> <span class="nav-text">Overriding and not just supplementing the default cipher</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#KDE-Plasma-lt-5-11-and-legacy-IPsec-IKEv1-ciphers"><span class="nav-number">1.5.</span> <span class="nav-text">KDE Plasma &lt; 5.11 and legacy IPsec IKEv1 ciphers</span></a></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#“Layer-2-Tunneling-Protocol-L2TP-”-not-showing-up"><span class="nav-number">2.</span> <span class="nav-text">“Layer 2 Tunneling Protocol (L2TP)” not showing up</span></a><li class="nav-item nav-level-2"><a class="nav-link" href="#Unable-to-save-password"><span class="nav-number">3.</span> <span class="nav-text">Unable to save password</span></a><li class="nav-item nav-level-2"><a class="nav-link" href="#Unable-to-create-or-edit-a-L2TP-VPN-connection"><span class="nav-number">4.</span> <span class="nav-text">Unable to create or edit a L2TP VPN connection</span></a><li class="nav-item nav-level-2"><a class="nav-link" href="#Issue-with-not-stopping-system-xl2tpd-service"><span class="nav-number">5.</span> <span class="nav-text">Issue with not stopping system xl2tpd service</span></a><li class="nav-item nav-level-2"><a class="nav-link" href="#Orphaned-pppd-process"><span class="nav-number">6.</span> <span class="nav-text">Orphaned pppd process</span></a><li class="nav-item nav-level-2"><a class="nav-link" href="#EAP-peer-reports-authentication-failure"><span class="nav-number">7.</span> <span class="nav-text">EAP: peer reports authentication failure</span></a><li class="nav-item nav-level-2"><a class="nav-link" href="#DNS-resolution-issues"><span class="nav-number">8.</span> <span class="nav-text">DNS resolution issues</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#local-hostname-resolution"><span class="nav-number">8.1.</span> <span class="nav-text">.local hostname resolution</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#NetworkManager-≤-1-6-2-and-Systemd-resolved-ignoring-VPN-server’s-DNS"><span class="nav-number">8.2.</span> <span class="nav-text">NetworkManager ≤ 1.6.2 and Systemd-resolved ignoring VPN server’s DNS</span></a></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu-AppArmor-issue-with-strongSwan"><span class="nav-number">9.</span> <span class="nav-text">Ubuntu AppArmor issue with strongSwan</span></a><li class="nav-item nav-level-2"><a class="nav-link" href="#openSUSE-and-SUSE-Linux-Enterprise-Server"><span class="nav-number">10.</span> <span class="nav-text">openSUSE and SUSE Linux Enterprise Server</span></a></div></div></section><div class="back-to-top"><span id="scrollpercent"><span>0</span>%</span></div></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2019</span><span class="with-love"></span> <span class="author" itemprop="copyrightHolder">kinboy</span><br><img src="/images/beian.png"> <span style="width:300px;margin:0 auto;padding:20px 0"><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42011102002861" style="display:inline-block;text-decoration:none;height:20px;line-height:20px"><img src style="float:left"><p style="float:left;height:20px;line-height:20px;margin:0 0 0 5px;color:#939393">鄂公网安备 42011102002861号</p></a></span></div></div></footer></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type="text/javascript" src="/lib/three/three.min.js"></script><script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script><script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><script id="dsq-count-scr" src="https://kinboy-wang.disqus.com/count.js" async></script><script type="text/javascript">var disqus_config=function(){this.page.url="http://kinboyw.github.io/2018/07/11/ike-scan扫描服务端的ike加密算法/",this.page.identifier="2018/07/11/ike-scan扫描服务端的ike加密算法/",this.page.title="ike-scan扫描ipsec vpn服务端ike加密算法"},d=document,s=d.createElement("script");s.src="https://kinboy-wang.disqus.com/embed.js",s.setAttribute("data-timestamp",""+ +new Date),(d.head||d.body).appendChild(s)</script><script type="text/javascript">// Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });</script><script>!function(){var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}()</script>

@@ -1,0 +1,314 @@
+<!DOCTYPE html><html class="theme-next gemini use-motion" lang="ZH | EN"><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="google-site-verification" content="AKuwh4i11uWg0wOl_cM7AI_dHqOHOLKYfCxKc8Lfv6E"><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4"><link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222"><meta name="keywords" content="FE,JavaScript,"><link rel="alternate" href="/atom.xml" title="Kinboy's note" type="application/atom+xml"><meta name="description" content="本文不会过多介绍基础知识，而是把重点放在原型的各个难点上。  大家可以先仔细分析下该图，然后让我们进入主题"><meta name="keywords" content="FE,JavaScript"><meta property="og:type" content="article"><meta property="og:title" content="深入理解JS原型"><meta property="og:url" content="http://kinboyw.github.io/2019/02/27/深入理解JS原型/index.html"><meta property="og:site_name" content="Kinboy&#39;s note"><meta property="og:description" content="本文不会过多介绍基础知识，而是把重点放在原型的各个难点上。  大家可以先仔细分析下该图，然后让我们进入主题"><meta property="og:locale" content="ZH | EN"><meta property="og:image" content="https://camo.githubusercontent.com/71cab2efcf6fb8401a2f0ef49443dd94bffc1373/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f332f31332f313632316538613962636230383732643f773d34383826683d35393026663d706e6726733d313531373232"><meta property="og:image" content="https://camo.githubusercontent.com/6f4c44c54637dd87a083a6eced805595b6e3735e/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f332f31332f313632316561336462373063656430613f773d33303426683d383626663d706e6726733d3131313931"><meta property="og:image" content="https://camo.githubusercontent.com/82e7d4306abd33940c2485c31a5eb91eb5a488bc/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f332f31332f313632316561613735306338373761653f773d34303826683d32303426663d706e6726733d3237333130"><meta property="og:image" content="https://camo.githubusercontent.com/d72d59bb822b24a67742c8c1f7fdbe0faad7c23c/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f332f31342f313632323234353137666264343064633f773d34393426683d31313626663d706e6726733d3138363334"><meta property="og:updated_time" content="2019-07-15T10:05:10.407Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="深入理解JS原型"><meta name="twitter:description" content="本文不会过多介绍基础知识，而是把重点放在原型的各个难点上。  大家可以先仔细分析下该图，然后让我们进入主题"><meta name="twitter:image" content="https://camo.githubusercontent.com/71cab2efcf6fb8401a2f0ef49443dd94bffc1373/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f332f31332f313632316538613962636230383732643f773d34383826683d35393026663d706e6726733d313531373232"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Gemini",version:"5.1.4",sidebar:{position:"left",display:"post",offset:12,b2t:!0,scrollpercent:!0,onmobile:!1},fancybox:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},duoshuo:{userId:"0",author:"Author"},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"I didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><link rel="canonical" href="http://kinboyw.github.io/2019/02/27/深入理解JS原型/"><title>深入理解JS原型 | Kinboy's note</title><script type="text/javascript">var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?c9c2b9e915e6bb8ec323a2f98c0c98d8";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><body itemscope itemtype="http://schema.org/WebPage" lang="ZH | EN"><div class="container sidebar-position-left page-post-detail"><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"></span><span class="site-title">Kinboy's note</span><span class="logo-line-after"></span></a></div><h1 class="site-subtitle" itemprop="description">前端漫记</h1></div><div class="site-nav-toggle"><button></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><br>Home</a><li class="menu-item menu-item-about"><a href="/rscard/" rel="section"><br>About</a><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><br>Tags</a><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><br>Categories</a><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><br>Archives</a><li class="menu-item menu-item-top"><a href="/top/" rel="section"><br>Top</a><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><br>Search</a></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"></span><span class="popup-btn-close"></span><div class="local-search-input-wrapper"><input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input"></div></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-categories" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://kinboyw.github.io/2019/02/27/深入理解JS原型/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="kinboy"><meta itemprop="description" content><meta itemprop="image" content="/images/avatar.png"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Kinboy's note"></span><header class="post-header"><h2 class="post-title" itemprop="name headline">深入理解JS原型</h2><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Posted on</span> <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-27T00:53:39+08:00">2019-02-27</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">In</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FE/" itemprop="url" rel="index"><span itemprop="name">FE</span></a></span> , <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FE/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span><a href="/2019/02/27/深入理解JS原型/#comments" itemprop="discussionUrl"></a></span><div class="post-wordcount"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Words count in article&#58;</span> <span title="Words count in article">1.5k</span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">Reading time &asymp;</span> <span title="Reading time">5</span></div></div></header><div class="post-body" itemprop="articleBody"><p>本文不会过多介绍基础知识，而是把重点放在原型的各个难点上。<p><img src="https://camo.githubusercontent.com/71cab2efcf6fb8401a2f0ef49443dd94bffc1373/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f332f31332f313632316538613962636230383732643f773d34383826683d35393026663d706e6726733d313531373232" alt><p>大家可以先仔细分析下该图，然后让我们进入主题</p><h2 id="prototype"><code>prototype</code></h2><p>首先来介绍下 <code>prototype</code> 属性。这是一个显式原型属性，只有函数才拥有该属性。基本上所有函数都有这个属性，但是也有一个例外<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">let</span> fun = <span class="built_in">Function</span>.prototype.bind()</span><br></pre></table></figure><p>如果你以上述方法创建一个函数，那么可以发现这个函数是不具有 <code>prototype</code> 属性的。<h4 id="prototype-如何产生的">prototype 如何产生的</h4><p>当我们声明一个函数时，这个属性就被自动创建了。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>() </span>&#123;&#125;</span><br></pre></table></figure><p>并且这个属性的值是一个对象（也就是原型），只有一个属性 <code>constructor</code><p><img src="https://camo.githubusercontent.com/6f4c44c54637dd87a083a6eced805595b6e3735e/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f332f31332f313632316561336462373063656430613f773d33303426683d383626663d706e6726733d3131313931" alt><p><code>constructor</code> 对应着构造函数，也就是 <code>Foo</code>。<h4 id="constructor-NaN">constructor</h4><p><code>constructor</code> 是一个公有且不可枚举的属性。一旦我们改变了函数的 <code>prototype</code> ，那么新对象就没有这个属性了（当然可以通过原型链取到 <code>constructor</code>）。<p><img src="https://camo.githubusercontent.com/82e7d4306abd33940c2485c31a5eb91eb5a488bc/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f332f31332f313632316561613735306338373761653f773d34303826683d32303426663d706e6726733d3237333130" alt><p>那么你肯定也有一个疑问，这个属性到底有什么用呢？其实这个属性可以说是一个历史遗留问题，在大部分情况下是没用的，在我的理解里，我认为他有两个作用：<ul><li>让实例对象知道是什么函数构造了它<li>如果想给某些类库中的构造函数增加一些自定义的方法，就可以通过 <code>xx.constructor.method</code> 来扩展</ul><h2 id="proto"><code>_proto_</code></h2><p>这是每个对象都有的隐式原型属性，指向了创建该对象的构造函数的原型。其实这个属性指向了 [[prototype]]，但是 [[prototype]] 是内部属性，我们并不能访问到，所以使用 <code>_proto_</code> 来访问。<p>因为在 JS 中是没有类的概念的，为了实现类似继承的方式，通过 <code>_proto_</code> 将对象和原型联系起来组成原型链，得以让对象可以访问到不属于自己的属性。<h4 id="实例对象的-proto-如何产生的">实例对象的 <code>_proto_</code> 如何产生的</h4><p>从上图可知，当我们使用 <code>new</code> 操作符时，生成的实例对象拥有了 <code>_proto_</code>属性。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>() </span>&#123;&#125;</span><br><span class="line"><span class="comment">// 这个函数是 Function 的实例对象</span></span><br><span class="line"><span class="comment">// function 就是一个语法糖</span></span><br><span class="line"><span class="comment">// 内部调用了 new Function(...)</span></span><br></pre></table></figure><p>所以可以说，在 <code>new</code> 的过程中，新对象被添加了 <code>_proto_</code> 并且链接到构造函数的原型上。<h4 id="new-的过程">new 的过程</h4><ol><li>新生成了一个对象<li>链接到原型<li>绑定 this<li>返回新对象</ol><p>在调用 <code>new</code> 的过程中会发生以上四件事情，我们也可以试着来自己实现一个 <code>new</code><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">create</span>() </span>&#123;</span><br><span class="line">    <span class="comment">// 创建一个空的对象</span></span><br><span class="line">    <span class="keyword">let</span> obj = <span class="keyword">new</span> <span class="built_in">Object</span>()</span><br><span class="line">    <span class="comment">// 获得构造函数</span></span><br><span class="line">    <span class="keyword">let</span> Con = [].shift.call(<span class="built_in">arguments</span>)</span><br><span class="line">    <span class="comment">// 链接到原型</span></span><br><span class="line">	obj.__proto__ = Con.prototype</span><br><span class="line">    <span class="comment">// 绑定 this，执行构造函数</span></span><br><span class="line">    <span class="keyword">let</span> result = Con.apply(obj, <span class="built_in">arguments</span>)</span><br><span class="line">    <span class="comment">// 确保 new 出来的是个对象</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">typeof</span> result === <span class="string">'object'</span> ? result : obj</span><br><span class="line">&#125;</span><br></pre></table></figure><p>对于实例对象来说，都是通过 <code>new</code> 产生的，无论是 <code>function Foo()</code> 还是 <code>let a = { b : 1 }</code> 。<p>对于创建一个对象来说，更推荐使用字面量的方式创建对象。因为你使用 <code>new Object()</code> 的方式创建对象需要通过作用域链一层层找到 <code>Object</code>，但是你使用字面量的方式就没这个问题。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>() </span>&#123;&#125;</span><br><span class="line"><span class="comment">// function 就是个语法糖</span></span><br><span class="line"><span class="comment">// 内部等同于 new Function()</span></span><br><span class="line"><span class="keyword">let</span> a = &#123; <span class="attr">b</span>: <span class="number">1</span> &#125;</span><br><span class="line"><span class="comment">// 这个字面量内部也是使用了 new Object()</span></span><br></pre></table></figure><h2 id="Function-proto-Function-prototype">Function.<strong>proto</strong> === Function.prototype</h2><p>对于对象来说，<code>xx.__proto__.contrcutor</code> 是该对象的构造函数，但是在图中我们可以发现 <code>Function.__proto__ === Function.prototype</code>，难道这代表着 <code>Function</code> 自己产生了自己?<p>答案肯定是否认的，要说明这个问题我们先从 <code>Object</code> 说起。<p>从图中我们可以发现，所有对象都可以通过原型链最终找到 <code>Object.prototype</code> ，虽然 <code>Object.prototype</code> 也是一个对象，但是这个对象却不是 <code>Object</code> 创造的，而是引擎自己创建了 <code>Object.prototype</code> 。<strong>所以可以这样说，所有实例都是对象，但是对象不一定都是实例。</strong><p>接下来我们来看 <code>Function.prototype</code> 这个特殊的对象，如果你在浏览器将这个对象打印出来，会发现这个对象其实是一个函数。<p><img src="https://camo.githubusercontent.com/d72d59bb822b24a67742c8c1f7fdbe0faad7c23c/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f332f31342f313632323234353137666264343064633f773d34393426683d31313626663d706e6726733d3138363334" alt><p>我们知道函数都是通过 <code>new Function()</code> 生成的，难道 <code>Function.prototype</code> 也是通过 <code>new Function()</code> 产生的吗？答案也是否定的，这个函数也是引擎自己创建的。首先引擎创建了 <code>Object.prototype</code> ，然后创建了 <code>Function.prototype</code> ，并且通过 <code>__proto__</code> 将两者联系了起来。这里也很好的解释了上面的一个问题，为什么 <code>let fun = Function.prototype.bind()</code> 没有 <code>prototype</code> 属性。因为 <code>Function.prototype</code> 是引擎创建出来的对象，引擎认为不需要给这个对象添加 <code>prototype</code> 属性。<p><strong>所以我们又可以得出一个结论，不是所有函数都是 <code>new Function()</code> 产生的。</strong><p>有了 <code>Function.prototype</code> 以后才有了 <code>function Function()</code> ，然后其他的构造函数都是 <code>function Function()</code> 生成的。<p>现在可以来解释 <code>Function.__proto__ === Function.prototype</code> 这个问题了。因为先有的 <code>Function.prototype</code> 以后才有的 <code>function Function()</code> ，所以也就不存在鸡生蛋蛋生鸡的悖论问题了。对于为什么 <code>Function.__proto__</code> 会等于 <code>Function.prototype</code> ，个人的理解是：其他所有的构造函数都可以通过原型链找到 <code>Function.prototype</code> ，并且 <code>function Function()</code> 本质也是一个函数，为了不产生混乱就将 <code>function Function()</code> 的 <code>__proto__</code> 联系到了 <code>Function.prototype</code> 上。<h2 id="总结">总结</h2><ul><li><code>Object</code> 是所有对象的爸爸，所有对象都可以通过 <code>__proto__</code> 找到它<li><code>Function</code> 是所有函数的爸爸，所有函数都可以通过 <code>__proto__</code> 找到它<li><code>Function.prototype</code> 和 <code>Object.prototype</code> 是两个特殊的对象，他们由引擎来创建<li>除了以上两个特殊对象，其他对象都是通过构造器 <code>new</code> 出来的<li>函数的 <code>prototype</code> 是一个对象，也就是原型<li>对象的 <code>__proto__</code> 指向原型， <code>__proto__</code> 将对象和原型连接起来组成了原型链</ul></div><div><div class="my_post_copyright"><script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script><script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js" integrity="sha256-iBcUE/x23aI6syuqF7EeT/+JFBxjPs5zeFJEXxumwb0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js" integrity="sha256-JirYRqbf+qzfqVtEE4GETyHlAbiCpC005yBTa4rj6xg=" crossorigin="anonymous"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css" integrity="sha256-zuyRv+YsWwh1XR5tsrZ7VCfGqUmmPmqBjIvJgQWoSDo=" crossorigin="anonymous"><p><span>本文标题:</span>深入理解JS原型<p><span>文章作者:</span>kinboy<p><span>发布时间:</span>2019年02月27日 - 00:53:39<p><span>最后更新:</span>2019年07月15日 - 18:05:10<p><span>原始链接:</span><a href="/2019/02/27/深入理解JS原型/" title="深入理解JS原型">http://kinboyw.github.io/2019/02/27/深入理解JS原型/</a><span class="copy-path" title="点击复制文章链接"></span><p><span>许可协议:</span> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</div><script>var clipboard=new Clipboard(".fa-clipboard");clipboard.on("success",$(function(){$(".fa-clipboard").click(function(){swal({title:"",text:"复制成功",html:!1,timer:500,showConfirmButton:!1})})}))</script></div><div><div><div style="text-align:center;color:#ccc;font-size:14px">------ Passage Ending ------</div></div></div><div><ul class="post-copyright"><li class="post-copyright-author"><strong>Post author:</strong> kinboy<li class="post-copyright-link"><strong>Post link:</strong> <a href="http://kinboyw.github.io/2019/02/27/深入理解JS原型/" title="深入理解JS原型">http://kinboyw.github.io/2019/02/27/深入理解JS原型/</a><li class="post-copyright-license"><strong>Copyright Notice:</strong> All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.</ul></div><footer class="post-footer"><div class="post-tags"><a href="/tags/FE/" rel="tag"># FE</a> <a href="/tags/JavaScript/" rel="tag"># JavaScript</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2019/02/26/JSONP原理及实现/" rel="next" title="JSONP原理及实现">JSONP原理及实现</a></div><div class="post-nav-prev post-nav-item"><a href="/2019/03/21/为什么没有CSS4，解释CSS-level/" rel="prev" title="为什么没有CSS4，解释CSS level">为什么没有CSS4，解释CSS level</a></div></div></footer></div></article></div></div><div class="comments" id="comments"><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">Table of Contents<li class="sidebar-nav-overview" data-target="site-overview-wrap">Overview</ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="kinboy"><p class="site-author-name" itemprop="name">kinboy</div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">66</span> <span class="site-state-item-name">posts</span></a></div><div class="site-state-item site-state-categories"><a href="/categories/index.html"><span class="site-state-item-count">31</span> <span class="site-state-item-name">categories</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/index.html"><span class="site-state-item-count">52</span> <span class="site-state-item-name">tags</span></a></div></nav><div class="feed-link motion-element"><a href="/atom.xml" rel="alternate">RSS</a></div><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/kinboyw" target="_blank" title="GitHub">GitHub</a></span><span class="links-of-author-item"><a href="mailto:kinboy9275@gmail.com" target="_blank" title="E-Mail"> E-Mail</a></span></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#prototype"><span class="nav-number">1.</span> <span class="nav-text">prototype</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#prototype-如何产生的"><span class="nav-number">1.0.1.</span> <span class="nav-text">prototype 如何产生的</span></a><li class="nav-item nav-level-4"><a class="nav-link" href="#constructor-NaN"><span class="nav-number">1.0.2.</span> <span class="nav-text">constructor</span></a></ol></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#proto"><span class="nav-number">2.</span> <span class="nav-text">_proto_</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实例对象的-proto-如何产生的"><span class="nav-number">2.0.1.</span> <span class="nav-text">实例对象的 _proto_ 如何产生的</span></a><li class="nav-item nav-level-4"><a class="nav-link" href="#new-的过程"><span class="nav-number">2.0.2.</span> <span class="nav-text">new 的过程</span></a></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#Function-proto-Function-prototype"><span class="nav-number">3.</span> <span class="nav-text">Function.proto === Function.prototype</span></a><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></div></div></section><div class="back-to-top"><span id="scrollpercent"><span>0</span>%</span></div></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2019</span><span class="with-love"></span> <span class="author" itemprop="copyrightHolder">kinboy</span><br><img src="/images/beian.png"> <span style="width:300px;margin:0 auto;padding:20px 0"><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42011102002861" style="display:inline-block;text-decoration:none;height:20px;line-height:20px"><img src style="float:left"><p style="float:left;height:20px;line-height:20px;margin:0 0 0 5px;color:#939393">鄂公网安备 42011102002861号</p></a></span></div></div></footer></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type="text/javascript" src="/lib/three/three.min.js"></script><script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script><script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><script id="dsq-count-scr" src="https://kinboy-wang.disqus.com/count.js" async></script><script type="text/javascript">var disqus_config=function(){this.page.url="http://kinboyw.github.io/2019/02/27/深入理解JS原型/",this.page.identifier="2019/02/27/深入理解JS原型/",this.page.title="深入理解JS原型"},d=document,s=d.createElement("script");s.src="https://kinboy-wang.disqus.com/embed.js",s.setAttribute("data-timestamp",""+ +new Date),(d.head||d.body).appendChild(s)</script><script type="text/javascript">// Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });</script><script>!function(){var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}()</script>

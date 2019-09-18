@@ -1,0 +1,314 @@
+<!DOCTYPE html><html class="theme-next gemini use-motion" lang="ZH | EN"><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="google-site-verification" content="AKuwh4i11uWg0wOl_cM7AI_dHqOHOLKYfCxKc8Lfv6E"><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4"><link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222"><meta name="keywords" content="FE,JavaScript,"><link rel="alternate" href="/atom.xml" title="Kinboy's note" type="application/atom+xml"><meta name="description" content="JavaScript 对象拷贝暗藏陷阱，JavaScript 提供了许多种方式来拷贝一个对象，但非都是深拷贝，大多数情况下浅拷贝是默认行为。 深拷贝 VS 浅拷贝​    浅拷贝能够成功地复制数字和字符串等原始值 （基本类型），但是不会递归地复制任何对象的引用，而是复制得到的新对象将会引用之前的同一个对象。 ​    如果一个对象 A 引用了另一个对象 B ，当对对象 A 执行 浅拷贝 的时候，"><meta name="keywords" content="FE,JavaScript"><meta property="og:type" content="article"><meta property="og:title" content="JavaScript对象拷贝的误区"><meta property="og:url" content="http://kinboyw.github.io/2018/11/14/JavaScript对象拷贝的误区/index.html"><meta property="og:site_name" content="Kinboy&#39;s note"><meta property="og:description" content="JavaScript 对象拷贝暗藏陷阱，JavaScript 提供了许多种方式来拷贝一个对象，但非都是深拷贝，大多数情况下浅拷贝是默认行为。 深拷贝 VS 浅拷贝​    浅拷贝能够成功地复制数字和字符串等原始值 （基本类型），但是不会递归地复制任何对象的引用，而是复制得到的新对象将会引用之前的同一个对象。 ​    如果一个对象 A 引用了另一个对象 B ，当对对象 A 执行 浅拷贝 的时候，"><meta property="og:locale" content="ZH | EN"><meta property="og:image" content="http://kinboyw.github.io/2018/11/14/JavaScript对象拷贝的误区/maxresdefault.jpg"><meta property="og:image" content="https://flaviocopes.com/how-to-clone-javascript-object/parse-json.png"><meta property="og:updated_time" content="2019-07-15T10:05:10.347Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="JavaScript对象拷贝的误区"><meta name="twitter:description" content="JavaScript 对象拷贝暗藏陷阱，JavaScript 提供了许多种方式来拷贝一个对象，但非都是深拷贝，大多数情况下浅拷贝是默认行为。 深拷贝 VS 浅拷贝​    浅拷贝能够成功地复制数字和字符串等原始值 （基本类型），但是不会递归地复制任何对象的引用，而是复制得到的新对象将会引用之前的同一个对象。 ​    如果一个对象 A 引用了另一个对象 B ，当对对象 A 执行 浅拷贝 的时候，"><meta name="twitter:image" content="http://kinboyw.github.io/2018/11/14/JavaScript对象拷贝的误区/maxresdefault.jpg"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Gemini",version:"5.1.4",sidebar:{position:"left",display:"post",offset:12,b2t:!0,scrollpercent:!0,onmobile:!1},fancybox:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},duoshuo:{userId:"0",author:"Author"},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"I didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><link rel="canonical" href="http://kinboyw.github.io/2018/11/14/JavaScript对象拷贝的误区/"><title>JavaScript对象拷贝的误区 | Kinboy's note</title><script type="text/javascript">var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?c9c2b9e915e6bb8ec323a2f98c0c98d8";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><body itemscope itemtype="http://schema.org/WebPage" lang="ZH | EN"><div class="container sidebar-position-left page-post-detail"><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"></span><span class="site-title">Kinboy's note</span><span class="logo-line-after"></span></a></div><h1 class="site-subtitle" itemprop="description">前端漫记</h1></div><div class="site-nav-toggle"><button></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><br>Home</a><li class="menu-item menu-item-about"><a href="/rscard/" rel="section"><br>About</a><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><br>Tags</a><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><br>Categories</a><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><br>Archives</a><li class="menu-item menu-item-top"><a href="/top/" rel="section"><br>Top</a><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><br>Search</a></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"></span><span class="popup-btn-close"></span><div class="local-search-input-wrapper"><input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input"></div></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-categories" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://kinboyw.github.io/2018/11/14/JavaScript对象拷贝的误区/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="kinboy"><meta itemprop="description" content><meta itemprop="image" content="/images/avatar.png"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Kinboy's note"></span><header class="post-header"><h2 class="post-title" itemprop="name headline">JavaScript对象拷贝的误区</h2><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Posted on</span> <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-14T11:26:28+08:00">2018-11-14</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">In</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FE/" itemprop="url" rel="index"><span itemprop="name">FE</span></a></span> , <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FE/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span><a href="/2018/11/14/JavaScript对象拷贝的误区/#comments" itemprop="discussionUrl"></a></span><div class="post-wordcount"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Words count in article&#58;</span> <span title="Words count in article">1.3k</span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">Reading time &asymp;</span> <span title="Reading time">6</span></div></div></header><div class="post-body" itemprop="articleBody"><img src="/2018/11/14/JavaScript对象拷贝的误区/maxresdefault.jpg" width="600"><p>JavaScript 对象拷贝暗藏陷阱，JavaScript 提供了许多种方式来拷贝一个对象，但非都是深拷贝，大多数情况下浅拷贝是默认行为。<h2 id="深拷贝-VS-浅拷贝">深拷贝 VS 浅拷贝</h2><p>​ 浅拷贝能够成功地复制数字和字符串等<code>原始值</code> （基本类型），但是不会递归地复制任何对象的引用，而是复制得到的新对象将会引用之前的同一个对象。<p>​ 如果一个对象 A 引用了另一个对象 B ，当对对象 A 执行 <strong>浅拷贝</strong> 的时候，你只是拷贝了对 B 的引用，复制得到的新对象仍然引用了 B 。<p>​ 当执行<strong>深拷贝</strong>的时候，外部的 B 对象也会一并拷贝，所以新复制得到的对象是完全独立于 B 对象的。</p><h2 id="最简单的选择：使用-Lodash">最简单的选择：使用 Lodash</h2><p>建议工作中执行深拷贝时最好用一些经过严格测试的第三方类库，比如很受欢迎的一直在维护的：Lodash。<p>Lodash 提供了非常方便的 <code>clone</code> 和 <code>deepclone</code> 函数来实现浅拷贝和深拷贝。<p>Lodash 有一个很棒的特性：<strong>你可以只导入单个函数</strong>来降低你的项目依赖数量。<p>在 Node.js 中：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">const</span> clone = <span class="built_in">require</span>(<span class="string">'lodash.clone'</span>)</span><br><span class="line"><span class="keyword">const</span> clonedeep = <span class="built_in">require</span>(<span class="string">'lodash.clonedeep'</span>)</span><br></pre></table></figure><p>这里是两个函数的使用示例：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">const</span> clone = <span class="built_in">require</span>(<span class="string">'lodash.clone'</span>)</span><br><span class="line"><span class="keyword">const</span> clonedeep = <span class="built_in">require</span>(<span class="string">'lodash.clonedeep'</span>)</span><br><br><span class="line"><span class="keyword">const</span> externalObject = &#123;</span><br><span class="line">  color: <span class="string">'red'</span></span><br><span class="line">&#125;</span><br><br><span class="line"><span class="keyword">const</span> original = &#123;</span><br><span class="line">  a: <span class="keyword">new</span> <span class="built_in">Date</span>(),</span><br><span class="line">  b: <span class="literal">NaN</span>,</span><br><span class="line">  c: <span class="keyword">new</span> <span class="built_in">Function</span>(),</span><br><span class="line">  d: <span class="literal">undefined</span>,</span><br><span class="line">  e: <span class="function"><span class="keyword">function</span>() </span>&#123;&#125;,</span><br><span class="line">  f: <span class="built_in">Number</span>,</span><br><span class="line">  g: <span class="literal">false</span>,</span><br><span class="line">  h: <span class="literal">Infinity</span>,</span><br><span class="line">  i: externalObject</span><br><span class="line">&#125;</span><br><br><span class="line"><span class="keyword">const</span> cloned = clone(original)</span><br><br><span class="line">externalObject.color = <span class="string">'blue'</span></span><br><br><span class="line"><span class="built_in">console</span>.info(<span class="string">'⬇️ shallow cloning 🌈'</span>)</span><br><span class="line"><span class="built_in">console</span>.info(</span><br><span class="line">  <span class="string">'✏️ Notice the i.color property we changed on original is also changed in the shallow copy'</span></span><br><span class="line">)</span><br><span class="line"><span class="built_in">console</span>.log(original)</span><br><span class="line"><span class="built_in">console</span>.log(cloned)</span><br><br><span class="line"><span class="keyword">const</span> deepcloned = clonedeep(original)</span><br><br><span class="line">externalObject.color = <span class="string">'yellow'</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">''</span>)</span><br><span class="line"><span class="built_in">console</span>.info(<span class="string">'⬇️ deep cloning 🌈'</span>)</span><br><span class="line"><span class="built_in">console</span>.info(<span class="string">'✏️ Notice the i.color property does not propagate any more'</span>)</span><br><span class="line"><span class="built_in">console</span>.log(original)</span><br><span class="line"><span class="built_in">console</span>.log(deepcloned)</span><br></pre></table></figure><p>In this simple example we first create a shallow copy, and edit the i.color property, which propagates to the copied object.<p>In the deep clone, this does not happen.<p>See this <a href="https://glitch.com/edit/#!/flavio-lodash-clone-shallow-deep" target="_blank" rel="noopener">live in Glitch</a>.</p><iframe src="https://glitch.com/embed/#!/embed/flavio-lodash-clone-shallow-deep?path=server.js&amp;previewSize=42&amp;previewFirst=true&amp;sidebarCollapsed=true" alt="flavio-lodash-clone-shallow-deep on glitch" style="text-shadow:#999 .01em .01em .01em!important;font-family:微软雅黑!important;height:892px;width:765px;border:0"></iframe><h2 id="Object-Assign">Object.Assign()</h2><p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign" target="_blank" rel="noopener"><code>Object.assign()</code></a> 执行浅拷贝，不是深拷贝.<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">const</span> copied = <span class="built_in">Object</span>.assign(&#123;&#125;, original)</span><br></pre></table></figure><p>Being a shallow copy, values are cloned, and objects references are copied (not the objects themselves), so if you edit an object property in the original object, that’s modified also in the copied object, since the referenced inner object is the same:<p>浅拷贝只会复制值类型和对象类型的引用（而不是对象本身）。所以如果你编辑了原始对象的属性，复制对象中的这个属性也会被修改，因为原始对象和复制对象内部的引用指向是相同的：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">const</span> original = &#123;</span><br><span class="line">  name: <span class="string">'Fiesta'</span>,</span><br><span class="line">  car: &#123;</span><br><span class="line">    color: <span class="string">'blue'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> copied = <span class="built_in">Object</span>.assign(&#123;&#125;, original)</span><br><br><span class="line">original.name = <span class="string">'Focus'</span></span><br><span class="line">original.car.color = <span class="string">'yellow'</span></span><br><br><span class="line">copied.name <span class="comment">//Fiesta</span></span><br><span class="line">copied.car.color <span class="comment">//yellow</span></span><br></pre></table></figure><h2 id="使用对象展开表达式">使用对象展开表达式</h2><p>这个 <a href="https://flaviocopes.com/es6/" target="_blank" rel="noopener">ES6/ES2015</a> 特性提供了非常方便的浅拷贝方法，它和<code>Object.assign()</code> 做的事情相同。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">const</span> copied = &#123; ...original &#125;</span><br></pre></table></figure><h2 id="错误的方式">错误的方式</h2><h3 id="使用-Object-create">使用 Object.create()</h3><blockquote><p>不推荐这样实现对象拷贝</blockquote><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">const</span> copied = <span class="built_in">Object</span>.create(original)</span><br></pre></table></figure><p>​ 这是错误的做法，它并没有做任何拷贝的操作。<p>​ 相反, <code>original</code> 对象会被当成 <code>copied</code> 对象的 <strong>prototype</strong> 。<p>​ 表面上它可以成功，但是实际上没有：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">const</span> original = &#123;</span><br><span class="line">  name: <span class="string">'Fiesta'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> copied = <span class="built_in">Object</span>.create(original)</span><br><span class="line">copied.name <span class="comment">//Fiesta</span></span><br><br><span class="line">original.hasOwnProperty(<span class="string">'name'</span>) <span class="comment">//true</span></span><br><span class="line">copied.hasOwnProperty(<span class="string">'name'</span>) <span class="comment">//false</span></span><br></pre></table></figure><h3 id="JSON-序列化">JSON 序列化</h3><blockquote><p>也不推荐</blockquote><p>​ 网上有一些建议是将对象转换成 JSON，然后再从 JSON 反向生成对象<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">const</span> cloned = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(original))</span><br></pre></table></figure><p>​ 但是这样做可能有预料不到的后果：<p>​ 这样做你可能会失去任何在 JSON 中找不到对等类型的 JavaScript 属性，比如 <code>Function</code> 或者 <code>Infinity</code>。 任何赋值为 <code>undefined</code> 的属性也会直接被 <code>JSON.stringify</code> 忽略掉，导致这些属性在复制对象中消失了。<p>​ 此外，也有一些对象只是简单地转成字符串，例如 Date 对象（同样，不考虑时区，默认为UTC），Set，Map以及许多其他类型：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre><td class="code"><pre><span class="line"><span class="built_in">JSON</span>.parse(</span><br><span class="line">  <span class="built_in">JSON</span>.stringify(&#123;</span><br><span class="line">    a: <span class="keyword">new</span> <span class="built_in">Date</span>(),</span><br><span class="line">    b: <span class="literal">NaN</span>,</span><br><span class="line">    c: <span class="keyword">new</span> <span class="built_in">Function</span>(),</span><br><span class="line">    d: <span class="literal">undefined</span>,</span><br><span class="line">    e: <span class="function"><span class="keyword">function</span>() </span>&#123;&#125;,</span><br><span class="line">    f: <span class="built_in">Number</span>,</span><br><span class="line">    g: <span class="literal">false</span>,</span><br><span class="line">    h: <span class="literal">Infinity</span></span><br><span class="line">  &#125;)</span><br><span class="line">)</span><br></pre></table></figure><p><img src="https://flaviocopes.com/how-to-clone-javascript-object/parse-json.png" alt="Parsing as JSON"><p>这种方式只适用于对象不包含任何内部对象和函数，只有值类型的情况。<p>下面是用原生 JS 手动实现的两种深拷贝的方式<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">var</span> array = [</span><br><span class="line">   &#123; <span class="attr">number</span>: <span class="number">1</span> &#125;,</span><br><span class="line">   &#123; <span class="attr">number</span>: <span class="number">2</span> &#125;,</span><br><span class="line">   &#123; <span class="attr">number</span>: <span class="number">3</span> &#125;</span><br><span class="line">];</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">copy</span> (<span class="params">obj</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> newobj = obj.constructor === <span class="built_in">Array</span> ? [] : &#123;&#125;;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">typeof</span> obj !== <span class="string">'object'</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> i <span class="keyword">in</span> obj)&#123;</span><br><span class="line">           newobj[i] = <span class="keyword">typeof</span> obj[i] === <span class="string">'object'</span> ?</span><br><span class="line">           copy(obj[i]) : obj[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> newobj</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> copyArray = copy(array)</span><br><span class="line">copyArray[<span class="number">0</span>].number = <span class="number">100</span>;</span><br><span class="line"><span class="built_in">console</span>.log(array); <span class="comment">//  [&#123;number: 1&#125;, &#123; number: 2 &#125;, &#123; number: 3 &#125;]</span></span><br><span class="line"><span class="built_in">console</span>.log(copyArray); <span class="comment">// [&#123;number: 100&#125;, &#123; number: 2 &#125;, &#123; number: 3 &#125;]</span></span><br></pre></table></figure><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">$</span>) </span>&#123;</span><br><span class="line"><span class="meta">    'use strict'</span>;</span><br><br><span class="line">    <span class="keyword">var</span> types = <span class="string">'Array Object String Date RegExp Function Boolean Number Null Undefined'</span>.split(<span class="string">' '</span>);</span><br><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">type</span>() </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Object</span>.prototype.toString.call(<span class="keyword">this</span>).slice(<span class="number">8</span>, <span class="number">-1</span>);</span><br><span class="line">    &#125;</span><br><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = types.length; i--;) &#123;</span><br><span class="line">        $[<span class="string">'is'</span> + types[i]] = (<span class="function"><span class="keyword">function</span>(<span class="params">self</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">elem</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> type.call(elem) === self;</span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;)(types[i]);</span><br><span class="line">    &#125;</span><br><br><span class="line">    <span class="keyword">return</span> $;</span><br><span class="line">&#125;)(<span class="built_in">window</span>.$ || (<span class="built_in">window</span>.$ = &#123;&#125;)); <span class="comment">//类型判断</span></span><br><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">copy</span>(<span class="params">obj, deep</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (obj === <span class="literal">null</span> || (<span class="keyword">typeof</span> obj !== <span class="string">"object"</span> &amp;&amp; !$.isFunction(obj))) &#123;</span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;</span><br><br><span class="line">    <span class="keyword">if</span> ($.isFunction(obj)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Function</span>(<span class="string">"return "</span> + obj.toString())();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> name, target = $.isArray(obj) ? [] : &#123;&#125;,</span><br><span class="line">            value;</span><br><br><span class="line">        <span class="keyword">for</span> (name <span class="keyword">in</span> obj) &#123;</span><br><span class="line">            value = obj[name];</span><br><br><span class="line">            <span class="keyword">if</span> (value === obj) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><br><span class="line">            <span class="keyword">if</span> (deep) &#123;</span><br><span class="line">                <span class="keyword">if</span> ($.isArray(value) || $.isObject(value)) &#123;</span><br><span class="line">                    target[name] = copy(value, deep);</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> ($.isFunction(value)) &#123;</span><br><span class="line">                    target[name] = <span class="keyword">new</span> <span class="built_in">Function</span>(<span class="string">"return "</span> + value.toString())();</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    target[name] = value;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                target[name] = value;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> target;</span><br><span class="line">    &#125;　</span><br><span class="line">&#125;</span><br></pre></table></figure></div><div><div class="my_post_copyright"><script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script><script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js" integrity="sha256-iBcUE/x23aI6syuqF7EeT/+JFBxjPs5zeFJEXxumwb0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js" integrity="sha256-JirYRqbf+qzfqVtEE4GETyHlAbiCpC005yBTa4rj6xg=" crossorigin="anonymous"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css" integrity="sha256-zuyRv+YsWwh1XR5tsrZ7VCfGqUmmPmqBjIvJgQWoSDo=" crossorigin="anonymous"><p><span>本文标题:</span>JavaScript对象拷贝的误区<p><span>文章作者:</span>kinboy<p><span>发布时间:</span>2018年11月14日 - 11:26:28<p><span>最后更新:</span>2019年07月15日 - 18:05:10<p><span>原始链接:</span><a href="/2018/11/14/JavaScript对象拷贝的误区/" title="JavaScript对象拷贝的误区">http://kinboyw.github.io/2018/11/14/JavaScript对象拷贝的误区/</a><span class="copy-path" title="点击复制文章链接"></span><p><span>许可协议:</span> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</div><script>var clipboard=new Clipboard(".fa-clipboard");clipboard.on("success",$(function(){$(".fa-clipboard").click(function(){swal({title:"",text:"复制成功",html:!1,timer:500,showConfirmButton:!1})})}))</script></div><div><div><div style="text-align:center;color:#ccc;font-size:14px">------ Passage Ending ------</div></div></div><div><ul class="post-copyright"><li class="post-copyright-author"><strong>Post author:</strong> kinboy<li class="post-copyright-link"><strong>Post link:</strong> <a href="http://kinboyw.github.io/2018/11/14/JavaScript对象拷贝的误区/" title="JavaScript对象拷贝的误区">http://kinboyw.github.io/2018/11/14/JavaScript对象拷贝的误区/</a><li class="post-copyright-license"><strong>Copyright Notice:</strong> All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.</ul></div><footer class="post-footer"><div class="post-tags"><a href="/tags/FE/" rel="tag"># FE</a> <a href="/tags/JavaScript/" rel="tag"># JavaScript</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2018/11/13/弄清-ECMAScript-6-模块/" rel="next" title="弄清 ECMAScript 6 模块">弄清 ECMAScript 6 模块</a></div><div class="post-nav-prev post-nav-item"><a href="/2018/11/14/理解inline元素的CSS盒模型/" rel="prev" title="理解inline元素的CSS盒模型">理解inline元素的CSS盒模型</a></div></div></footer></div></article></div></div><div class="comments" id="comments"><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">Table of Contents<li class="sidebar-nav-overview" data-target="site-overview-wrap">Overview</ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="kinboy"><p class="site-author-name" itemprop="name">kinboy</div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">66</span> <span class="site-state-item-name">posts</span></a></div><div class="site-state-item site-state-categories"><a href="/categories/index.html"><span class="site-state-item-count">31</span> <span class="site-state-item-name">categories</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/index.html"><span class="site-state-item-count">52</span> <span class="site-state-item-name">tags</span></a></div></nav><div class="feed-link motion-element"><a href="/atom.xml" rel="alternate">RSS</a></div><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/kinboyw" target="_blank" title="GitHub">GitHub</a></span><span class="links-of-author-item"><a href="mailto:kinboy9275@gmail.com" target="_blank" title="E-Mail"> E-Mail</a></span></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#深拷贝-VS-浅拷贝"><span class="nav-number">1.</span> <span class="nav-text">深拷贝 VS 浅拷贝</span></a><li class="nav-item nav-level-2"><a class="nav-link" href="#最简单的选择：使用-Lodash"><span class="nav-number">2.</span> <span class="nav-text">最简单的选择：使用 Lodash</span></a><li class="nav-item nav-level-2"><a class="nav-link" href="#Object-Assign"><span class="nav-number">3.</span> <span class="nav-text">Object.Assign()</span></a><li class="nav-item nav-level-2"><a class="nav-link" href="#使用对象展开表达式"><span class="nav-number">4.</span> <span class="nav-text">使用对象展开表达式</span></a><li class="nav-item nav-level-2"><a class="nav-link" href="#错误的方式"><span class="nav-number">5.</span> <span class="nav-text">错误的方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-Object-create"><span class="nav-number">5.1.</span> <span class="nav-text">使用 Object.create()</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#JSON-序列化"><span class="nav-number">5.2.</span> <span class="nav-text">JSON 序列化</span></a></ol></ol></div></div></section><div class="back-to-top"><span id="scrollpercent"><span>0</span>%</span></div></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2019</span><span class="with-love"></span> <span class="author" itemprop="copyrightHolder">kinboy</span><br><img src="/images/beian.png"> <span style="width:300px;margin:0 auto;padding:20px 0"><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42011102002861" style="display:inline-block;text-decoration:none;height:20px;line-height:20px"><img src style="float:left"><p style="float:left;height:20px;line-height:20px;margin:0 0 0 5px;color:#939393">鄂公网安备 42011102002861号</p></a></span></div></div></footer></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type="text/javascript" src="/lib/three/three.min.js"></script><script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script><script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><script id="dsq-count-scr" src="https://kinboy-wang.disqus.com/count.js" async></script><script type="text/javascript">var disqus_config=function(){this.page.url="http://kinboyw.github.io/2018/11/14/JavaScript对象拷贝的误区/",this.page.identifier="2018/11/14/JavaScript对象拷贝的误区/",this.page.title="JavaScript对象拷贝的误区"},d=document,s=d.createElement("script");s.src="https://kinboy-wang.disqus.com/embed.js",s.setAttribute("data-timestamp",""+ +new Date),(d.head||d.body).appendChild(s)</script><script type="text/javascript">// Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });</script><script>!function(){var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}()</script>

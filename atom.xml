@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Kinboy&#39;s note</title>
+  
+  <subtitle>前端漫记</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://kinboyw.github.io/"/>
+  <updated>2019-07-15T10:05:10.339Z</updated>
+  <id>http://kinboyw.github.io/</id>
+  
+  <author>
+    <name>kinboy</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Git 压缩多个commit为单个commit</title>
+    <link href="http://kinboyw.github.io/2019/04/09/Git-%E5%8E%8B%E7%BC%A9%E5%A4%9A%E4%B8%AAcommit%E4%B8%BA%E5%8D%95%E4%B8%AAcommit/"/>
+    <id>http://kinboyw.github.io/2019/04/09/Git-压缩多个commit为单个commit/</id>
+    <published>2019-04-09T15:02:20.000Z</published>
+    <updated>2019-07-15T10:05:10.339Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;原文——&lt;a href=&quot;https://www.internalpointers.com/post/squash-commits-into-one-git&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Squash commits into one with Git&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;本篇介绍一个很棒的能将多次修改合并起来的方法，尤其是在将他们共享出去之前&lt;/p&gt;
+&lt;p&gt;在 Git 中，你可以使用强大的 &lt;code&gt;interactive rebase&lt;/code&gt;（交互式 rebase）将多次提交合并成一次。这是我常用的一个很方便的工具；我经常通过将多个临时的小的提交合并成一次提交，然后将整理好的代码 push 给远端。 &lt;/p&gt;
+    
+    </summary>
+    
+      <category term="git" scheme="http://kinboyw.github.io/categories/git/"/>
+    
+    
+      <category term="git" scheme="http://kinboyw.github.io/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>字体设计基础(1)视觉均衡</title>
+    <link href="http://kinboyw.github.io/2019/04/03/%E5%AD%97%E4%BD%93%E8%AE%BE%E8%AE%A1%E5%9F%BA%E7%A1%80-1-%E8%A7%86%E8%A7%89%E5%9D%87%E8%A1%A1/"/>
+    <id>http://kinboyw.github.io/2019/04/03/字体设计基础-1-视觉均衡/</id>
+    <published>2019-04-03T13:15:57.000Z</published>
+    <updated>2019-07-15T10:05:10.394Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;strong&gt;字体设计基础&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;【字体设计基础】系列翻译自 &lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="翻译" scheme="http://kinboyw.github.io/categories/%E7%BF%BB%E8%AF%91/"/>
+    
+      <category term="字体" scheme="http://kinboyw.github.io/categories/%E7%BF%BB%E8%AF%91/%E5%AD%97%E4%BD%93/"/>
+    
+    
+      <category term="字体" scheme="http://kinboyw.github.io/tags/%E5%AD%97%E4%BD%93/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>用 VSCode 调试 React</title>
+    <link href="http://kinboyw.github.io/2019/04/02/%E7%94%A8-VSCode-%E8%B0%83%E8%AF%95-React/"/>
+    <id>http://kinboyw.github.io/2019/04/02/用-VSCode-调试-React/</id>
+    <published>2019-04-02T02:16:15.000Z</published>
+    <updated>2019-07-15T10:05:10.409Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://cdn-images-1.medium.com/max/1400/1*XzK7XPYkM2le0dgoKqxtjA.jpeg&quot; alt=&quot;img&quot;&gt;&lt;/p&gt;
+&lt;p&gt;我终于不用再花时间在终端，浏览器和编辑器之间往返来回了。难道不是所有人都在这么做吗？&lt;/p&gt;
+&lt;p&gt;在这篇教程中我会教你用 Visual Studio Code 的 debug 功能为你的 React 工作流赋能。你会学到如何如何将 VSCode 和 Chrome 连接起来，这样你就可以做到直接从 VSCode 调试浏览器中的代码了😎&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="工具" scheme="http://kinboyw.github.io/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+    
+      <category term="工具" scheme="http://kinboyw.github.io/tags/%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>撤销一个 git commit --amend</title>
+    <link href="http://kinboyw.github.io/2019/03/29/%E6%92%A4%E9%94%80%E4%B8%80%E4%B8%AA-git-commit-amend/"/>
+    <id>http://kinboyw.github.io/2019/03/29/撤销一个-git-commit-amend/</id>
+    <published>2019-03-29T02:17:44.000Z</published>
+    <updated>2019-07-15T10:05:10.407Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;可能会碰到这样的情况，你想要将本该在 HEAD 之前提交的修改通过 &lt;code&gt;git commit --amend&lt;/code&gt; 提交追加到 HEAD 上了。这样，就需要回滚你刚刚完成的操作，然后将它应用到正确的提交上。对于简单的修改，你可能会发现 &lt;a href=&quot;https://blog.pivotal.io/users/khicks/blog/articles/git-reset-p&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;&lt;code&gt;git reset -p&lt;/code&gt;&lt;/a&gt;  很方便。很多情况下修改的内容太多，并且和前面的提交交织在一起，你可能会需要 &lt;code&gt;git reflog&lt;/code&gt; 帮忙。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="git" scheme="http://kinboyw.github.io/categories/git/"/>
+    
+    
+      <category term="git" scheme="http://kinboyw.github.io/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>GitFlow 工作流</title>
+    <link href="http://kinboyw.github.io/2019/03/26/GitFlow-%E5%B7%A5%E4%BD%9C%E6%B5%81/"/>
+    <id>http://kinboyw.github.io/2019/03/26/GitFlow-工作流/</id>
+    <published>2019-03-26T12:01:04.000Z</published>
+    <updated>2019-07-15T10:05:10.339Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt; 原文– &lt;a href=&quot;https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Gitflow Workflow&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Gitfow 工作流是一个 Git 工作流设计，第一次是被 &lt;a href=&quot;http://nvie.com/posts/a-successful-git-branching-model/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Vincent Driessen at nvie&lt;/a&gt; 发布并收到欢迎。Gitflow 工作流 定义了一个严格围绕项目发布的分支模型。它提供了一个用于管理大型项目的稳定框架。&lt;/p&gt;
+&lt;p&gt;Gitflow 完美地适合于具有计划性发布周期的项目。这种工作流不会添加任何超出 &lt;a href=&quot;http://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;特性分支工作流&lt;/a&gt; 所需范围之外的新概念或者命令。相反，它为不同分支分配了非常详细的角色，并且定义了如何以及合适他们应该交互。除了 &lt;code&gt;feature&lt;/code&gt; 分支，它为准备阶段，维护阶段和记录版本阶段使用了独立的分支。当然，你也可以充分利用所有特性分支工作流的优势：拉取请求，独立实验，以及更多高效合作。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="git" scheme="http://kinboyw.github.io/categories/git/"/>
+    
+    
+      <category term="git" scheme="http://kinboyw.github.io/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>十分钟介绍 MobX 和 React</title>
+    <link href="http://kinboyw.github.io/2019/03/24/%E5%8D%81%E5%88%86%E9%92%9F%E4%BB%8B%E7%BB%8D-MobX-%E5%92%8C-React/"/>
+    <id>http://kinboyw.github.io/2019/03/24/十分钟介绍-MobX-和-React/</id>
+    <published>2019-03-24T05:45:00.000Z</published>
+    <updated>2019-07-15T10:05:10.391Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;原文：&lt;a href=&quot;https://mobx.js.org/getting-started.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Ten minute introduction to MobX and React&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/mobxjs/mobx&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;&lt;code&gt;MobX&lt;/code&gt;&lt;/a&gt; 是一个简单的，可扩展并且经过实战考研的状态管理解决方案。这篇教程将会花10分钟时间教会你关于 MobX 的全部重要概念。MobX 是一个独立的库，但是大多数人会将它和 React 组合使用，本篇教程也将关注这种组合的用法。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="FE" scheme="http://kinboyw.github.io/categories/FE/"/>
+    
+      <category term="JavaScript" scheme="http://kinboyw.github.io/categories/FE/JavaScript/"/>
+    
+    
+      <category term="FE" scheme="http://kinboyw.github.io/tags/FE/"/>
+    
+      <category term="JavaScript" scheme="http://kinboyw.github.io/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>为什么没有CSS4，解释CSS level</title>
+    <link href="http://kinboyw.github.io/2019/03/21/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B2%A1%E6%9C%89CSS4%EF%BC%8C%E8%A7%A3%E9%87%8ACSS-level/"/>
+    <id>http://kinboyw.github.io/2019/03/21/为什么没有CSS4，解释CSS-level/</id>
+    <published>2019-03-20T17:00:41.000Z</published>
+    <updated>2019-07-15T10:05:10.381Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;原文– &lt;a href=&quot;https://rachelandrew.co.uk/archives/2016/09/13/why-there-is-no-css4-explaining-css-levels/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Where there is no CSS4 - explaining CSS Levels&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;​    我们已经有了 CSS1 和 CSS2，我们甚至还有过 CSS2.1，后来我们接着有了 CSS3，CSS3 真的存在吗？这篇文章将会快速介绍当今 CSS 是如何制定版本号的。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="FE" scheme="http://kinboyw.github.io/categories/FE/"/>
+    
+      <category term="CSS" scheme="http://kinboyw.github.io/categories/FE/CSS/"/>
+    
+    
+      <category term="CSS" scheme="http://kinboyw.github.io/tags/CSS/"/>
+    
+      <category term="Layout" scheme="http://kinboyw.github.io/tags/Layout/"/>
+    
+      <category term="CSS布局" scheme="http://kinboyw.github.io/tags/CSS%E5%B8%83%E5%B1%80/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>深入理解JS原型</title>
+    <link href="http://kinboyw.github.io/2019/02/27/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3JS%E5%8E%9F%E5%9E%8B/"/>
+    <id>http://kinboyw.github.io/2019/02/27/深入理解JS原型/</id>
+    <published>2019-02-26T16:53:39.000Z</published>
+    <updated>2019-07-15T10:05:10.407Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文不会过多介绍基础知识，而是把重点放在原型的各个难点上。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://camo.githubusercontent.com/71cab2efcf6fb8401a2f0ef49443dd94bffc1373/68747470733a2f2f757365722d676f6c642d63646e2e786974752e696f2f323031382f332f31332f313632316538613962636230383732643f773d34383826683d35393026663d706e6726733d313531373232&quot; alt&gt;&lt;/p&gt;
+&lt;p&gt;大家可以先仔细分析下该图，然后让我们进入主题&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="FE" scheme="http://kinboyw.github.io/categories/FE/"/>
+    
+      <category term="JavaScript" scheme="http://kinboyw.github.io/categories/FE/JavaScript/"/>
+    
+    
+      <category term="FE" scheme="http://kinboyw.github.io/tags/FE/"/>
+    
+      <category term="JavaScript" scheme="http://kinboyw.github.io/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JSONP原理及实现</title>
+    <link href="http://kinboyw.github.io/2019/02/26/JSONP%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E7%8E%B0/"/>
+    <id>http://kinboyw.github.io/2019/02/26/JSONP原理及实现/</id>
+    <published>2019-02-26T06:33:04.000Z</published>
+    <updated>2019-07-15T10:05:10.343Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;JSONP的原理就不细说了，就是利用script可以跨域的特点来实现跨域，首先我们考虑一个最简单的jsonp，就是简简单单创建script标签，&lt;br&gt;添加url的功能，如下：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;jsonp&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;url&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; script = &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.createElement(&lt;span class=&quot;string&quot;&gt;&#39;script&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  script.src = url;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  script.type = &lt;span class=&quot;string&quot;&gt;&#39;text/javascript&#39;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.body.appendChild(script);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="FE" scheme="http://kinboyw.github.io/categories/FE/"/>
+    
+      <category term="JavaScript" scheme="http://kinboyw.github.io/categories/FE/JavaScript/"/>
+    
+    
+      <category term="FE" scheme="http://kinboyw.github.io/tags/FE/"/>
+    
+      <category term="JavaScript" scheme="http://kinboyw.github.io/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>探索JavaScript构造函数与原型继承</title>
+    <link href="http://kinboyw.github.io/2019/02/15/%E6%8E%A2%E7%B4%A2JavaScript%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E4%B8%8E%E5%8E%9F%E5%9E%8B%E7%BB%A7%E6%89%BF/"/>
+    <id>http://kinboyw.github.io/2019/02/15/探索JavaScript构造函数与原型继承/</id>
+    <published>2019-02-15T03:39:40.000Z</published>
+    <updated>2019-07-15T10:05:10.406Z</updated>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;In javascript, every object has a constructor property that refers to the constructor function that initializes the object.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Sounds nice: it makes constructors sound static like classes in Java. Even the &lt;code&gt;new Constructor()&lt;/code&gt; syntax looks like it. And it seems true:&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;function MyConstructor() &amp;#123;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;var myobject = new MyConstructor();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;myobject.constructor == MyConstructor;     // true&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;But life isn’t that simple:&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;function MyConstructor() &amp;#123;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;MyConstructor.prototype = &amp;#123;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;var myobject = new MyConstructor();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;myobject.constructor == MyConstructor;  // false&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="FE" scheme="http://kinboyw.github.io/categories/FE/"/>
+    
+      <category term="JavaScript" scheme="http://kinboyw.github.io/categories/FE/JavaScript/"/>
+    
+    
+      <category term="FE" scheme="http://kinboyw.github.io/tags/FE/"/>
+    
+      <category term="JavaScript" scheme="http://kinboyw.github.io/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JavaScript中的New关键字</title>
+    <link href="http://kinboyw.github.io/2019/02/15/JavaScript%E4%B8%AD%E7%9A%84New%E5%85%B3%E9%94%AE%E5%AD%97/"/>
+    <id>http://kinboyw.github.io/2019/02/15/JavaScript中的New关键字/</id>
+    <published>2019-02-15T03:31:52.000Z</published>
+    <updated>2019-07-15T10:05:10.344Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;The &lt;code&gt;new&lt;/code&gt; keyword in JavaScript can be quite confusing when it is first encountered, as people tend to think that JavaScript is not an object-oriented programming language.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;What is it?&lt;/li&gt;
+&lt;li&gt;What problems does it solve?&lt;/li&gt;
+&lt;li&gt;When is it appropriate and when not?&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+      <category term="FE" scheme="http://kinboyw.github.io/categories/FE/"/>
+    
+      <category term="JavaScript" scheme="http://kinboyw.github.io/categories/FE/JavaScript/"/>
+    
+    
+      <category term="FE" scheme="http://kinboyw.github.io/tags/FE/"/>
+    
+      <category term="JavaScript" scheme="http://kinboyw.github.io/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JavaScript作用域</title>
+    <link href="http://kinboyw.github.io/2019/02/13/JavaScript%E4%BD%9C%E7%94%A8%E5%9F%9F/"/>
+    <id>http://kinboyw.github.io/2019/02/13/JavaScript作用域/</id>
+    <published>2019-02-13T08:43:28.000Z</published>
+    <updated>2019-07-15T10:05:10.344Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;​    作用域（&lt;a href=&quot;http://en.wikipedia.org/wiki/Scope_%28programming%29&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Scope&lt;/a&gt; ）是 JavaScript 语言的基础概念之一，可能是让我在编写复杂程序的时候煎熬最多的。记不清多少次迷失在追踪函数到函数之间传递控制时 &lt;code&gt;this&lt;/code&gt; 关键字指向的问题中了，我发现自己经常以各种令人困惑的方式扭曲我的代码，试图对理解变量在哪些地方可以访问的问题上保留一点理智。&lt;/p&gt;
+&lt;p&gt;​    这篇文章将会正面解决问题，概述作用域和上下文的定义，测试两种允许我们操作上下文的 JavaScript 方法，并深入探讨我遇到过的 90% 的问题的解决方案。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="FE" scheme="http://kinboyw.github.io/categories/FE/"/>
+    
+      <category term="JavaScript" scheme="http://kinboyw.github.io/categories/FE/JavaScript/"/>
+    
+    
+      <category term="FE" scheme="http://kinboyw.github.io/tags/FE/"/>
+    
+      <category term="JavaScript" scheme="http://kinboyw.github.io/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>配置 Nginx HTTPS 服务器</title>
+    <link href="http://kinboyw.github.io/2019/01/17/%E9%85%8D%E7%BD%AE-Nginx-HTTPS-%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    <id>http://kinboyw.github.io/2019/01/17/配置-Nginx-HTTPS-服务器/</id>
+    <published>2019-01-17T01:56:24.000Z</published>
+    <updated>2019-07-15T10:05:10.428Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;译自官方文档—— &lt;a href=&quot;http://nginx.org/en/docs/http/configuring_https_servers.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Configuring HTTPS servers&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;要配置 HTTPS 服务器，必须在 server 区的监听（listen）套接字上允许 ssl 参数，同时要声明服务器证书和私钥文件的位置：&lt;/p&gt;
+&lt;figure class=&quot;highlight nginx&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;section&quot;&gt;server&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attribute&quot;&gt;listen&lt;/span&gt;              &lt;span class=&quot;number&quot;&gt;443&lt;/span&gt; ssl;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attribute&quot;&gt;server_name&lt;/span&gt;         www.example.com;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attribute&quot;&gt;ssl_certificate&lt;/span&gt;     www.example.com.crt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attribute&quot;&gt;ssl_certificate_key&lt;/span&gt; www.example.com.key;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attribute&quot;&gt;ssl_protocols&lt;/span&gt;       TLSv1 TLSv1.&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; TLSv1.&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attribute&quot;&gt;ssl_ciphers&lt;/span&gt;         HIGH:!aNULL:!MD5;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    ...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;​    服务器证书是一个公开的实体。它会被发送给所有连接到服务器的客户端。私钥是一个安全实体，应该被保存在一个限制访问的文件中，但是要允许 Nginx 的主线程可读。私钥也可以保存在和证书同一个文件中：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ssl_certificate     www.example.com.cert;
+ssl_certificate_key www.example.com.cert;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;​    这种情况下文件的访问权限也应当被限制。尽管证书和私钥被保存在同一个文件中，只有证书会被发送给客户端。&lt;/p&gt;
+&lt;p&gt;​    &lt;code&gt;ssl_protocols&lt;/code&gt; 和 &lt;code&gt;ssl_ciphers&lt;/code&gt; 指令可以用来限制只允许高版本和强加密的 SSL/TLS 的连接。Nginx 默认使用  &lt;code&gt;“ssl_protocols TLSv1 TLSv1.1 TLSv1.2”&lt;/code&gt; 和 &lt;code&gt;“ssl_ciphers HIGH:!aNULL:!MD5”&lt;/code&gt;，所以通常不需要特意配置它们。要知道这些指令的默认配置变过几次。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Nginx" scheme="http://kinboyw.github.io/categories/Nginx/"/>
+    
+    
+      <category term="Nginx" scheme="http://kinboyw.github.io/tags/Nginx/"/>
+    
+      <category term="HTTPS" scheme="http://kinboyw.github.io/tags/HTTPS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JavaScript原型图解</title>
+    <link href="http://kinboyw.github.io/2018/12/13/JavaScript%E5%8E%9F%E5%9E%8B%E5%9B%BE%E8%A7%A3/"/>
+    <id>http://kinboyw.github.io/2018/12/13/JavaScript原型图解/</id>
+    <published>2018-12-13T13:53:05.000Z</published>
+    <updated>2019-07-15T10:05:10.344Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;介绍-JavaScript-原型&quot;&gt;&lt;a href=&quot;#介绍-JavaScript-原型&quot; class=&quot;headerlink&quot; title=&quot;介绍 JavaScript 原型&quot;&gt;&lt;/a&gt;介绍 JavaScript 原型&lt;/h2&gt;&lt;p&gt;JavaScript 引擎默认提供了 Object() 构造函数和一个可以被 Object.prototype 引用到的匿名对象。&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(&lt;span class=&quot;built_in&quot;&gt;Object&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(&lt;span class=&quot;built_in&quot;&gt;Object&lt;/span&gt;.prototype);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;Object.prototype 对象有许多内置属性，例如 toString() ，valueOf()等等。也有一个名为 constructor 的属性，它指向 Object() 构造函数。&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(&lt;span class=&quot;built_in&quot;&gt;Object&lt;/span&gt;.prototype.constructor === &lt;span class=&quot;built_in&quot;&gt;Object&lt;/span&gt;); &lt;span class=&quot;comment&quot;&gt;// true&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;假设原型代表一个函数，方块代表一个对象。下面的图形就描绘出了 Object() 函数和 Object.prototype 对象之间的关系：&lt;/p&gt;
+&lt;img src=&quot;/2018/12/13/JavaScript原型图解/JavaScript-Prototype-300x109.png&quot; width=&quot;300&quot;&gt;
+    
+    </summary>
+    
+      <category term="FE" scheme="http://kinboyw.github.io/categories/FE/"/>
+    
+      <category term="JavaScript" scheme="http://kinboyw.github.io/categories/FE/JavaScript/"/>
+    
+    
+      <category term="FE" scheme="http://kinboyw.github.io/tags/FE/"/>
+    
+      <category term="JavaScript" scheme="http://kinboyw.github.io/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>理解JavaScript对象</title>
+    <link href="http://kinboyw.github.io/2018/12/12/%E7%90%86%E8%A7%A3JavaScript%E5%AF%B9%E8%B1%A1/"/>
+    <id>http://kinboyw.github.io/2018/12/12/理解JavaScript对象/</id>
+    <published>2018-12-12T14:55:47.000Z</published>
+    <updated>2019-07-15T10:05:10.408Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;原文：&lt;a href=&quot;http://www.javascripttutorial.net/javascript-objects/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Understanding JavaScript Objects&lt;/a&gt; &lt;/p&gt;
+&lt;p&gt;如果你写过 C++，Java 或者 C#，那你通常会定义类，类是对象的蓝图，然后从这个类创建一些跟这个类具有相同属性和方法的对象。&lt;/p&gt;
+&lt;p&gt;JavaScript 面向对象编程的方式有所不同。JavaScript 中没有其他面向对象编程语言中的类的概念（ES6中才开始定义了类）。&lt;/p&gt;
+&lt;p&gt;JavaScript 将对象定义为一组包含了初始值，对象与函数的属性的无序集合。换句话说，对象就是一组键值对（哈希），值就是数据或者函数。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="FE" scheme="http://kinboyw.github.io/categories/FE/"/>
+    
+      <category term="JavaScript" scheme="http://kinboyw.github.io/categories/FE/JavaScript/"/>
+    
+    
+      <category term="FE" scheme="http://kinboyw.github.io/tags/FE/"/>
+    
+      <category term="JavaScript" scheme="http://kinboyw.github.io/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JavaScript的数据类型转换</title>
+    <link href="http://kinboyw.github.io/2018/12/10/JavaScript%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/"/>
+    <id>http://kinboyw.github.io/2018/12/10/JavaScript的数据类型转换/</id>
+    <published>2018-12-10T13:37:56.000Z</published>
+    <updated>2019-07-15T10:05:10.352Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;JavaScript是一种松散类型。这并不意味着它就没有数据类型，只是变量的值或者 JavaScript 对象属性不需要为其分配特定类型的值，也不必总是保持相同的类型。JavaScript 可以自由地将一种类型的值转为他们使用变量的上下文中需要的类型。&lt;/p&gt;
+&lt;p&gt;JavaScript 的松散类型以及轻松的类型转换仍然拯救不了程序员们需要思考他们正在处理的值的实际类型。一个浏览器脚本中非常常见的错误就是，读取一个表单空间的 value 属性，用户应该在其中输入一个数字，然后将该值与另一个数字相加。因为表单空间的 value 属性其实是字符串（尽管其包含的字符序列表示的是一串数字），如果尝试将这串字符串与另一个值相加，即使另一个值碰巧是一个数字，结果也会导致第二个值被类型转换成一个字符串，然后拼接到第一个字符串的末尾。&lt;/p&gt;
+&lt;p&gt;这个问题源于 &lt;code&gt;+&lt;/code&gt; 操作符的数字相加和字符串拼接的双重性质。因此，这个操作符的实际作用取决于上下文，只有操作符两边的操作数都是数字时， &lt;code&gt;+&lt;/code&gt; 操作符才用作数值相加。除此之外，它都会将操作数转换成字符型，然后执行字符串拼接。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="FE" scheme="http://kinboyw.github.io/categories/FE/"/>
+    
+      <category term="JavaScript" scheme="http://kinboyw.github.io/categories/FE/JavaScript/"/>
+    
+    
+      <category term="FE" scheme="http://kinboyw.github.io/tags/FE/"/>
+    
+      <category term="JavaScript" scheme="http://kinboyw.github.io/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JavaScript的数据类型</title>
+    <link href="http://kinboyw.github.io/2018/12/10/JavaScript%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"/>
+    <id>http://kinboyw.github.io/2018/12/10/JavaScript的数据类型/</id>
+    <published>2018-12-10T12:23:21.000Z</published>
+    <updated>2019-07-15T10:05:10.351Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h4 id=&quot;JavaScript的两种类型&quot;&gt;&lt;a href=&quot;#JavaScript的两种类型&quot; class=&quot;headerlink&quot; title=&quot;JavaScript的两种类型&quot;&gt;&lt;/a&gt;JavaScript的两种类型&lt;/h4&gt;&lt;p&gt;JavaScript中有两种数据：初始值和对象。对象以外的类型就是初始值类型，初始值类型不包含方法。&lt;/p&gt;
+&lt;p&gt;JS中共有6中初始值类型：Boolean，Number，String，Null，Undefined，Symbol&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="FE" scheme="http://kinboyw.github.io/categories/FE/"/>
+    
+      <category term="JavaScript" scheme="http://kinboyw.github.io/categories/FE/JavaScript/"/>
+    
+    
+      <category term="FE" scheme="http://kinboyw.github.io/tags/FE/"/>
+    
+      <category term="JavaScript" scheme="http://kinboyw.github.io/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JavaScript现代模式，use strict</title>
+    <link href="http://kinboyw.github.io/2018/12/02/JavaScript%E7%8E%B0%E4%BB%A3%E6%A8%A1%E5%BC%8F%EF%BC%8Cuse-strict/"/>
+    <id>http://kinboyw.github.io/2018/12/02/JavaScript现代模式，use-strict/</id>
+    <published>2018-12-02T04:43:36.000Z</published>
+    <updated>2019-07-15T10:05:10.349Z</updated>
+    
+    <summary type="html">
+    
+      &lt;img src=&quot;/2018/12/02/JavaScript现代模式，use-strict/javascript-825x300.jpg&quot;&gt;
+&lt;p&gt;很久以来，JavaScript 的发展过程中都不存在兼容性问题。新特性不断添加，但是并没有改变旧的功能。&lt;/p&gt;
+&lt;p&gt;这样的好处就是永远不会破坏已有的代码。但是不好的一面是，任何由 JavaScript 作者带来的错误或者设计缺陷都将永远伴随这门语言。&lt;/p&gt;
+&lt;p&gt;直到 ECMAScript 5（ES5）出现，状况才有所改观。它新增了语言特性的同时也修改了一些旧的特性。为了让代码能够正常工作，多数改动都是默认关闭的。开发者需要用 &lt;code&gt;use strict&lt;/code&gt; 指令显示地启用它们。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="FE" scheme="http://kinboyw.github.io/categories/FE/"/>
+    
+      <category term="JavaScript" scheme="http://kinboyw.github.io/categories/FE/JavaScript/"/>
+    
+    
+      <category term="FE" scheme="http://kinboyw.github.io/tags/FE/"/>
+    
+      <category term="JavaScript" scheme="http://kinboyw.github.io/tags/JavaScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CSS元素尺寸与滚动</title>
+    <link href="http://kinboyw.github.io/2018/12/02/CSS%E5%85%83%E7%B4%A0%E5%B0%BA%E5%AF%B8%E4%B8%8E%E6%BB%9A%E5%8A%A8/"/>
+    <id>http://kinboyw.github.io/2018/12/02/CSS元素尺寸与滚动/</id>
+    <published>2018-12-01T16:20:04.000Z</published>
+    <updated>2019-07-15T10:05:10.316Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;原文：&lt;a href=&quot;http://javascript.info/size-and-scroll&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Element size and scrolling&lt;/a&gt; &lt;/p&gt;
+&lt;img src=&quot;/2018/12/02/CSS元素尺寸与滚动/metric-all@2x.png&quot; width=&quot;600&quot;&gt;
+&lt;p&gt;我们可以从很多 JavaScript 属性中得到关于元素宽度，高度和几何特性的信息。&lt;/p&gt;
+&lt;p&gt;当在 JavaScript 中移动或者定位元素时，我们需要这些信息来计算坐标。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="FE" scheme="http://kinboyw.github.io/categories/FE/"/>
+    
+      <category term="CSS" scheme="http://kinboyw.github.io/categories/FE/CSS/"/>
+    
+    
+      <category term="FE" scheme="http://kinboyw.github.io/tags/FE/"/>
+    
+      <category term="CSS" scheme="http://kinboyw.github.io/tags/CSS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>React中用Index做列表的key值是反模式</title>
+    <link href="http://kinboyw.github.io/2018/11/19/React%E7%94%A8Index%E5%81%9A%E5%88%97%E8%A1%A8%E7%9A%84key%E5%80%BC%E6%98%AF%E5%8F%8D%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://kinboyw.github.io/2018/11/19/React用Index做列表的key值是反模式/</id>
+    <published>2018-11-19T15:22:26.000Z</published>
+    <updated>2019-07-15T10:05:10.362Z</updated>
+    
+    <summary type="html">
+    
+      &lt;img src=&quot;/2018/11/19/React用Index做列表的key值是反模式/download.png&quot; width=&quot;600&quot;&gt;
+&lt;p&gt;翻译原文：&lt;a href=&quot;https://medium.com/@robinpokorny/index-as-a-key-is-an-anti-pattern-e0349aece318&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Index as a key is an anti-pattern&lt;/a&gt; &lt;/p&gt;
+&lt;p&gt;经常见到程序员用 &lt;code&gt;index&lt;/code&gt; 作为列表项的 &lt;code&gt;key&lt;/code&gt; 值传给 React 来渲染列表：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;todos.map(&lt;span class=&quot;function&quot;&gt;(&lt;span class=&quot;params&quot;&gt;todo, index&lt;/span&gt;) =&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;lt;Todo&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#123;...todo&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    key=&amp;#123;index&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  /&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;)&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;这看起来还比较优雅，的确也消除了警告。但是这里有什么危险？&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="FE" scheme="http://kinboyw.github.io/categories/FE/"/>
+    
+      <category term="React" scheme="http://kinboyw.github.io/categories/FE/React/"/>
+    
+    
+      <category term="FE" scheme="http://kinboyw.github.io/tags/FE/"/>
+    
+      <category term="React" scheme="http://kinboyw.github.io/tags/React/"/>
+    
+  </entry>
+  
+</feed>

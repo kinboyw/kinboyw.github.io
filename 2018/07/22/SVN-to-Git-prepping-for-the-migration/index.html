@@ -1,0 +1,314 @@
+<!DOCTYPE html><html class="theme-next gemini use-motion" lang="ZH | EN"><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="google-site-verification" content="AKuwh4i11uWg0wOl_cM7AI_dHqOHOLKYfCxKc8Lfv6E"><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4"><link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222"><meta name="keywords" content="git,svn,"><link rel="alternate" href="/atom.xml" title="Kinboy's note" type="application/atom+xml"><meta name="description" content="原文：SVN to Git - prepping for the migration 在Why Git中，我们讨论了Git可以帮助您的团队变得更加敏捷的多种方式。一旦你已经决定转换，下一步就是弄清楚如何将已有的开发工作流迁移到Git。 这篇文章解释了你在将团队从SVN转换为Git时可能会遭遇到的最大变化。在迁移过程中最重要的事情是要记住Git不是SVN。为了理解Git的全部潜力，请尽力拥抱版本控制"><meta name="keywords" content="git,svn"><meta property="og:type" content="article"><meta property="og:title" content="SVN 到 Git，迁移的准备工作"><meta property="og:url" content="http://kinboyw.github.io/2018/07/22/SVN-to-Git-prepping-for-the-migration/index.html"><meta property="og:site_name" content="Kinboy&#39;s note"><meta property="og:description" content="原文：SVN to Git - prepping for the migration 在Why Git中，我们讨论了Git可以帮助您的团队变得更加敏捷的多种方式。一旦你已经决定转换，下一步就是弄清楚如何将已有的开发工作流迁移到Git。 这篇文章解释了你在将团队从SVN转换为Git时可能会遭遇到的最大变化。在迁移过程中最重要的事情是要记住Git不是SVN。为了理解Git的全部潜力，请尽力拥抱版本控制"><meta property="og:locale" content="ZH | EN"><meta property="og:updated_time" content="2019-07-15T10:05:10.370Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="SVN 到 Git，迁移的准备工作"><meta name="twitter:description" content="原文：SVN to Git - prepping for the migration 在Why Git中，我们讨论了Git可以帮助您的团队变得更加敏捷的多种方式。一旦你已经决定转换，下一步就是弄清楚如何将已有的开发工作流迁移到Git。 这篇文章解释了你在将团队从SVN转换为Git时可能会遭遇到的最大变化。在迁移过程中最重要的事情是要记住Git不是SVN。为了理解Git的全部潜力，请尽力拥抱版本控制"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Gemini",version:"5.1.4",sidebar:{position:"left",display:"post",offset:12,b2t:!0,scrollpercent:!0,onmobile:!1},fancybox:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},duoshuo:{userId:"0",author:"Author"},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"I didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><link rel="canonical" href="http://kinboyw.github.io/2018/07/22/SVN-to-Git-prepping-for-the-migration/"><title>SVN 到 Git，迁移的准备工作 | Kinboy's note</title><script type="text/javascript">var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?c9c2b9e915e6bb8ec323a2f98c0c98d8";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><body itemscope itemtype="http://schema.org/WebPage" lang="ZH | EN"><div class="container sidebar-position-left page-post-detail"><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"></span><span class="site-title">Kinboy's note</span><span class="logo-line-after"></span></a></div><h1 class="site-subtitle" itemprop="description">前端漫记</h1></div><div class="site-nav-toggle"><button></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><br>Home</a><li class="menu-item menu-item-about"><a href="/rscard/" rel="section"><br>About</a><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><br>Tags</a><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><br>Categories</a><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><br>Archives</a><li class="menu-item menu-item-top"><a href="/top/" rel="section"><br>Top</a><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><br>Search</a></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"></span><span class="popup-btn-close"></span><div class="local-search-input-wrapper"><input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input"></div></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://kinboyw.github.io/2018/07/22/SVN-to-Git-prepping-for-the-migration/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="kinboy"><meta itemprop="description" content><meta itemprop="image" content="/images/avatar.png"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Kinboy's note"></span><header class="post-header"><h2 class="post-title" itemprop="name headline">SVN 到 Git，迁移的准备工作</h2><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Posted on</span> <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-22T13:24:33+08:00">2018-07-22</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">In</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span><a href="/2018/07/22/SVN-to-Git-prepping-for-the-migration/#comments" itemprop="discussionUrl"></a></span><div class="post-wordcount"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Words count in article&#58;</span> <span title="Words count in article">4k</span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">Reading time &asymp;</span> <span title="Reading time">15</span></div></div></header><div class="post-body" itemprop="articleBody"><p>原文：<a href="https://www.atlassian.com/git/tutorials/svn-to-git-prepping-your-team-migration#for-administrators" target="_blank" rel="noopener">SVN to Git - prepping for the migration</a><p>在<a href="https://www.atlassian.com/git/tutorials/why-git" target="_blank" rel="noopener">Why Git</a>中，我们讨论了Git可以帮助您的团队变得更加敏捷的多种方式。一旦你已经决定转换，下一步就是弄清楚如何将已有的开发工作流迁移到Git。<p>这篇文章解释了你在将团队从SVN转换为Git时可能会遭遇到的最大变化。在迁移过程中最重要的事情是要记住Git不是SVN。为了理解Git的全部潜力，请尽力拥抱版本控制的新思想。<p><a href="https://www.atlassian.com/git/tutorials/svn-to-git-prepping-your-team-migration#for-administrators" target="_blank" rel="noopener">For administrators</a> <a href="https://www.atlassian.com/git/tutorials/svn-to-git-prepping-your-team-migration#basic-git-commands" target="_blank" rel="noopener">Basic Git commands</a> <a href="https://www.atlassian.com/git/tutorials/svn-to-git-prepping-your-team-migration#git-migration-tools" target="_blank" rel="noopener">Git Migration Tools</a> <a href="https://www.atlassian.com/git/tutorials/svn-to-git-prepping-your-team-migration#for-developers" target="_blank" rel="noopener">For developers</a><h2 id="For-administrators-对管理员">For administrators 对管理员</h2><p>采用Git可能需要几天到几个月的时间，具体取决于团队的规模。本节介绍了在培训员工使用 Git 以及从 SVN 迁移仓库到 Git过程中工程经理需要注意的问题。</p><h2 id="Basic-Git-commands-基本Git命令">Basic Git commands 基本Git命令</h2><p>Git 曾因其陡峭的学习曲线儿闻名。然而 Git 维护者一直在稳步发布新的改进，例如合理的默认值和上下文帮助信息，这使得上手Git的过程更加轻松愉悦。<p>Atlassian 提供了全面的自学Git的<a href="https://www.atlassian.com/git/tutorials" target="_blank" rel="noopener">系列教程</a>,也包含了网络讨论和在线训练课程。所有这些应该满足了你的团队着手使用Git所需要的全部培训选择。为了让你能够顺利开始，这里有一些常见Git命令的列表：<table><thead><tr><th>Git task<th>Notes<th>Git commands<tbody><tr><td><a href="https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-config" target="_blank" rel="noopener">Tell Git who you are</a><td>Configure the author name and email address to be used with your commits.Note that Git strips some characters (for example trailing periods) from user.name.<td>git config –global user.name “Sam Smith” git config –global user.email <a href="mailto:sam@example.com" target="_blank" rel="noopener">sam@example.com</a><tr><td><a href="https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-init" target="_blank" rel="noopener">Create a new local repository</a><td>git init<tr><td><a href="https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-clone" target="_blank" rel="noopener">Check out a repository</a><td>Create a working copy of a local repository:<td>git clone /path/to/repository<tr><td>For a remote server, use:<td>git clone username@host:/path/to/repository<tr><td><a href="https://www.atlassian.com/git/tutorials/saving-changes/git-add" target="_blank" rel="noopener">Add files</a><td>Add one or more files to staging (index):<td>git add<filename>git add *</filename><tr><td><a href="https://www.atlassian.com/git/tutorials/saving-changes/git-commit" target="_blank" rel="noopener">Commit</a><td>Commit changes to head (but not yet to the remote repository):<td>git commit -m “Commit message”<tr><td>Commit any files you’ve added with git add, and also commit any files you’ve changed since then:<td>git commit -a<tr><td><a href="https://www.atlassian.com/git/tutorials/syncing/git-push" target="_blank" rel="noopener">Push</a><td>Send changes to the master branch of your remote repository:<td>git push origin master<tr><td><a href="https://www.atlassian.com/git/tutorials/inspecting-a-repository/git-status" target="_blank" rel="noopener">Status</a><td>List the files you’ve changed and those you still need to add or commit:<td>git status<tr><td><a href="https://www.atlassian.com/git/tutorials/syncing/git-remote" target="_blank" rel="noopener">Connect to a remote repository</a><td>If you haven’t connected your local repository to a remote server, add the server to be able to push to it:<td>git remote add origin<tr><td>List all currently configured remote repositories:<td>git remote -v<tr><td><a href="https://www.atlassian.com/git/tutorials/using-branches" target="_blank" rel="noopener">Branches</a><td>Create a new branch and switch to it:<td>git checkout -b<tr><td>Switch from one branch to another:<td>git checkout<tr><td>List all the branches in your repo, and also tell you what branch you’re currently in:<td>git branch<tr><td>Delete the feature branch:<td>git branch -d<tr><td>Push the branch to your remote repository, so others can use it:<td>git push origin<tr><td>Push all branches to your remote repository:<td>git push –all origin<tr><td>Delete a branch on your remote repository:<td>git push origin :<tr><td><a href="https://www.atlassian.com/git/tutorials/syncing/git-pull" target="_blank" rel="noopener">Update from the remote repository</a><td>Fetch and merge changes on the remote server to your working directory:<td>git pull<tr><td>To merge a different branch into your active branch:<td>git merge<tr><td>View all the merge conflicts:View the conflicts against the base file:Preview changes, before merging:<td>git diff git diff –base<filename>git diff<sourcebranch></sourcebranch></filename><tr><td>After you have manually resolved any conflicts, you mark the changed file:<td>git add<tr><td>Tags<td>You can use tagging to mark a significant changeset, such as a release:<td>git tag 1.0.0<tr><td>CommitId is the leading characters of the changeset ID, up to 10, but must be unique. Get the ID using:<td>git log<tr><td>Push all tags to remote repository:<td>git push –tags origin<tr><td><a href="https://www.atlassian.com/git/tutorials/undoing-changes" target="_blank" rel="noopener">Undo local changes</a><td>If you mess up, you can replace the changes in your working tree with the last content in head:Changes already added to the index, as well as new files, will be kept.<td>git checkout –<tr><td>Instead, to drop all your local changes and commits, fetch the latest history from the server and point your local master branch at it, do this:<td>git fetch origin git reset –hard origin/master<tr><td>Search<td>Search the working directory for foo():<td>git grep “foo()”</table><h2 id="Git-Migration-Tools-Git-迁移工具">Git Migration Tools Git 迁移工具</h2><p>有很多工具可以帮助你将已有的工程从SVN迁移到Git上，但是在你决定使用哪种工具之前，你需要弄清楚你希望如何迁移自己的代码。你有以下选项：<ul><li>迁移整个代码库到Git，同时停用SVN。<li>不迁移现有工程到Git，但是新的工程使用Git。<li>迁移一些工程到Git，同时在其他工程上继续使用SVN。<li>在同一个工程上同步使用SVN 和 Git。</ul><p>完整迁移到Git会降低开发流程的复杂性，因此这是首选方案。然而对那些拥有数十个开发团队和可能几百个工程项目的大公司来说，这也不一定可行。<p>你选择的迁移工具很大程度取决于你所选择的上面的策略。一些常见的 SVN-to-Git的迁移工具介绍如下。<h3 id="Atlassian’s-migration-scripts-Atlassian的迁移工具">Atlassian’s migration scripts Atlassian的迁移工具</h3><p>如果你对突然过渡感兴趣，那么Atlassian的迁移脚本对你来说是个不错的选择。这些脚本提供了将已有的SVN仓库可靠地转换为Git仓库所需要的全部工具。生成的native-Git历史记录可确保你在转换过程后无须处理任何SVN-to-Git的互操作性问题。<p>我们提供了完整的<a href="https://www.atlassian.com/git/tutorials/migrating-overview" target="_blank" rel="noopener">技术演练</a> ，使用这些脚本将您的整个代码库转换为Git仓库集合。演练解释了从提取SVN作者信息到重新组织非标准SVN存储库结构的所有内容。<h3 id="SVN-Mirror-for-Stash-now-Bitbucket-Server-plugin">SVN Mirror for Stash (now Bitbucket Server) plugin</h3><p><a href="https://marketplace.atlassian.com/plugins/org.tmatesoft.subgit.stash-svn-importer" target="_blank" rel="noopener">SVN Mirror for Stash</a> 是一个<a href="https://bitbucket.org/product/server" target="_blank" rel="noopener">Bitbucket Server</a> 插件，可以让你轻松地维护兼容SVN和Git的混合代码库。和Atlassian的迁移脚本不同的是，SVN Mirror for Stash 允许你在同一个工程上同步使用 Git 和 SVN，只要你喜欢。<p>这个折中的解决方案对大公司来说是一个很棒的选择。它允许不同的团队在方便时迁移工作流，从而实现增量采用Git。<h3 id="What-is-Git-SVN">What is Git-SVN?</h3><p>git-svn工具是一个作用于本地Git仓库和 远程SVN仓库之间的接口。Git-svn让开发者可以在本地编写和向本地Git提交代码，然后将提交的内容用 SVN commit风格的操作提交到SVN中心仓库。这应该是暂时的，但是探索从SVN切换到Git的过程中很有帮助。<p>如果你不确定要切换到Git并希望让一些开发者探索Git命令而不全面迁移的情况下，git svn 是一个选择。它也非常适合培训阶段 - 而不是突然过渡，你的团队可以轻松地使用本地Git命令，不必担心协作的工作流。<p>要注意 git svn 应该只是你的迁移过程中的暂时阶段。因为它仍然依赖于SVN这个后端，它无法利用更加强大的Git功能，例如分支或者高级协作工作流程。<h3 id="Rollout-Strategies-推出策略">Rollout Strategies 推出策略</h3><p>迁移代码库只是应用Git的一个方面。你也应该考虑如何将Git介绍给代码库背后的人。外部顾问，内部Git冠军和飞行员团队是将开发团队迁移到Git的三个主要策略。<h3 id="External-Git-Consultants-外部顾问">External Git Consultants 外部顾问</h3><p>Git顾问基本上可以象征性地收费为你处理迁移过程。这样做的优点是，你可以不用自己花时间学习就能创建一个完美适配你的团队的Git工作流。它还可以为您提供专家培训资源，如果你的团队正在学习Git。 <a href="https://www.atlassian.com/resources/experts/?tab=find-an-expert&amp;expertskills=SVNtoGitmigration&amp;products=*&amp;expertlocation=" target="_blank" rel="noopener">Atlassian Experts</a> 是从SVN迁移到Git的专家，也是寻找Git顾问的好资源。<p>另一方面，自己设计和实现一个Git工作流是团队理解新的开发流程的内部工作的好办法。这中方式可以避免当专家离开后，团队陷入黑暗的风险。<h3 id="Internal-Git-Champions-内部Git冠军">Internal Git Champions 内部Git冠军</h3><p>Git冠军是你公司内部对使用Git感到很高兴的开发者。利用冠军程序员对于拥有强大的开发者文化的公司和渴望成为早期Git使用者的热心程序员来说是一个很好的选择。<p>相比于外面的顾问，这种方式还有一个有点就是能够将Git专业知识保留在内部。然而需要大量的时间来训练Git冠军，而且需要承担选择错误的Git工作流或者错误的实现的风险。<h3 id="Pilot-Teams-飞行员团队">Pilot Teams 飞行员团队</h3><p>第三种选择是用飞行员团队测试。如果你有一个小团队在一个相对独立的项目上工作，这种方式最好。将外部专家于飞行员团队内部的Git冠军组合甚至效果更佳。<p>这样做的好处是需要整个团队的支持，并且还限制了选择错误工作流的风险，因为它在设计新的开发流程的时候获得了整个团队的输入。换句话说，它确保确保比顾问或冠军在独自设计工作流程时更早的捕获到任何缺失的部分。<p>另一方面，利用飞行员团队意味着更多的初期训练和调试时间：并不是一个开发者在整理工作流，整个开发团队会在他们对新的工作流程感到舒适时暂时降低工作效率。<h3 id="Security-and-Permissions-安全和权限">Security and Permissions 安全和权限</h3><p>访问控制是你需要从根本上重新思考如何管理代码库的Git的一个方面。<p>在SVN中，你通常将所有代码库存放在一个单独的中心仓库中，然后限制不同团队或者个人对文件夹的访问。在Git中，这 不再可能了：开发者必须能够签出整个仓库才能使用它。你通常不能签出一个仓库的子集，就像在SVN上时一样。权限只能被授予整个Git仓库。<p>这就意味着你必须将庞大的单片SVN仓库拆分成几个小的Git仓库。当我们将 <a href="https://www.atlassian.com/software/jira" target="_blank" rel="noopener">Jira</a> 开发团队迁移到Git上时，我们实际上在Atlassian遇到了这个第一手资料。<p>请记住，Git是被设计用于从几千个独立Linux开发者那里安全地集成代码贡献的，所以，它必定提供了一些方式来供你搭建你的团队需要的任何方式的访问控制。但是这可能需要重新审视您的构建周期。<p>如果你担心要维护新的Git仓库集合之间的依赖关系，你可能会发现Git之上的依赖关系管理层会很有帮助。依赖管理层将会有助于构建期，因为随着项目增长，你需要缓存来加速构建时间。可以在这篇有用的文章中找到每个技术栈的推荐依赖关系管理层工具列表：<a href="http://blogs.atlassian.com/2014/04/git-project-dependencies/" target="_blank" rel="noopener">“Git和项目依赖关系”</a> .<h2 id="For-developers-开发者">For developers 开发者</h2><h3 id="A-Repository-for-Every-Developer-每个开发人员的代码库">A Repository for Every Developer 每个开发人员的代码库</h3><p>作为开发者，你需要适应的最大的改变就是Git分布式的本质。不同于单个中心库，每一个开发者都有他们自己的整个代码库的副本。这极大的改变了你和程序员同事们协作的方式。<p>你可以使用 <code>git clone</code> 将整个Git仓库克隆到本地计算机上，而不是使用<code>svn checkout</code>从SVN库签出工作副本。<p>通过使用<code>git push</code>，<code>git fetch</code> 或者<code>git pull</code> 在仓库的分支之间移动来实现协作。共享通常在Git分支级别上完成，但也可以像SVN一样在提交级别上完成。但是在Git中，提交代表着项目的整个状态，而不是文件修改。你在SVN 和 Git中都可以使用分支，这里重要的区别是你可以用Git在本地完成提交，而不用共享你的工作。这能让你更自由进行实验，在离线状态下工作更有效，而且加速几乎所有版本控制相关的命令。<p>然而，理解这一点很重要，就是远程仓库并不是一个直接链接到其他人的仓库的。它只是一个标签，防止你每次与远程仓库交互的时候必须重新键入整个URL。你一直都是在一个独立的环境中工作的，直到你明确地从一个远程仓库pull或者push一个分支。<p>对SVN而言，另一个较大的调整就是“local” 和 “remote” 的概念。本地仓库在你的本地计算机上，所有其他的仓库都被认为是远程仓库。远程仓库的主要目的是为了让你的代码可以被团队的其他人访问到，因此并不会在其中（远程仓库）进行活动开发。本地仓库位于本地计算机上，你可以在其中进行所有软件开发。<h3 id="Don’t-Be-Scared-of-Branching-or-Merging-不要还怕分支和合并">Don’t Be Scared of Branching or Merging 不要还怕分支和合并</h3><p>在SVN中，你通过在你的工作副本中编辑文件来提交，然后运行 <code>svn commit</code> 来发送代码到中心库。然后其他人就可以通过<code>svn update</code>拉取这些修改到他们自己的工作副本中。SVN分支通常避讳用于项目的大型，长期运行方面，因为合并是一个危险的过程，有可能破坏项目结构。<p>Git的基本开发工作流程是非常不同的。Git开发围绕着分支和合并而不是受限于单一的开发线（例如，trunk/）。<p>当你想要在Git中开始处理任何事情时，你可以用 <code>git checkout -b &lt;branch-name&gt;</code> 创建并签出一个新的分支。这让你有了一条专有的开发支线，你可以在这条支线上写代码，不用担心影响到团队里的其他任何人。如果你破坏了一些东西无法修复，你只需要使用<code>git branch -d &lt;branch-name&gt;</code> 抛弃分支。如果你构建了一些有用的东西，就提交一个pull请求，要求将其合并到master分支中。<h3 id="Potential-Git-Workflows-潜在的Git工作流">Potential Git Workflows 潜在的Git工作流</h3><p>当你选择Git工作流的时候，考虑你的团队需求很重要。一个简单的工作流可以最大化开发速度和灵活性，而更复杂的工作流程可以确保更高的一致性和对正在进行的工作的控制。<ul><li><a href="https://www.atlassian.com/git/tutorials/comparing-workflows/centralized-workflow/" target="_blank" rel="noopener">中心化工作流</a> 提供与常见SVN流程最接近的匹配，所以这是一个很好的入门选项。<li>基于这个想法，使用<a href="https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow" target="_blank" rel="noopener">功能分支工作流</a> 可以让开发人员保持工作的独立性，并保护重要的共享分支。功能分支也构成了通过pull请求来管理更改的基础。<li>一个<a href="https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow" target="_blank" rel="noopener">Gitflow 工作流</a> 是功能分支的一个更加正式的，结构化的扩展，使其成为具有明确定义的发布周期的大型团队的理想选择。<li>最后，如果你需要最大限度地隔离和控制更改，或者让更多开发人员贡献于同一个存储库，请考虑<a href="https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow" target="_blank" rel="noopener">forking 工作流</a> 。</ul><p>但是，如果你真的想要充分利用Git，作为专业团队，你应该考虑用<strong>功能分支工作流</strong>。这是一个真正分布式工作流，具有高度安全性，令人难以置信的可扩展性和典型的敏捷性。<h3 id="Conclusion-总结">Conclusion 总结</h3><p>将团队迁移到Git可能是一个艰巨的任务，但是也不一定是。这篇文章介绍了一些常用的选项来迁移你的代码库，将Git融入到你的开发团队，以及处理安全和权限问题。我们也介绍了开发者在迁移过程中应该为止做好准备的最大挑战。<p>希望你现在以及有了坚实的基础来将分布式开发引入你的公司，无论其规模或其当前的开发实践。</div><div><div class="my_post_copyright"><script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script><script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js" integrity="sha256-iBcUE/x23aI6syuqF7EeT/+JFBxjPs5zeFJEXxumwb0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js" integrity="sha256-JirYRqbf+qzfqVtEE4GETyHlAbiCpC005yBTa4rj6xg=" crossorigin="anonymous"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css" integrity="sha256-zuyRv+YsWwh1XR5tsrZ7VCfGqUmmPmqBjIvJgQWoSDo=" crossorigin="anonymous"><p><span>本文标题:</span>SVN 到 Git，迁移的准备工作<p><span>文章作者:</span>kinboy<p><span>发布时间:</span>2018年07月22日 - 13:24:33<p><span>最后更新:</span>2019年07月15日 - 18:05:10<p><span>原始链接:</span><a href="/2018/07/22/SVN-to-Git-prepping-for-the-migration/" title="SVN 到 Git，迁移的准备工作">http://kinboyw.github.io/2018/07/22/SVN-to-Git-prepping-for-the-migration/</a><span class="copy-path" title="点击复制文章链接"></span><p><span>许可协议:</span> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</div><script>var clipboard=new Clipboard(".fa-clipboard");clipboard.on("success",$(function(){$(".fa-clipboard").click(function(){swal({title:"",text:"复制成功",html:!1,timer:500,showConfirmButton:!1})})}))</script></div><div><div><div style="text-align:center;color:#ccc;font-size:14px">------ Passage Ending ------</div></div></div><div><ul class="post-copyright"><li class="post-copyright-author"><strong>Post author:</strong> kinboy<li class="post-copyright-link"><strong>Post link:</strong> <a href="http://kinboyw.github.io/2018/07/22/SVN-to-Git-prepping-for-the-migration/" title="SVN 到 Git，迁移的准备工作">http://kinboyw.github.io/2018/07/22/SVN-to-Git-prepping-for-the-migration/</a><li class="post-copyright-license"><strong>Copyright Notice:</strong> All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.</ul></div><footer class="post-footer"><div class="post-tags"><a href="/tags/git/" rel="tag"># git</a> <a href="/tags/svn/" rel="tag"># svn</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2018/07/21/Setting-up-a-repository/" rel="next" title="创建一个Git仓库">创建一个Git仓库</a></div><div class="post-nav-prev post-nav-item"><a href="/2018/07/26/用vim写代码/" rel="prev" title="用vim写代码">用vim写代码</a></div></div></footer></div></article></div></div><div class="comments" id="comments"><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">Table of Contents<li class="sidebar-nav-overview" data-target="site-overview-wrap">Overview</ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="kinboy"><p class="site-author-name" itemprop="name">kinboy</div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">66</span> <span class="site-state-item-name">posts</span></a></div><div class="site-state-item site-state-categories"><a href="/categories/index.html"><span class="site-state-item-count">31</span> <span class="site-state-item-name">categories</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/index.html"><span class="site-state-item-count">52</span> <span class="site-state-item-name">tags</span></a></div></nav><div class="feed-link motion-element"><a href="/atom.xml" rel="alternate">RSS</a></div><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/kinboyw" target="_blank" title="GitHub">GitHub</a></span><span class="links-of-author-item"><a href="mailto:kinboy9275@gmail.com" target="_blank" title="E-Mail"> E-Mail</a></span></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#For-administrators-对管理员"><span class="nav-number">1.</span> <span class="nav-text">For administrators 对管理员</span></a><li class="nav-item nav-level-2"><a class="nav-link" href="#Basic-Git-commands-基本Git命令"><span class="nav-number">2.</span> <span class="nav-text">Basic Git commands 基本Git命令</span></a><li class="nav-item nav-level-2"><a class="nav-link" href="#Git-Migration-Tools-Git-迁移工具"><span class="nav-number">3.</span> <span class="nav-text">Git Migration Tools Git 迁移工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Atlassian’s-migration-scripts-Atlassian的迁移工具"><span class="nav-number">3.1.</span> <span class="nav-text">Atlassian’s migration scripts Atlassian的迁移工具</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#SVN-Mirror-for-Stash-now-Bitbucket-Server-plugin"><span class="nav-number">3.2.</span> <span class="nav-text">SVN Mirror for Stash (now Bitbucket Server) plugin</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#What-is-Git-SVN"><span class="nav-number">3.3.</span> <span class="nav-text">What is Git-SVN?</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#Rollout-Strategies-推出策略"><span class="nav-number">3.4.</span> <span class="nav-text">Rollout Strategies 推出策略</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#External-Git-Consultants-外部顾问"><span class="nav-number">3.5.</span> <span class="nav-text">External Git Consultants 外部顾问</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#Internal-Git-Champions-内部Git冠军"><span class="nav-number">3.6.</span> <span class="nav-text">Internal Git Champions 内部Git冠军</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#Pilot-Teams-飞行员团队"><span class="nav-number">3.7.</span> <span class="nav-text">Pilot Teams 飞行员团队</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#Security-and-Permissions-安全和权限"><span class="nav-number">3.8.</span> <span class="nav-text">Security and Permissions 安全和权限</span></a></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#For-developers-开发者"><span class="nav-number">4.</span> <span class="nav-text">For developers 开发者</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#A-Repository-for-Every-Developer-每个开发人员的代码库"><span class="nav-number">4.1.</span> <span class="nav-text">A Repository for Every Developer 每个开发人员的代码库</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#Don’t-Be-Scared-of-Branching-or-Merging-不要还怕分支和合并"><span class="nav-number">4.2.</span> <span class="nav-text">Don’t Be Scared of Branching or Merging 不要还怕分支和合并</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#Potential-Git-Workflows-潜在的Git工作流"><span class="nav-number">4.3.</span> <span class="nav-text">Potential Git Workflows 潜在的Git工作流</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#Conclusion-总结"><span class="nav-number">4.4.</span> <span class="nav-text">Conclusion 总结</span></a></ol></ol></div></div></section><div class="back-to-top"><span id="scrollpercent"><span>0</span>%</span></div></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2019</span><span class="with-love"></span> <span class="author" itemprop="copyrightHolder">kinboy</span><br><img src="/images/beian.png"> <span style="width:300px;margin:0 auto;padding:20px 0"><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42011102002861" style="display:inline-block;text-decoration:none;height:20px;line-height:20px"><img src style="float:left"><p style="float:left;height:20px;line-height:20px;margin:0 0 0 5px;color:#939393">鄂公网安备 42011102002861号</p></a></span></div></div></footer></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type="text/javascript" src="/lib/three/three.min.js"></script><script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script><script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><script id="dsq-count-scr" src="https://kinboy-wang.disqus.com/count.js" async></script><script type="text/javascript">var disqus_config=function(){this.page.url="http://kinboyw.github.io/2018/07/22/SVN-to-Git-prepping-for-the-migration/",this.page.identifier="2018/07/22/SVN-to-Git-prepping-for-the-migration/",this.page.title="SVN 到 Git，迁移的准备工作"},d=document,s=d.createElement("script");s.src="https://kinboy-wang.disqus.com/embed.js",s.setAttribute("data-timestamp",""+ +new Date),(d.head||d.body).appendChild(s)</script><script type="text/javascript">// Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });</script><script>!function(){var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}()</script>

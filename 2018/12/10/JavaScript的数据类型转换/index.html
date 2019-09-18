@@ -1,0 +1,314 @@
+<!DOCTYPE html><html class="theme-next gemini use-motion" lang="ZH | EN"><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="google-site-verification" content="AKuwh4i11uWg0wOl_cM7AI_dHqOHOLKYfCxKc8Lfv6E"><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4"><link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222"><meta name="keywords" content="FE,JavaScript,"><link rel="alternate" href="/atom.xml" title="Kinboy's note" type="application/atom+xml"><meta name="description" content="简介JavaScript是一种松散类型。这并不意味着它就没有数据类型，只是变量的值或者 JavaScript 对象属性不需要为其分配特定类型的值，也不必总是保持相同的类型。JavaScript 可以自由地将一种类型的值转为他们使用变量的上下文中需要的类型。 JavaScript 的松散类型以及轻松的类型转换仍然拯救不了程序员们需要思考他们正在处理的值的实际类型。一个浏览器脚本中非常常见的错误就是，"><meta name="keywords" content="FE,JavaScript"><meta property="og:type" content="article"><meta property="og:title" content="JavaScript的数据类型转换"><meta property="og:url" content="http://kinboyw.github.io/2018/12/10/JavaScript的数据类型转换/index.html"><meta property="og:site_name" content="Kinboy&#39;s note"><meta property="og:description" content="简介JavaScript是一种松散类型。这并不意味着它就没有数据类型，只是变量的值或者 JavaScript 对象属性不需要为其分配特定类型的值，也不必总是保持相同的类型。JavaScript 可以自由地将一种类型的值转为他们使用变量的上下文中需要的类型。 JavaScript 的松散类型以及轻松的类型转换仍然拯救不了程序员们需要思考他们正在处理的值的实际类型。一个浏览器脚本中非常常见的错误就是，"><meta property="og:locale" content="ZH | EN"><meta property="og:updated_time" content="2019-07-15T10:05:10.352Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="JavaScript的数据类型转换"><meta name="twitter:description" content="简介JavaScript是一种松散类型。这并不意味着它就没有数据类型，只是变量的值或者 JavaScript 对象属性不需要为其分配特定类型的值，也不必总是保持相同的类型。JavaScript 可以自由地将一种类型的值转为他们使用变量的上下文中需要的类型。 JavaScript 的松散类型以及轻松的类型转换仍然拯救不了程序员们需要思考他们正在处理的值的实际类型。一个浏览器脚本中非常常见的错误就是，"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Gemini",version:"5.1.4",sidebar:{position:"left",display:"post",offset:12,b2t:!0,scrollpercent:!0,onmobile:!1},fancybox:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},duoshuo:{userId:"0",author:"Author"},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"I didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><link rel="canonical" href="http://kinboyw.github.io/2018/12/10/JavaScript的数据类型转换/"><title>JavaScript的数据类型转换 | Kinboy's note</title><script type="text/javascript">var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?c9c2b9e915e6bb8ec323a2f98c0c98d8";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><body itemscope itemtype="http://schema.org/WebPage" lang="ZH | EN"><div class="container sidebar-position-left page-post-detail"><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"></span><span class="site-title">Kinboy's note</span><span class="logo-line-after"></span></a></div><h1 class="site-subtitle" itemprop="description">前端漫记</h1></div><div class="site-nav-toggle"><button></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><br>Home</a><li class="menu-item menu-item-about"><a href="/rscard/" rel="section"><br>About</a><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><br>Tags</a><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><br>Categories</a><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><br>Archives</a><li class="menu-item menu-item-top"><a href="/top/" rel="section"><br>Top</a><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><br>Search</a></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"></span><span class="popup-btn-close"></span><div class="local-search-input-wrapper"><input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input"></div></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-categories" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://kinboyw.github.io/2018/12/10/JavaScript的数据类型转换/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="kinboy"><meta itemprop="description" content><meta itemprop="image" content="/images/avatar.png"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Kinboy's note"></span><header class="post-header"><h2 class="post-title" itemprop="name headline">JavaScript的数据类型转换</h2><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Posted on</span> <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-10T21:37:56+08:00">2018-12-10</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">In</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FE/" itemprop="url" rel="index"><span itemprop="name">FE</span></a></span> , <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FE/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span><a href="/2018/12/10/JavaScript的数据类型转换/#comments" itemprop="discussionUrl"></a></span><div class="post-wordcount"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Words count in article&#58;</span> <span title="Words count in article">4.1k</span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">Reading time &asymp;</span> <span title="Reading time">16</span></div></div></header><div class="post-body" itemprop="articleBody"><h2 id="简介">简介</h2><p>JavaScript是一种松散类型。这并不意味着它就没有数据类型，只是变量的值或者 JavaScript 对象属性不需要为其分配特定类型的值，也不必总是保持相同的类型。JavaScript 可以自由地将一种类型的值转为他们使用变量的上下文中需要的类型。<p>JavaScript 的松散类型以及轻松的类型转换仍然拯救不了程序员们需要思考他们正在处理的值的实际类型。一个浏览器脚本中非常常见的错误就是，读取一个表单空间的 value 属性，用户应该在其中输入一个数字，然后将该值与另一个数字相加。因为表单空间的 value 属性其实是字符串（尽管其包含的字符序列表示的是一串数字），如果尝试将这串字符串与另一个值相加，即使另一个值碰巧是一个数字，结果也会导致第二个值被类型转换成一个字符串，然后拼接到第一个字符串的末尾。<p>这个问题源于 <code>+</code> 操作符的数字相加和字符串拼接的双重性质。因此，这个操作符的实际作用取决于上下文，只有操作符两边的操作数都是数字时， <code>+</code> 操作符才用作数值相加。除此之外，它都会将操作数转换成字符型，然后执行字符串拼接。</p><h2 id="to-Boolean">to Boolean</h2><p>在计算 <code>if</code> 表达式的时候，JavaScript 解释器会自动将表达式的运算结果转换为布尔类型。还有一些其他的操作符会将操作数转换为布尔型，包括逻辑操作符：<code>&amp;&amp;</code> ，<code>||</code> ，<code>!</code> 。通常用 <code>||</code> 来得到一个表达时的布尔型转换值。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">var</span> boolValue = !!x;</span><br></pre></table></figure><p>下面的表格也是用 <code>||</code> 来生成各种类型对应的布尔型。<p>还有一种生成布尔型值的方法是将值作为参数传入 <code>Boolean</code> 构造函数，这样得到的是一个布尔类型的包装对象而不是一个布尔的初始值了：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">var</span> boolValue = <span class="built_in">Boolean</span>(x);</span><br></pre></table></figure><table><thead><tr><th>-1.6<th>-0<th>+0<th>1<th>1.6<th>8<th>16<th>16.8<th>123e-2<th>-Infinity<th>+Infinity<th>NaN<tbody><tr><td>!!col<td>true<td>false<td>false<td>true<td>true<td>true<td>true<td>true<td>true<td>true<td>true<td>false</table><p>数字转换成 bool 型时，0 为 false ，其他所有值都是 true。特殊数字 <code>NaN</code> 除外，它表示将其他类型转换为数字型时，转换无效不能得到有意义的数字。<code>NaN</code> 始终是 false 。<code>Infinity</code> 和 <code>-Infinity</code> 都是 true。<table><thead><tr><th>“” (empty string)<th>“-1.6”<th>“0”<th>“1”<th>“1.6”<th>“8”<th>“16”<th>“16.8”<th>“123e-2”<th>“010” (Octal)<th>“0x10” (Hex)<th>“0xFF” (Hex)<th>“-010”<th>“-0x10”<th>“xx”<tbody><tr><td>!!col<td>false<td>true<td>true<td>true<td>true<td>true<td>true<td>true<td>true<td>true<td>true<td>true<td>true<td>true<td>true</table><p>字符串转布尔型更简单，除空字符串以外，都是 true，空字符串是 false 。<table><thead><tr><th>undefined<th>null<th>true<th>false<th>new Object()<th>function(){ return; }<tbody><tr><td>!!col<td>false<td>false<td>true<td>false<td>true<td>true</table><p>对于其他类型， <code>undefined</code> 和 <code>null</code> 转换为 false ，对象和函数始终是 true 。<p>这是类型转换为布尔型最有价值的方面，因为它允许脚本区分属性是未定义还是指向一个对象。经常用 <code>if</code> 语句将要访问的对象包裹起来测试对象是否未定义，以此来避免出错，如果对象未定义，则返回 false，如果已存在，则返回 true。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="built_in">document</span>.documentElement)&#123;</span><br><span class="line">    scrollX = <span class="built_in">document</span>.documentElement.scrollLeft;</span><br><span class="line">&#125;</span><br></pre></table></figure><h2 id="to-String">to String</h2><p>上面讲到了，类型转换为字符串经常是由 <code>+</code> 操作符在其中一个操作数不是数字的情况下导致的。转换为字符传类型最简单的办法就是用该值拼接一个空字符串。我们用这个方法来生成下面的表格。<p>另一种方法是用 <code>String</code> 构造函数，这样得到的不是一个字符型的初始值，而是一个 <code>String</code> 类型的包装对象：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">var</span> stringValue = <span class="built_in">String</span>(x);</span><br></pre></table></figure><table><thead><tr><th>-1.6<th>-0<th>+0<th>1<th>1.6<th>8<th>16<th>16.8<th>123e-2<th>-Infinity<th>+Infinity<th>NaN<tbody><tr><td>“” + col<td>-1.6<td>0<td>0<td>1<td>1.6<td>8<td>16<td>16.8<td>1.23<td>-Infinity<td>Infinity<td>NaN</table><p>注意，上面表格中的源码 <code>123e-2</code> 转换后得到了字符串 <code>1.23</code> ，这是因为 JavaScript 内部数字的字符串表示形式，然而 JavaScript 内部数字表示采用了 IEEE 标准规范的双精度浮点数字形式，这意味着 JavaScript 无法精确地表示所有数字。数学运算的结果可能产生近似值，当他们转换成字符串时，字符串可能出乎意料地表示为近似值。经常使用自定义函数来生成指定格式的数字字符串，类型转换机制很少适用于用来生成用于表示的数字输出。<table><thead><tr><th>undefined<th>null<th>true<th>false<th>new Object()<th>function(){ return; }<tbody><tr><td>“” + col<td>undefined<td>null<td>true<td>false<td>[object Object]<td><code>function(){ return; }</code></table><p>当对象或者函数被转换成字符串时，会调用它们的 <code>toString</code> 方法。这个方法默认继承于 <code>Object.prototype.toString</code> 和 <code>Function.prototype.toString</code>，但是可以通过给对象/函数的 “toString” 属性赋值一个方法来重写。函数类型转换为字符串不一定会得到函数的源代码。<code>Function.prototype.toString</code> 因具体实现会有很大的不同，“宿主对象” 和方法（由环境提供的对象和方法，例如 DOM元素）也是如此。<h2 id="to-Number">to Number</h2><p>转换为数字类型，尤其是字符串转为数字，是非常常见的需求，有很多方法可用。除连接/加法操作符以外的任何数学运算操作符都会强制类型转换。所以字符串转数字可能要对数字字符串执行不影响结果数值的数学运算，例如减去 0 或者乘以 1。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">var</span> numValue = stringValue - <span class="number">0</span>;</span><br><span class="line"><span class="comment">/* or */</span></span><br><span class="line"><span class="keyword">var</span> numValue = stringValue * <span class="number">1</span>;</span><br><span class="line"><span class="comment">/* or */</span></span><br><span class="line"><span class="keyword">var</span> numValue = stringValue / <span class="number">1</span>;</span><br></pre></table></figure><p>然而，一元的 <code>+</code> 运算符也可以将操作数转换成数字，因为它不会做任何额外的数学运算，这是将字符串转换为数字的最快的方法。<p>顺便说一下，一元的 <code>-</code> （减法）操作符除了随后会取负其值以外，也会对操作数执行类型转换（必要的情况下）。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">var</span> numValue = (+stringValue);</span><br></pre></table></figure><p>同样也可以调用 <code>Number</code> 构造函数，将字符串作为够攒函数的参数，返回一个数字的包装对象：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">var</span> numValue = <span class="built_in">Number</span>(stringValue);</span><br></pre></table></figure><p>Number 构造函数是类型转换方法中最慢的一种，当速度不是最重要的考虑因素时，它的代码逻辑会比较清晰。<p>下面的表格使用一元 <code>+</code> 运算符生成。<table><thead><tr><th>“” (empty string)<th>“-1.6”<th>“0”<th>“1”<th>“1.6”<th>“8”<th>“16”<th>“16.8”<th>“123e-2”<th>“010” (Octal)<th>“0x10” (Hex)<th>“0xFF” (Hex)<th>“-010”<th>“-0x10”<th>“xx”<tbody><tr><td>+col<td>0<td>-1.6<td>0<td>1<td>1.6<td>8<td>16<td>16.8<td>1.23<td>10<td>16<td>255<td>-10<td>NaN<td>NaN</table><p>字符串转数字时最重要的考虑是结果可能不是数字。空字符转换成数字 0，取决于应用，这样做可能会带来危害。在其他上下文中，遵循 JavaScript 八进制数字格式的字符串（0 开头）可能会有问题，类型转换会将它们按10进制数字看待。然而遵循16进制数字格式的字符串（<code>ox</code> 或者 <code>oX</code> 开头）会读作 16 进制。不能被读作数字的字符串会被类型转换为 <code>NaN</code> ，<code>NaN</code> 的测试方法是另其不等于自身。指数计数格式（<code>&quot;123e-2&quot;</code>）的数字字符串与前导的负号一起被转换。<table><thead><tr><th>undefined<th>null<th>true<th>false<th>new Object()<th>function(){ return; }<tbody><tr><td>+col<td>NaN<td>0<td>1<td>0<td>NaN<td>NaN</table><p>对象和函数始终转换成 <code>NaN</code>，<code>undefined</code> 也是如此，但是 <code>null</code> 会类型转换为 0。可能是因为它先转换为布尔型，然后转换为数字的，<code>null</code> 先转换成 <code>false</code> ，<code>false</code> 会转换成数字 0。几乎不可能会出现需要将这些类型转换成数字的情况。<h2 id="Parsing-to-Number">Parsing to Number</h2><p>另一种转换字符串为数字的方法是使用一些设计用来返回一个数字的全局函数。<code>parseFloat</code> 函数接收一个字符串参数，将字符串解析为一个浮点数，并返回该浮点数。非字符参数会先按上面说的方式转换为字符串。<p>字符串解析函数会逐个字符地读取字符串直到遇到一个不能转换为数字的字符为止，这是它会停下来，并将已解析的可转换为数字的字符转换为数字，然后返回该数字。这个特性在某些情况下非常有用，例如，有一个代表 CSS 长度的值 <code>34.5em</code> ，<code>parseFloat</code> 会自动忽略 <code>em</code> ，因为这些字符不能与前面的数字字符合并转为数字。返回的值会是 34.5，CSS 字符串截取后不包含单位的数字部分。<h3 id="parseFloat">parseFloat</h3><table><thead><tr><th>“” (empty string)<th>“-1.6”<th>“0”<th>“1”<th>“1.6”<th>“8”<th>“16”<th>“16.8”<th>“123e-2”<th>“010” (Octal)<th>“0x10” (Hex)<th>“0xFF” (Hex)<th>“-010”<th>“-0x10”<th>“xx”<tbody><tr><td>parseFloat(col)<td>NaN<td>-1.6<td>0<td>1<td>1.6<td>8<td>16<td>16.8<td>1.23<td>10<td>0<td>0<td>-10<td>0<td>NaN</table><p><code>parseFloat</code>将空字符串以及不能进行数字解释的字符串转换为 <code>NaN</code> 。指数计数法格式可以被理解，八进制格式中的前导 0 不会妨碍字符串作为十进制数来解释。十六进制字符串解释为数字 0 ，因为后面跟着 <code>x</code> 不能解释为数字的一部分，所以解析在前导的 0 之后就结束了。<table><thead><tr><th>undefined<th>null<th>true<th>false<th>new Object()<th>function(){ return; }<tbody><tr><td>parseFloat(col)<td>NaN<td>NaN<td>NaN<td>NaN<td>NaN<td>NaN</table><p>非字符串值会先被 <code>parseFloat</code> 转换为字符串。因为类型转换为字符串不会得到一个能解释为数字的字符串，所以结果是 <code>NaN</code>。对象和函数可能有自定义的 <code>toString</code> 方法，可能会返回能够进行数字解释的字符串，但那是非常规的需求。<h3 id="parseInt">parseInt</h3><p><code>parseInt</code> 函数与 <code>parseFloat</code> 的作用非常相似，不同之处在于它尝试将字符串参数解释为整数，因此可以识别较少的字符作为该数字的一部分。<p><code>parseInt</code> 偶尔被用于将一个浮点数转换为整数。它非常不适合这样用，因为如果它的参数是数字类型，它会先被转换成一个字符串，然后在转换成数字，非常低效。 <code>2e-200</code>这样的数字 可能会产生错误的结果 ，近似的整数是 0，但是 <code>parseInt</code> 返回了 <code>2</code>。由于 JavaScript 使用的数字格式，数字经常被表示为近似值。所以，例如 1/2+1/3+1/6 = 0.99999999999999，如果用 parseInt 来转换该表达式，会返回 0。<p>对于将数字舍入为整数，优先使用<code>Math.round</code> ，<code>Math.ceil</code> 和 <code>Math.floor</code> 这三个方法。<table><thead><tr><th>-1.6<th>-0<th>+0<th>1<th>1.6<th>8<th>16<th>16.8<th>123e-2<th>-Infinity<th>+Infinity<th>NaN<tbody><tr><td>parseInt(col)<td>-1<td>0<td>0<td>1<td>1<td>8<td>16<td>16<td>1<td>NaN<td>NaN<td>NaN</table><p>当它作用于数字时，参数的初始值类型转换为字符串的过程在结果中体现地很明显。注意，<code>123e-2</code> 的内部数字是 <code>1.23</code> ，类型转换为字符串得到 <code>&quot;1.23&quot;</code>，上面表格中的转换结果看上去奇怪，其实是正确的。<table><thead><tr><th>“” (empty string)<th>“-1.6”<th>“0”<th>“1”<th>“1.6”<th>“8”<th>“16”<th>“16.8”<th>“123e-2”<th>“010” (Octal)<th>“0x10” (Hex)<th>“0xFF” (Hex)<th>“-010”<th>“-0x10”<th>“xx”<tbody><tr><td>parseInt(col)<td>NaN<td>-1<td>0<td>1<td>1<td>8<td>16<td>16<td>123<td>8<td>16<td>255<td>-8<td>-16<td>NaN</table><p>八进制和十六进制数字格式的字符串的确表示整数，并且<code>parseInt</code>能够根据 JavaScript 的源码解释它们，即使是以负号开头。<table><thead><tr><th>undefined<th>null<th>true<th>false<th>new Object()<th>function(){ return; }<tbody><tr><td>parseInt(col)<td>NaN<td>NaN<td>NaN<td>NaN<td>NaN<td>NaN</table><p>由于 <code>parseInt</code> 会将非字符型参数类型转换为字符串，所以对于 <code>boolean</code> ，<code>null</code>，<code>undefined</code> 对象和函数类型的参数来说，<code>parseInt</code> 得到的结果总是与 <code>parseFloat</code> 相同（假设对象和函数没有自定义 <code>toString</code> 方法）。<h3 id="有一个基数参数的-parseInt">有一个基数参数的 parseInt</h3><p>很少会允许 <code>parseInt</code> 推导出字符串中数字表示的基数，因为前导的 0 很少用于指示八进制格式的数据（尤其是在用户输入中）。为了解决这个问题，<code>parseInt</code> 能够识别第二个指示基数的参数，可以用于指定解释字符中数字的基数。第二个参数指定为 10 会导致 <code>parseInt</code> 以 10 为基数解释字符。<table><thead><tr><th>“” (empty string)<th>“-1.6”<th>“0”<th>“1”<th>“1.6”<th>“8”<th>“16”<th>“16.8”<th>“123e-2”<th>“010” (Octal)<th>“0x10” (Hex)<th>“0xFF” (Hex)<th>“-010”<th>“-0x10”<th>“xx”<tbody><tr><td>parseInt(col, 10)<td>NaN<td>-1<td>0<td>1<td>1<td>8<td>16<td>16<td>123<td>10<td>0<td>0<td>-10<td>0<td>NaN</table><p>八进制格式的字符串现在可以以 10 为基数来解释，16 进制字符串则只能转换为 0 ，因为遇到 <code>&quot;x&quot;</code> 的时候，转换就会停止。<p><code>parseInt</code> 可以用于以 2 到 36 为基数的数字。下面是以 16 为基数。<table><thead><tr><th>“” (empty string)<th>“-1.6”<th>“0”<th>“1”<th>“1.6”<th>“8”<th>“16”<th>“16.8”<th>“123e-2”<th>“010” (Octal)<th>“0x10” (Hex)<th>“0xFF” (Hex)<th>“-010”<th>“-0x10”<th>“xx”<tbody><tr><td>parseInt(col, 16)<td>NaN<td>-1<td>0<td>1<td>1<td>8<td>22<td>22<td>4670<td>16<td>16<td>255<td>-16<td>-16<td>NaN</table><p>十六进制的 <code>0x</code> 格式在以 16 为解释基数时可以被识别。<p>最后以 3 为基数：<table><thead><tr><th>-1.6<th>-0<th>+0<th>1<th>1.6<th>8<th>16<th>16.8<th>123e-2<th>-Infinity<th>+Infinity<th>NaN<tbody><tr><td>parseInt(col, 3)<td>-1<td>0<td>0<td>1<td>1<td>NaN<td>1<td>1<td>1<td>NaN<td>NaN<td>NaN</table><p>数字参数转换为字符串的结果很明显。数字 <code>8</code> 转换为 <code>NaN</code> 是因为 <code>&quot;8&quot;</code> 这个字符不能以 3 为基数解释，得到一个为空的可接受字符的序列，产生与空字符串一样的结果。<table><thead><tr><th>“” (empty string)<th>“-1.6”<th>“0”<th>“1”<th>“1.6”<th>“8”<th>“16”<th>“16.8”<th>“123e-2”<th>“010” (Octal)<th>“0x10” (Hex)<th>“0xFF” (Hex)<th>“-010”<th>“-0x10”<th>“xx”<tbody><tr><td>parseInt(col, 3)<td>NaN<td>-1<td>0<td>1<td>1<td>NaN<td>1<td>1<td>5<td>3<td>0<td>0<td>-3<td>0<td>NaN</table><h2 id="ToInt32">ToInt32</h2><p><code>ToInt32</code> 是一个只在 JavaScript 实现中可用的内部函数，不能在脚本中以 <code>parseInt</code> 一样的方式直接调用。JavaScript 转换为数字时很少用到这个函数，但是一些情况下可以用到。按位操作符，例如按位或（<code>|</code>）和 按位与（<code>&amp;</code>）操作符作用于数字，所以它们会将操作数转换为数字。然而它们只能作用于 32 位有符号整型，所以对于给定的（可能是转换得到的）数字，它们会将它作为参数传入 <code>ToInt32</code> 函数，用返回值作操作数。返回的数字始终是一个 32 位有符号整型。<p>这种效果就像 <code>parseInt</code> 结合了类型转换为数字。然而结果只能限定在 32 位范围内，而且始终是数字，不可能是 <code>NaN</code> 或者 <code>±Infinity</code>。<p>就像在对结果数值没有影响的操作中使用数学运算符一样，也可以在对 <code>ToInt32</code> 返回的结果没有影响的操作中使用按位操作符。下面的表格就是用 按位或 0 操作生成的。<table><thead><tr><th>-1.6<th>-0<th>+0<th>1<th>1.6<th>8<th>16<th>16.8<th>123e-2<th>-Infinity<th>+Infinity<th>NaN<tbody><tr><td>col\<td>0<td>-1<td>0<td>0<td>1<td>1<td>8<td>16<td>16<td>1<td>0<td>0<td>0</table><p><code>NaN</code> 和 <code>±Infinity</code> 变成了 0 ，浮点数被截取成了整数。<table><thead><tr><th>“” (empty string)<th>“-1.6”<th>“0”<th>“1”<th>“1.6”<th>“8”<th>“16”<th>“16.8”<th>“123e-2”<th>“010” (Octal)<th>“0x10” (Hex)<th>“0xFF” (Hex)<th>“-010”<th>“-0x10”<th>“xx”<tbody><tr><td>col\<td>0<td>0<td>-1<td>0<td>1<td>1<td>8<td>16<td>16<td>1<td>10<td>16<td>255<td>-10<td>0<td>0</table><p>类型转换为 <code>NaN</code> 的字符串会从 <code>ToInt32</code> 中返回 0 。<table><thead><tr><th>undefined<th>null<th>true<th>false<th>new Object()<th>function(){ return; }<tbody><tr><td>col\<td>0<td>0<td>0<td>1<td>0<td>0<td>0</table><p>甚至 <code>undefined</code> ，对象和函数都被这个操作转换为 0 。注意 布尔值 <code>true</code> 被转换成数字 1。<h2 id="转换用户输入">转换用户输入</h2><p>多数获得用户输入的机制，例如 <code>&lt;input type=text&gt;</code> 和 <code>prompt</code> 这些，提供了字符串格式的输入结果。如果希望用户输入一个数字，他们仍然可以输入任何东西（至少他们可能打错字）。如果字符串需要转换成数字用于后续的操作，上面提到的方法可以根据哪个最接近期待的用户输入来选择，但是一些由错误的输入得到的结果可能会难以识别和处理。<h3 id="正则表达式示例">正则表达式示例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre><td class="code"><pre><span class="line">/^\d+$/                 //All-digit</span><br><span class="line">/^\s*[-+]?\d+\s*$/      //Unbroken Signed integer &amp; spaces</span><br><span class="line">/^\d&#123;1,5&#125;$/             //1 to 5 digits</span><br><span class="line">/^\d+\.\d\d$/           //Money</span><br><span class="line">/^\d+(\.\d&#123;2&#125;)$/        //Money</span><br><span class="line">/^\d&#123;1,3&#125;(,\d\d\d)*\.\d\d$/  //comma-separated money - 12,432.57</span><br><br><span class="line">       // optional comma-separated money - 12,432.57 or 12432.57</span><br><span class="line">/^\d&#123;1,3&#125;(,\d\d\d)*\.\d\d$|^\d+\.\d\d$/</span><br></pre></table></figure></div><div><div class="my_post_copyright"><script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script><script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js" integrity="sha256-iBcUE/x23aI6syuqF7EeT/+JFBxjPs5zeFJEXxumwb0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js" integrity="sha256-JirYRqbf+qzfqVtEE4GETyHlAbiCpC005yBTa4rj6xg=" crossorigin="anonymous"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css" integrity="sha256-zuyRv+YsWwh1XR5tsrZ7VCfGqUmmPmqBjIvJgQWoSDo=" crossorigin="anonymous"><p><span>本文标题:</span>JavaScript的数据类型转换<p><span>文章作者:</span>kinboy<p><span>发布时间:</span>2018年12月10日 - 21:37:56<p><span>最后更新:</span>2019年07月15日 - 18:05:10<p><span>原始链接:</span><a href="/2018/12/10/JavaScript的数据类型转换/" title="JavaScript的数据类型转换">http://kinboyw.github.io/2018/12/10/JavaScript的数据类型转换/</a><span class="copy-path" title="点击复制文章链接"></span><p><span>许可协议:</span> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</div><script>var clipboard=new Clipboard(".fa-clipboard");clipboard.on("success",$(function(){$(".fa-clipboard").click(function(){swal({title:"",text:"复制成功",html:!1,timer:500,showConfirmButton:!1})})}))</script></div><div><div><div style="text-align:center;color:#ccc;font-size:14px">------ Passage Ending ------</div></div></div><div><ul class="post-copyright"><li class="post-copyright-author"><strong>Post author:</strong> kinboy<li class="post-copyright-link"><strong>Post link:</strong> <a href="http://kinboyw.github.io/2018/12/10/JavaScript的数据类型转换/" title="JavaScript的数据类型转换">http://kinboyw.github.io/2018/12/10/JavaScript的数据类型转换/</a><li class="post-copyright-license"><strong>Copyright Notice:</strong> All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.</ul></div><footer class="post-footer"><div class="post-tags"><a href="/tags/FE/" rel="tag"># FE</a> <a href="/tags/JavaScript/" rel="tag"># JavaScript</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2018/12/10/JavaScript的数据类型/" rel="next" title="JavaScript的数据类型">JavaScript的数据类型</a></div><div class="post-nav-prev post-nav-item"><a href="/2018/12/12/理解JavaScript对象/" rel="prev" title="理解JavaScript对象">理解JavaScript对象</a></div></div></footer></div></article></div></div><div class="comments" id="comments"><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">Table of Contents<li class="sidebar-nav-overview" data-target="site-overview-wrap">Overview</ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="kinboy"><p class="site-author-name" itemprop="name">kinboy</div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">66</span> <span class="site-state-item-name">posts</span></a></div><div class="site-state-item site-state-categories"><a href="/categories/index.html"><span class="site-state-item-count">31</span> <span class="site-state-item-name">categories</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/index.html"><span class="site-state-item-count">52</span> <span class="site-state-item-name">tags</span></a></div></nav><div class="feed-link motion-element"><a href="/atom.xml" rel="alternate">RSS</a></div><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/kinboyw" target="_blank" title="GitHub">GitHub</a></span><span class="links-of-author-item"><a href="mailto:kinboy9275@gmail.com" target="_blank" title="E-Mail"> E-Mail</a></span></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a><li class="nav-item nav-level-2"><a class="nav-link" href="#to-Boolean"><span class="nav-number">2.</span> <span class="nav-text">to Boolean</span></a><li class="nav-item nav-level-2"><a class="nav-link" href="#to-String"><span class="nav-number">3.</span> <span class="nav-text">to String</span></a><li class="nav-item nav-level-2"><a class="nav-link" href="#to-Number"><span class="nav-number">4.</span> <span class="nav-text">to Number</span></a><li class="nav-item nav-level-2"><a class="nav-link" href="#Parsing-to-Number"><span class="nav-number">5.</span> <span class="nav-text">Parsing to Number</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#parseFloat"><span class="nav-number">5.1.</span> <span class="nav-text">parseFloat</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#parseInt"><span class="nav-number">5.2.</span> <span class="nav-text">parseInt</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#有一个基数参数的-parseInt"><span class="nav-number">5.3.</span> <span class="nav-text">有一个基数参数的 parseInt</span></a></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#ToInt32"><span class="nav-number">6.</span> <span class="nav-text">ToInt32</span></a><li class="nav-item nav-level-2"><a class="nav-link" href="#转换用户输入"><span class="nav-number">7.</span> <span class="nav-text">转换用户输入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#正则表达式示例"><span class="nav-number">7.1.</span> <span class="nav-text">正则表达式示例</span></a></ol></ol></div></div></section><div class="back-to-top"><span id="scrollpercent"><span>0</span>%</span></div></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2019</span><span class="with-love"></span> <span class="author" itemprop="copyrightHolder">kinboy</span><br><img src="/images/beian.png"> <span style="width:300px;margin:0 auto;padding:20px 0"><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42011102002861" style="display:inline-block;text-decoration:none;height:20px;line-height:20px"><img src style="float:left"><p style="float:left;height:20px;line-height:20px;margin:0 0 0 5px;color:#939393">鄂公网安备 42011102002861号</p></a></span></div></div></footer></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type="text/javascript" src="/lib/three/three.min.js"></script><script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script><script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><script id="dsq-count-scr" src="https://kinboy-wang.disqus.com/count.js" async></script><script type="text/javascript">var disqus_config=function(){this.page.url="http://kinboyw.github.io/2018/12/10/JavaScript的数据类型转换/",this.page.identifier="2018/12/10/JavaScript的数据类型转换/",this.page.title="JavaScript的数据类型转换"},d=document,s=d.createElement("script");s.src="https://kinboy-wang.disqus.com/embed.js",s.setAttribute("data-timestamp",""+ +new Date),(d.head||d.body).appendChild(s)</script><script type="text/javascript">// Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });</script><script>!function(){var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}()</script>

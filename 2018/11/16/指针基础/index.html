@@ -1,0 +1,314 @@
+<!DOCTYPE html><html class="theme-next gemini use-motion" lang="ZH | EN"><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="google-site-verification" content="AKuwh4i11uWg0wOl_cM7AI_dHqOHOLKYfCxKc8Lfv6E"><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4"><link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222"><meta name="keywords" content="Langauge,C,"><link rel="alternate" href="/atom.xml" title="Kinboy's note" type="application/atom+xml"><meta name="description" content="翻译原文：Pointer Basics  这是翻译的斯坦福大学官网上的 CSLibrary 中的一篇课程文档 这个文档介绍指针的基础知识，因为很多计算机语言中都会用到它，例如：C，C++，Java，以及 Pascal。  Section 1 – 指针的三个基本规则 Section 2 – 一个简单的代码示例 Section 3 – 习题和答案  这是 Stanford CS Education"><meta name="keywords" content="Langauge,C"><meta property="og:type" content="article"><meta property="og:title" content="指针基础"><meta property="og:url" content="http://kinboyw.github.io/2018/11/16/指针基础/index.html"><meta property="og:site_name" content="Kinboy&#39;s note"><meta property="og:description" content="翻译原文：Pointer Basics  这是翻译的斯坦福大学官网上的 CSLibrary 中的一篇课程文档 这个文档介绍指针的基础知识，因为很多计算机语言中都会用到它，例如：C，C++，Java，以及 Pascal。  Section 1 – 指针的三个基本规则 Section 2 – 一个简单的代码示例 Section 3 – 习题和答案  这是 Stanford CS Education"><meta property="og:locale" content="ZH | EN"><meta property="og:image" content="http://kinboyw.github.io/2018/11/16/指针基础/c.jpeg"><meta property="og:image" content="http://kinboyw.github.io/2018/11/16/指针基础/pointer.jpg"><meta property="og:image" content="http://kinboyw.github.io/2018/11/16/指针基础/PointerPointee.gif"><meta property="og:image" content="http://kinboyw.github.io/2018/11/16/指针基础/1.gif"><meta property="og:image" content="http://kinboyw.github.io/2018/11/16/指针基础/2.gif"><meta property="og:image" content="http://kinboyw.github.io/2018/11/16/指针基础/3.gif"><meta property="og:image" content="http://kinboyw.github.io/2018/11/16/指针基础/4.gif"><meta property="og:image" content="http://kinboyw.github.io/2018/11/16/指针基础/5.gif"><meta property="og:image" content="http://kinboyw.github.io/2018/11/16/指针基础/6.gif"><meta property="og:image" content="http://kinboyw.github.io/2018/11/16/指针基础/TwoPointers.gif"><meta property="og:image" content="http://kinboyw.github.io/2018/11/16/指针基础/ThreeNodes.gif"><meta property="og:updated_time" content="2019-07-15T10:05:10.401Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="指针基础"><meta name="twitter:description" content="翻译原文：Pointer Basics  这是翻译的斯坦福大学官网上的 CSLibrary 中的一篇课程文档 这个文档介绍指针的基础知识，因为很多计算机语言中都会用到它，例如：C，C++，Java，以及 Pascal。  Section 1 – 指针的三个基本规则 Section 2 – 一个简单的代码示例 Section 3 – 习题和答案  这是 Stanford CS Education"><meta name="twitter:image" content="http://kinboyw.github.io/2018/11/16/指针基础/c.jpeg"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Gemini",version:"5.1.4",sidebar:{position:"left",display:"post",offset:12,b2t:!0,scrollpercent:!0,onmobile:!1},fancybox:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},duoshuo:{userId:"0",author:"Author"},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"I didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><link rel="canonical" href="http://kinboyw.github.io/2018/11/16/指针基础/"><title>指针基础 | Kinboy's note</title><script type="text/javascript">var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?c9c2b9e915e6bb8ec323a2f98c0c98d8";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><body itemscope itemtype="http://schema.org/WebPage" lang="ZH | EN"><div class="container sidebar-position-left page-post-detail"><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"></span><span class="site-title">Kinboy's note</span><span class="logo-line-after"></span></a></div><h1 class="site-subtitle" itemprop="description">前端漫记</h1></div><div class="site-nav-toggle"><button></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><br>Home</a><li class="menu-item menu-item-about"><a href="/rscard/" rel="section"><br>About</a><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><br>Tags</a><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><br>Categories</a><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><br>Archives</a><li class="menu-item menu-item-top"><a href="/top/" rel="section"><br>Top</a><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><br>Search</a></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"></span><span class="popup-btn-close"></span><div class="local-search-input-wrapper"><input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input"></div></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-categories" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://kinboyw.github.io/2018/11/16/指针基础/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="kinboy"><meta itemprop="description" content><meta itemprop="image" content="/images/avatar.png"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Kinboy's note"></span><header class="post-header"><h2 class="post-title" itemprop="name headline">指针基础</h2><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Posted on</span> <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-16T01:01:21+08:00">2018-11-16</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">In</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Language/" itemprop="url" rel="index"><span itemprop="name">Language</span></a></span> , <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Language/C/" itemprop="url" rel="index"><span itemprop="name">C</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span><a href="/2018/11/16/指针基础/#comments" itemprop="discussionUrl"></a></span><div class="post-wordcount"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Words count in article&#58;</span> <span title="Words count in article">2.9k</span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">Reading time &asymp;</span> <span title="Reading time">11</span></div></div></header><div class="post-body" itemprop="articleBody"><img src="/2018/11/16/指针基础/c.jpeg" width="600"><p>翻译原文：<a href="http://cslibrary.stanford.edu/106/" target="_blank" rel="noopener">Pointer Basics</a><p><em>这是翻译的斯坦福大学官网上的 <a href="http://cslibrary.stanford.edu/" target="_blank" rel="noopener">CSLibrary</a> 中的一篇课程文档</em><p>这个文档介绍指针的基础知识，因为很多计算机语言中都会用到它，例如：C，C++，Java，以及 Pascal。<ul><li><a href="http://cslibrary.stanford.edu/106/#s1" target="_blank" rel="noopener">Section 1</a> – 指针的三个基本规则<li><a href="http://cslibrary.stanford.edu/106/#s2" target="_blank" rel="noopener">Section 2</a> – 一个简单的代码示例<li><a href="http://cslibrary.stanford.edu/106/#s3" target="_blank" rel="noopener">Section 3</a> – 习题和答案</ul><p>这是 Stanford CS Education Library 的106号文档。其他免费资料在 <a href="http://cslibrary.stanford.edu/" target="_blank" rel="noopener">cslibrary.stanford.edu</a> 中可以获取到。</p><img src="/2018/11/16/指针基础/pointer.jpg" width="400"><h2 id="1-–-指针规则1">1 – 指针规则1</h2><p>关于指针，好的地方是控制他们工作的规则非常简单。这些规则可以组合得到复杂的结果，但是单个的规则还是很简单。<h3 id="1-指针与指针对象">1) 指针与指针对象</h3><p><strong>指针</strong>存放了对一些东西的引用 。不幸的是，指针指向的目标还没有一个固定的术语，不同的计算机语言中，指针指向的内容很多。我们用术语 <strong>指针对象</strong> 来代指指针指向的事物，我们就来研究一下那些在所有语言中都正确的 <strong>指针/指针对象</strong> 关系的基本性质。术语 “引用”和 “指针”的意思非常相似——“引用”意在更高层的讨论，而“指针”是指传统的编译语言对地址指针的实现。对于这里所讲的基本的 <strong>指针/指针对象</strong> 规则，这两个术语可以认为是等同的。</p><img src="/2018/11/16/指针基础/PointerPointee.gif" width="400" title="PointerPointee"><p>上面的图中画出了一个名为 <code>x</code> 的指针，指向了一个保存了数值<code>42</code> 的指针对象。指针通常被画成一个矩形盒子，指针中保存的引用被画成一个箭头，从指针的盒子开始，指向它的指针对象。<p>分配指针和给指针分配指针对象是分开的两个步骤。你可以认为 指针/指针对象 结构是在两个层级的操作。两个层级都必须设置才能正常工作。最常见的错误集中于编写手动操作指针的代码时，忘记了设置指针对象。有时候不接触指针对象的指针操作被称为“浅”，而操作指针对象的指针操作称为“深”。<h3 id="2-解引用">2) 解引用</h3><p><strong>解引用</strong> 操作从指针开始，沿着箭头一直访问到它的指针对象。目的可能是查看指针对象的状态或者改变指针对象的状态。<p>对一个指针执行的解引用操作只在这个指针有一个指针对象——这个指针对象必须已经被分配并且指针必须已经设置为指向它—— 的情况下有效。最常见的错误就是代码中忘记为指针设置指针对象。在 Java 中，运行时会礼貌地标记错误的解引用。在编译语言中，例如 C，C++，和Pascal中，错误的解引用有时会崩溃，有时会以一些微妙而随机的方式破坏内存。因此编译语言中的指针异常很难追踪。<h3 id="3-指针赋值">3) 指针赋值</h3><p>两个指针之间的 <strong>指针赋值</strong> 会使他们指向同一个指针对象。所以 <code>y=x;</code> 的赋值会让 <code>y</code> 指向与 <code>x</code> 相同的指针对象。指针赋值不接触指针对象。它只是改变一个指针来让它拥有与其他指针相同的引用。指针赋值后，这两个指针被称为 <code>共享</code> 指针对象。<h2 id="2-–-代码示例">2 – 代码示例</h2><p>有不同计算机语言的代码示例。所有的版本都有相同的结构，证明相同的基本规则和指针只是；他们只有语法上的不同。不考虑特定语言，示例的基本结构如下…<table><thead><tr><th>1. 分配 <code>x</code> 和 <code>y</code> 两个指针。让他们不指向任何指针对象。<th><img src="/2018/11/16/指针基础/1.gif"><tbody><tr><td>2. 分配一个指针对象，然后设置 <code>x</code> 指向它。每种语言都有自己的语法来实现这一步操作。重要的是指针对象的内存是动态分配的，然后让<code>x</code> 指向这个指针对象<td><img src="/2018/11/16/指针基础/2.gif"><tr><td>3.解引用 <code>x</code> 将42保存到指针对象中。这是解引用操作的基本示例。从 <code>x</code> 开始，沿着箭头方向访问到指针对象。<td><img src="/2018/11/16/指针基础/3.gif"><tr><td>4. 尝试解引用 <code>y</code> 来保存 13 到指针对象中.这一步会崩溃——因为它还没有被赋值一个指针对象。<td><img src="/2018/11/16/指针基础/4.gif"><tr><td>5. 赋值 <code>y=x;</code> 让 <code>y</code> 指向 <code>x</code> 的指针对象。现在 <code>x</code> 和 <code>y</code> 指向了相同的指针对象——他们是共享的。<td><img src="/2018/11/16/指针基础/5.gif"><tr><td>6. 尝试解引用 <code>y</code> 来保存 13到指针对象中。这一次成功了，因为上一步赋值操作为 <code>y</code> 分配了指针对象。<td><img src="/2018/11/16/指针基础/6.gif"></table><h3 id="版本">版本</h3><p>下面是不同语言版本的示例。他们做了相同的事情——只是每种语言的语法不同。<h3 id="C-版本">C 版本</h3><p>指针 <code>x</code> 和 <code>y</code> 分配成本地变量。类型 <code>int*</code> 表示“指针指向 int 类型”。指针不会自动得到指针对象。<code>x</code> 的指针对象是另外用标准库 <code>malloc()</code> 动态分配的。语法 <code>*x</code> 解引用 x 来访问它的指针对象。<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;   </span><br><span class="line">    <span class="keyword">int</span>*    x;  <span class="comment">// Allocate the pointers x and y</span></span><br><span class="line">    <span class="keyword">int</span>*    y;  <span class="comment">// (but not the pointees)</span></span><br><span class="line">    </span><br><span class="line">    x = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>));    <span class="comment">// Allocate an int pointee,</span></span><br><span class="line">                                <span class="comment">// and set x to point to it</span></span><br><span class="line">    </span><br><span class="line">    *x = <span class="number">42</span>;    <span class="comment">// Dereference x to store 42 in its pointee</span></span><br><span class="line">    </span><br><span class="line">    *y = <span class="number">13</span>;    <span class="comment">// CRASH -- y does not have a pointee yet</span></span><br><span class="line">    </span><br><span class="line">    y = x;      <span class="comment">// Pointer assignment sets y to point to x's pointee</span></span><br><span class="line">    </span><br><span class="line">    *y = <span class="number">13</span>;    <span class="comment">// Dereference y to store 13 in its (shared) pointee</span></span><br><span class="line">&#125;</span><br></pre></table></figure><p>C语言（或者C++）中另一种使用指针的方式是使用 &amp; 符号（ampersand ）运算符来计算栈中指向本地内存的指针。然而，指针对象通常是在堆中动态分配的，所以这就是我们展示的。<h3 id="Java-版本">Java 版本</h3><p>Java中最常见的 指针/指针对象结构是一个本地变量作为指针，指向一些类的对象作为指针对象。所以为了按计划创建一个保存了整数类型的指针对象，我们定义一个 <code>IntObj</code> 类来保存一个整型。然后我们可以创建一个 <code>IntObj</code> 指针对象来保存 int。用 <code>IntObj x;</code> 这样的代码来分配指针不会自动分配指针对象。 <code>IntObj</code> 指针对象通过调用 <code>new</code> 来分配。<code>x.value</code> 解引用 <code>x</code> 来访问指针对象中的 <code>.value</code> 字段。<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IntObj</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> value;</span><br><span class="line">&#125;</span><br><br><span class="line"><span class="function"><span class="keyword">public</span> class <span class="title">Binky</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        IntObj  x;  <span class="comment">// Allocate the pointers x and y</span></span><br><span class="line">        IntObj  y;  <span class="comment">// (but not the IntObj pointees)</span></span><br><span class="line">        </span><br><span class="line">        x = <span class="keyword">new</span> IntObj();   <span class="comment">// Allocate an IntObj pointee</span></span><br><span class="line">                            <span class="comment">// and set x to point to it</span></span><br><span class="line">        </span><br><span class="line">        x.value = <span class="number">42</span>;   <span class="comment">// Dereference x to store 42 in its pointee</span></span><br><span class="line">        </span><br><span class="line">        y.value = <span class="number">13</span>;   <span class="comment">// CRASH -- y does not have a pointee yet</span></span><br><span class="line">        </span><br><span class="line">        y = x;  <span class="comment">// Pointer assignment sets y to point to x's pointee</span></span><br><span class="line">        </span><br><span class="line">        y.value = <span class="number">13</span>;   <span class="comment">// Deference y to store 13 in its (shared) pointee</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></table></figure><h3 id="C-版本-1">C++ 版本</h3><p>与 上面 C 语言版本唯一的不同是使用了标准操作符 <code>new</code> 来代替 <code>malloc()</code><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;   </span><br><span class="line">    <span class="keyword">int</span>*    x;  <span class="comment">// Allocate the pointers x and y</span></span><br><span class="line">    <span class="keyword">int</span>*    y;  <span class="comment">// (but not the pointees)</span></span><br><span class="line">    </span><br><span class="line">    x = <span class="keyword">new</span> <span class="keyword">int</span>;    <span class="comment">// Allocate an int pointee,</span></span><br><span class="line">                    <span class="comment">// and set x to point to it</span></span><br><span class="line">    </span><br><span class="line">    *x = <span class="number">42</span>;    <span class="comment">// Dereference x to store 42 in its pointee</span></span><br><span class="line">    </span><br><span class="line">    *y = <span class="number">13</span>;    <span class="comment">// CRASH -- y does not have a pointee yet</span></span><br><span class="line">    </span><br><span class="line">    y = x;      <span class="comment">// Pointer assignment sets y to point to x's pointee</span></span><br><span class="line">    </span><br><span class="line">    *y = <span class="number">13</span>;    <span class="comment">// Dereference y to store 13 in its (shared) pointee</span></span><br><span class="line">&#125;</span><br></pre></table></figure><h3 id="Pascal-版本">Pascal 版本</h3><p>这跟 C 语言版本在结构一致，但是使用了 Pascal 语法。<code>^Integer</code> 意思是“指向整型的指针”。分配指针不会自动分配它的指针对象。标准程序 <code>New()</code> 取一个指针参数，分配一个新的指针对象，设置指针指向这个指针对象。表达式 <code>x^</code> 解引用访问这个指针对象。<figure class="highlight pascal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre><td class="code"><pre><span class="line"><span class="function"><span class="keyword">Procedure</span> <span class="title">main</span></span></span><br><span class="line">    var x:^Integer; /* Allocate the pointers x and y */</span><br><span class="line">    var y:^Integer; /* (but not the pointees)        */</span><br><span class="line"><span class="keyword">Begin</span></span><br><span class="line">    New(x); /* Allocate a pointee and set x to point to it */</span><br><span class="line">    </span><br><span class="line">    x^ := 42;   /* Deference x to store 42 in its pointee */</span><br><span class="line">    </span><br><span class="line">    y^ := 13;   /* CRASH -- y does not have a pointee yet */</span><br><span class="line">    </span><br><span class="line">    y := x; 	/* Pointer assignment makes y point to x's pointee */</span><br><span class="line">    </span><br><span class="line">    y^ := 13;   /* Dereference y to store 13 in its (shared) pointee */</span><br><span class="line"><span class="keyword">End</span>;</span><br></pre></table></figure><h2 id="3-–-习题">3 – 习题</h2><p>这些习题考察指针的基本特性。其中两个问题大量使用内存图。内存图是思考指针问题的很好的方法。<h3 id="Question-1">Question 1</h3><p>在上面代码的末尾，<code>y</code> 被指定了一个指针对象，然后解引用它保存数字13到指针对象中，在这发生后，<code>x</code> 的指针对象的值是多少？<p>答案：13，因为 <code>x</code> 的指针对象也是 <code>y</code> 的指针对象，这就是指针共享的全部作用——多个指针指向一个指针对象。<h3 id="Question-2">Question 2</h3><p>思考下面这张图…</p><img src="/2018/11/16/指针基础/TwoPointers.gif" width="400" title="TwoPointers"><p>选择中语言，写代码创建上面的指针结构。<p>答案：基本步骤是…<ol><li>分配两个指针<li>分配两个指针对象，然后设置两个指针分别指向他们<li>保存数字 1 和 2 到这两个指针对象中<li>赋值第一个指针指向第二个指针对象。这会丢失对第一个指针对象的引用，这是很少见的，但题目就是这样要求的。</ol><p><strong>C Code</strong><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span>* x;</span><br><span class="line">	<span class="keyword">int</span>* y;</span><br><span class="line">	x = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">	y = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">	*x = <span class="number">1</span>;</span><br><span class="line">	*y = <span class="number">2</span>;</span><br><span class="line">	x = y;</span><br><span class="line">&#125;</span><br></pre></table></figure><p><strong>Java Code</strong><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    IntObj x;</span><br><span class="line">	IntObj y;</span><br><span class="line">	x = <span class="keyword">new</span> IntObj();</span><br><span class="line">	y = <span class="keyword">new</span> IntObj();</span><br><span class="line">	x.value = <span class="number">1</span>;</span><br><span class="line">	y.value = <span class="number">2</span>;</span><br><span class="line">	x = y;</span><br><span class="line">&#125;</span><br></pre></table></figure><h3 id="Question-3">Question 3</h3><p>假设你有一个指针对象叫作 “Node”，包含两个东西，一个 int 和一个 指向另一个 Node 的指针（这个Node 类型的的定义在下面）。你可以用这样的指针对象类型在一个结构中构造三个 Node 互相指向的指针对象，像这样…</p><img src="/2018/11/16/指针基础/ThreeNodes.gif" width="400" title="ThreeNodes"><p>名叫 <code>x</code> 的指针指向第一个 Node 指针对象。第一个 Node 包含一个指针指向第二个 Node ，第二个包含一个指针指向第三个 Node ，第三个 Node 又包含一个指针指向了第一个 Node。这个结构只能用我们已经见过的指针对象分配，解引用和赋值的规则来创建。使用下面的定义，每一个 Node 都包含了一个 Integer 名为 <code>value</code> ，和一个指针指向另一个名为 <code>next</code> 的 Node。<p><strong>C Code</strong><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span> &#123;</span></span><br><span class="line"> 	<span class="keyword">int</span> value;</span><br><span class="line"> 	<span class="class"><span class="keyword">struct</span> <span class="title">Node</span>* <span class="title">next</span>;</span> </span><br><span class="line">&#125;;</span><br></pre></table></figure><p><strong>Java Code</strong><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">int</span> value;</span><br><span class="line">	<span class="keyword">public</span> Node next;</span><br><span class="line">&#125;;</span><br></pre></table></figure><p>写代码创建上面图中的结构。为了方便，你可以使用 <code>x</code> 以外的临时指针来访问指针对象中的字段——所以 <code>-&gt;value</code> 访问 <code>x</code> 指针对象中的 名为<code>value</code> 字段。<p><strong>Answer</strong> The basic steps are… <strong>答案</strong> 基本步骤…<ol><li>分配三个指针：<code>x</code> 指向第一个 Node，然后临时指针 <code>y</code> 和 <code>z</code> 指向其他两个 Node。<li>分配三个 Node 指针对象并保存他们的解引用到三个指针中。<li>解引用每一个指针对象，保存合适的数值到其指针对象的 <code>value</code> 字段中。<li>解引用每个指针来访问其指针对象中的 <code>.next</code> 字段，并使用指针赋值来设置 <code>.next</code> 字段指向合适的 Node。</ol><p><strong>C Code</strong><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Allocate the pointers</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Node</span>* <span class="title">x</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Node</span>* <span class="title">y</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Node</span>* <span class="title">z</span>;</span></span><br><span class="line">	<span class="comment">// Allocate the pointees</span></span><br><span class="line">	x = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Node));</span><br><span class="line">	y = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Node));</span><br><span class="line">	z = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Node));</span><br><span class="line">	<span class="comment">// Put the numbers in the pointees</span></span><br><span class="line">	x-&gt;value = <span class="number">1</span>;</span><br><span class="line">	y-&gt;value = <span class="number">2</span>;</span><br><span class="line">	z-&gt;value = <span class="number">3</span>;</span><br><span class="line">	<span class="comment">// Put the pointers in the pointees</span></span><br><span class="line">	x-&gt;next = y;</span><br><span class="line">	y-&gt;next = z;</span><br><span class="line">	z-&gt;next = x;</span><br><span class="line">&#125;</span><br></pre></table></figure><p><strong>Java Code</strong><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre><td class="code"><pre><span class="line">&#123;	</span><br><span class="line">    <span class="comment">// Allocate the pointers</span></span><br><span class="line">	Node x;</span><br><span class="line">	Node y;</span><br><span class="line">	Node z;</span><br><span class="line">	<span class="comment">// Allocate the pointees</span></span><br><span class="line">	x = <span class="keyword">new</span> Node();</span><br><span class="line">	y = <span class="keyword">new</span> Node();</span><br><span class="line">	z = <span class="keyword">new</span> Node();</span><br><span class="line">	<span class="comment">// Put the numbers in the pointees</span></span><br><span class="line">	x.value = <span class="number">1</span>;</span><br><span class="line">	y.value = <span class="number">2</span>;</span><br><span class="line">	z.value = <span class="number">3</span>;</span><br><span class="line">	<span class="comment">// Put the pointers in the pointees</span></span><br><span class="line">	x.next = y;</span><br><span class="line">	y.next = z;</span><br><span class="line">	z.next = x;</span><br><span class="line">&#125;</span><br></pre></table></figure><p>这里介绍的 Node 结构实际上是一种真实的数据类型，被用来创建 “链表” 数据结构。链表是指针的实际应用的用途，是提升指针技能的绝佳领域。看Stanford CS Library 中的<a href="http://cslibrary.stanford.edu/103/" target="_blank" rel="noopener">Linked List Basics</a> 和 <a href="http://cslibrary.stanford.edu/105/" target="_blank" rel="noopener">Linked List Problems</a> 了解更多链表知识。<hr><p>Up to the <a href="http://cslibrary.stanford.edu/" target="_blank" rel="noopener">CS Education Library Home</a></div><div><div class="my_post_copyright"><script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script><script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js" integrity="sha256-iBcUE/x23aI6syuqF7EeT/+JFBxjPs5zeFJEXxumwb0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js" integrity="sha256-JirYRqbf+qzfqVtEE4GETyHlAbiCpC005yBTa4rj6xg=" crossorigin="anonymous"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css" integrity="sha256-zuyRv+YsWwh1XR5tsrZ7VCfGqUmmPmqBjIvJgQWoSDo=" crossorigin="anonymous"><p><span>本文标题:</span>指针基础<p><span>文章作者:</span>kinboy<p><span>发布时间:</span>2018年11月16日 - 01:01:21<p><span>最后更新:</span>2019年07月15日 - 18:05:10<p><span>原始链接:</span><a href="/2018/11/16/指针基础/" title="指针基础">http://kinboyw.github.io/2018/11/16/指针基础/</a><span class="copy-path" title="点击复制文章链接"></span><p><span>许可协议:</span> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</div><script>var clipboard=new Clipboard(".fa-clipboard");clipboard.on("success",$(function(){$(".fa-clipboard").click(function(){swal({title:"",text:"复制成功",html:!1,timer:500,showConfirmButton:!1})})}))</script></div><div><div><div style="text-align:center;color:#ccc;font-size:14px">------ Passage Ending ------</div></div></div><div><ul class="post-copyright"><li class="post-copyright-author"><strong>Post author:</strong> kinboy<li class="post-copyright-link"><strong>Post link:</strong> <a href="http://kinboyw.github.io/2018/11/16/指针基础/" title="指针基础">http://kinboyw.github.io/2018/11/16/指针基础/</a><li class="post-copyright-license"><strong>Copyright Notice:</strong> All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.</ul></div><footer class="post-footer"><div class="post-tags"><a href="/tags/Langauge/" rel="tag"># Langauge</a> <a href="/tags/C/" rel="tag"># C</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2018/11/15/常见面试算法题/" rel="next" title="常见面试算法题">常见面试算法题</a></div><div class="post-nav-prev post-nav-item"><a href="/2018/11/16/如何在Node-js中启用ES6-Import/" rel="prev" title="如何在Node.js中启用ES6 Import">如何在Node.js中启用ES6 Import</a></div></div></footer></div></article></div></div><div class="comments" id="comments"><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">Table of Contents<li class="sidebar-nav-overview" data-target="site-overview-wrap">Overview</ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="kinboy"><p class="site-author-name" itemprop="name">kinboy</div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">66</span> <span class="site-state-item-name">posts</span></a></div><div class="site-state-item site-state-categories"><a href="/categories/index.html"><span class="site-state-item-count">31</span> <span class="site-state-item-name">categories</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/index.html"><span class="site-state-item-count">52</span> <span class="site-state-item-name">tags</span></a></div></nav><div class="feed-link motion-element"><a href="/atom.xml" rel="alternate">RSS</a></div><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/kinboyw" target="_blank" title="GitHub">GitHub</a></span><span class="links-of-author-item"><a href="mailto:kinboy9275@gmail.com" target="_blank" title="E-Mail"> E-Mail</a></span></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-–-指针规则1"><span class="nav-number">1.</span> <span class="nav-text">1 – 指针规则1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-指针与指针对象"><span class="nav-number">1.1.</span> <span class="nav-text">1) 指针与指针对象</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#2-解引用"><span class="nav-number">1.2.</span> <span class="nav-text">2) 解引用</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#3-指针赋值"><span class="nav-number">1.3.</span> <span class="nav-text">3) 指针赋值</span></a></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#2-–-代码示例"><span class="nav-number">2.</span> <span class="nav-text">2 – 代码示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#版本"><span class="nav-number">2.1.</span> <span class="nav-text">版本</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#C-版本"><span class="nav-number">2.2.</span> <span class="nav-text">C 版本</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-版本"><span class="nav-number">2.3.</span> <span class="nav-text">Java 版本</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#C-版本-1"><span class="nav-number">2.4.</span> <span class="nav-text">C++ 版本</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#Pascal-版本"><span class="nav-number">2.5.</span> <span class="nav-text">Pascal 版本</span></a></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#3-–-习题"><span class="nav-number">3.</span> <span class="nav-text">3 – 习题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Question-1"><span class="nav-number">3.1.</span> <span class="nav-text">Question 1</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#Question-2"><span class="nav-number">3.2.</span> <span class="nav-text">Question 2</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#Question-3"><span class="nav-number">3.3.</span> <span class="nav-text">Question 3</span></a></ol></ol></div></div></section><div class="back-to-top"><span id="scrollpercent"><span>0</span>%</span></div></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2019</span><span class="with-love"></span> <span class="author" itemprop="copyrightHolder">kinboy</span><br><img src="/images/beian.png"> <span style="width:300px;margin:0 auto;padding:20px 0"><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42011102002861" style="display:inline-block;text-decoration:none;height:20px;line-height:20px"><img src style="float:left"><p style="float:left;height:20px;line-height:20px;margin:0 0 0 5px;color:#939393">鄂公网安备 42011102002861号</p></a></span></div></div></footer></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type="text/javascript" src="/lib/three/three.min.js"></script><script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script><script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><script id="dsq-count-scr" src="https://kinboy-wang.disqus.com/count.js" async></script><script type="text/javascript">var disqus_config=function(){this.page.url="http://kinboyw.github.io/2018/11/16/指针基础/",this.page.identifier="2018/11/16/指针基础/",this.page.title="指针基础"},d=document,s=d.createElement("script");s.src="https://kinboy-wang.disqus.com/embed.js",s.setAttribute("data-timestamp",""+ +new Date),(d.head||d.body).appendChild(s)</script><script type="text/javascript">// Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });</script><script>!function(){var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}()</script>

@@ -1,0 +1,314 @@
+<!DOCTYPE html><html class="theme-next gemini use-motion" lang="ZH | EN"><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="google-site-verification" content="AKuwh4i11uWg0wOl_cM7AI_dHqOHOLKYfCxKc8Lfv6E"><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4"><link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222"><meta name="keywords" content="架构,单页应用,"><link rel="alternate" href="/atom.xml" title="Kinboy's note" type="application/atom+xml"><meta name="description" content="原文：Single-Page Applications and the Server SPAs minimize server requests, but they aren’t server-lessSingle-page applications (SPAs) are distinguished from regular applications because they do not nee"><meta name="keywords" content="架构,单页应用"><meta property="og:type" content="article"><meta property="og:title" content="单页面应用与服务器"><meta property="og:url" content="http://kinboyw.github.io/2018/09/28/Simple-Page Applications And Server/index.html"><meta property="og:site_name" content="Kinboy&#39;s note"><meta property="og:description" content="原文：Single-Page Applications and the Server SPAs minimize server requests, but they aren’t server-lessSingle-page applications (SPAs) are distinguished from regular applications because they do not nee"><meta property="og:locale" content="ZH | EN"><meta property="og:updated_time" content="2019-07-15T10:05:10.371Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="单页面应用与服务器"><meta name="twitter:description" content="原文：Single-Page Applications and the Server SPAs minimize server requests, but they aren’t server-lessSingle-page applications (SPAs) are distinguished from regular applications because they do not nee"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Gemini",version:"5.1.4",sidebar:{position:"left",display:"post",offset:12,b2t:!0,scrollpercent:!0,onmobile:!1},fancybox:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},duoshuo:{userId:"0",author:"Author"},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"I didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><link rel="canonical" href="http://kinboyw.github.io/2018/09/28/Simple-Page Applications And Server/"><title>单页面应用与服务器 | Kinboy's note</title><script type="text/javascript">var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?c9c2b9e915e6bb8ec323a2f98c0c98d8";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><body itemscope itemtype="http://schema.org/WebPage" lang="ZH | EN"><div class="container sidebar-position-left page-post-detail"><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"></span><span class="site-title">Kinboy's note</span><span class="logo-line-after"></span></a></div><h1 class="site-subtitle" itemprop="description">前端漫记</h1></div><div class="site-nav-toggle"><button></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><br>Home</a><li class="menu-item menu-item-about"><a href="/rscard/" rel="section"><br>About</a><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><br>Tags</a><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><br>Categories</a><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><br>Archives</a><li class="menu-item menu-item-top"><a href="/top/" rel="section"><br>Top</a><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><br>Search</a></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"></span><span class="popup-btn-close"></span><div class="local-search-input-wrapper"><input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input"></div></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://kinboyw.github.io/2018/09/28/Simple-Page Applications And Server/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="kinboy"><meta itemprop="description" content><meta itemprop="image" content="/images/avatar.png"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Kinboy's note"></span><header class="post-header"><h2 class="post-title" itemprop="name headline">单页面应用与服务器</h2><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Posted on</span> <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-28T20:25:04+08:00">2018-09-28</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">In</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/翻译/" itemprop="url" rel="index"><span itemprop="name">翻译</span></a></span> , <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FE/" itemprop="url" rel="index"><span itemprop="name">FE</span></a></span> , <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FE/HTTP/" itemprop="url" rel="index"><span itemprop="name">HTTP</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span><a href="/2018/09/28/Simple-Page Applications And Server/#comments" itemprop="discussionUrl"></a></span><div class="post-wordcount"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Words count in article&#58;</span> <span title="Words count in article">2.6k</span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">Reading time &asymp;</span> <span title="Reading time">16</span></div></div></header><div class="post-body" itemprop="articleBody"><p>原文：<a href="https://medium.com/@pshrmn/single-page-applications-and-the-server-32a23d67936" target="_blank" rel="noopener">Single-Page Applications and the Server</a><h2 id="SPAs-minimize-server-requests-but-they-aren’t-server-less">SPAs minimize server requests, but they aren’t server-less</h2><p>Single-page applications (SPAs) are distinguished from regular applications because they do not need to make server requests when the user navigates. However, the application still needs a server to provide the initial files for the application to render. <a href="https://medium.com/@pshrmn/demystifying-single-page-applications-3068d0555d46" target="_blank" rel="noopener">Demystifying Single-Page Applications</a> covers the client-side aspect of how this works and here we will cover how different types of servers can support single-page applications.</p><h3 id="Server-Types">Server Types</h3><p>Websites are backed by two types of servers: web and application. NGINX, a web server, <a href="https://www.nginx.com/resources/glossary/application-server-vs-web-server/" target="_blank" rel="noopener">provides a good explanation of the two</a>. The most general way to differentiate the two is to say that a web server serves static content (i.e. files that already exist on the server) while an application server can generate new content.<p>With single-page applications, there are three main scenarios for serving the application’s content:<ol><li>Purely static<li>Configurable static<li>Dynamic</ol><h4 id="Purely-Static">Purely Static</h4><p>A purely static web server can only successfully respond to requests if a resource at the requested location exists. This will typically be the case when you are using a static host, such as GitHub Pages or Amazon S3.<p>With a purely static server, a request for <code>/horses.html</code> only succeeds (returns a response with status <code>200</code>) if the server’s root directory contains a <code>horses.html</code> file. If the resource does not exist, the server will return a <code>404</code> response.<h4 id="Configurable-Static">Configurable Static</h4><p>A web server can be configured to respond with an alternative file if the requested resource doesn’t actually exist on the disk. If a request for <code>/bears</code> comes in and the server has no <code>bears</code> file, the configuration can tell it to respond with an <code>index.html</code> file instead.<h4 id="Dynamic">Dynamic</h4><p>An application server will have a web framework running on top of it. For example, a <a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node</a> application server might be running <a href="https://expressjs.com/" target="_blank" rel="noopener">Express</a> and a <a href="https://bogomips.org/unicorn/" target="_blank" rel="noopener">Unicorn</a> application server may be used to run <a href="http://rubyonrails.org/" target="_blank" rel="noopener">Ruby on Rails</a>.<p>The framework is able to match requests and dynamically generate responses. Like a configurable static setup, requests don’t have to map directly to files on the server, but a dynamic setup gives you even more leeway.<p>An application server is most likely run as a proxy of a web server, but the web server would typically just pass non-static requests to the application server.<p>Generally speaking, a dynamic/configurable static server is preferable for running a single-page application. If you are using a static file host, you can still run a single-page application, but there are some limitations that you will need to know.<h3 id="Serving-Single-Page-Applications-From-Static-File-Hosts">Serving Single-Page Applications From Static File Hosts</h3><p>If you are running a single-page application through a static file host, you have two options.<p>The first, and more practical, is to have a single HTML file. With this system, the URL’s <code>hash</code> will be used to store location data.<p>This would be the home page:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre><td class="code"><pre><span class="line">https://example.com/#/</span><br></pre></table></figure><p>and this is the contact page:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre><td class="code"><pre><span class="line">https://example.com/#/contact</span><br></pre></table></figure><p>Because the location is stored in the URL’s <code>hash</code>, and the server only uses the location’s <code>pathname</code> to map resources, all requests to the server for pages in the application will be for the root <code>index.html</code> file.<p>Most single-page application routers should provide you with a way to encode locations in the hash. With the <a href="https://curi.js.org/" target="_blank" rel="noopener">Curi router</a>, this is done using the <a href="https://github.com/pshrmn/hickory/blob/master/docs/api/Hash.md" target="_blank" rel="noopener">Hickory hash history</a>.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre><td class="code"><pre><span class="line">import Hash from &quot;@hickory/hash&quot;;</span><br><span class="line">// ...</span><br><span class="line">const history = Hash();</span><br><span class="line">const router = curi(history, routes);</span><br><span class="line">// current URL: &quot;example.com/#/&quot;</span><br><span class="line">history.push(&quot;/contact&quot;);</span><br><span class="line">// push() changes the URL to &quot;example.com/#/contact&quot;</span><br></pre></table></figure><p>The popular <code>history</code> package also has a <code>hash</code> option.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre><td class="code"><pre><span class="line">import &#123; createHashHistory &#125; from &quot;history&quot;;</span><br><span class="line">const history = createHashHistory();</span><br></pre></table></figure><p>A visual drawback of using hash URLs is that they are a bit ugly. However, they are your best bet and I would recommend just dealing with it.<p>If you <em>really</em> want “pretty” URLs, you could generate an HTML file for <strong>every single possible URL in your application</strong>. That would allow your server to be able to respond with an HTML file for every (valid) request. This is technically feasible for applications with a small number of routes, and some static site generators will do this for you. However, this breaks down for sites that generate URLs for dynamic content, like profile pages for users.<h3 id="Serving-Single-Page-Applications-from-Configurable-Static-Servers">Serving Single-Page Applications from Configurable Static Servers</h3><p>If you can configure your web server, creating a single-page application with “pretty” URLs is much easier.<p>The basic gist of how to configure a web server for single-page applications is that you have a single HTML file that your application serves for almost every request.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre><td class="code"><pre><span class="line">&lt;!-- index.html --&gt;</span><br><span class="line">&lt;!doctype html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;...&lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;script src=&quot;/static/js/index.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></table></figure><p>Request for<code>/camels</code>? Respond with <code>index.html</code>. Request for <code>/badgers</code>? Respond with <code>index.html</code>. Request for <code>/static/js/index.js</code>? That is where the “almost” comes in. The server needs to distinguish between requests for HTML content for requests for other files so that it can serve the correct files, and not the <code>index.html</code> file, for those requests.<p>With the Apache web server, you can use <code>mod_rewrite</code> to try to respond with the requested file, but fall back to responding with a default HTML file when the resource does not exist.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre><td class="code"><pre><span class="line">RewriteEngine On</span><br><span class="line"># set the base URL prefix</span><br><span class="line">RewriteBase /</span><br><span class="line"># for requests for index.html, just respond with the file</span><br><span class="line">RewriteRule ^index\.html$ - [L]</span><br><span class="line"># if requested path is not a valid filename, continue rewrite</span><br><span class="line">RewriteCond %&#123;REQUEST_FILENAME&#125; !-f</span><br><span class="line"># if requested path is not a valid directory, continue rewrite</span><br><span class="line">RewriteCond %&#123;REQUEST_FILENAME&#125; !-d</span><br><span class="line"># if you have continue to here, respond with index.html</span><br><span class="line">RewriteRule . /index.html [L]</span><br></pre></table></figure><p>With Nginx, you can use <code>try_files</code> to serve the HTML file. This will attempt to serve the file at the provided <code>$uri</code>, but if that does not exist, it will fall back to the <code>index.html</code> file.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">  ...</span><br><span class="line">  location / &#123;</span><br><span class="line">    try_files $uri /index.html;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></table></figure><p><strong>Note:</strong> These configurations are gleaned from an <a href="https://github.com/ReactTraining/react-router/blob/afa0560326eebc4ac426bb206ffd2b07f5448964/docs/guides/Histories.md#configuring-your-server" target="_blank" rel="noopener">old React Router documentation</a>. If you have issues getting these Apache/NGINX setups to work, I would recommend either checking their respective documentation or StackOverflow.<h3 id="Dynamically-Serving-Single-Page-Applications-with-Application-Servers">Dynamically Serving Single-Page Applications with Application Servers</h3><p>The setup for application servers is similar to configurable static servers. In some cases, they may even overlap by having Apache/NGINX/etc. serve static files and pass other requests to a proxy, the application server.<p>There are so many different application servers out there, that it is impractical to cover the setup for each of them here, but the gist is always the same: process the request, determine how to respond, and respond with some HTML. The example code below will use the Express framework.<p>An application server needs to identify static resource requests and respond with the correct file. If you configure your web server to handle these, then you can skip this on the application server. Additionally, a dynamic server needs to identify API requests so that they can be handled properly.<p>Some single-page applications will also employ server-side rendering. Instead of using a common HTML file, server-side rendering will respond with the fully structured HTML for the requested page. Some people swear by this, while others consider it unnecessary. At the very least, there are some caveats to it, but we will come back to this in a little bit.<p>Your framework should provide a way to identify static resource requests. This basically entails specifying a static file directory so that any request whose <code>pathname</code> begins with the static directory will just serve the requested file (or fail with a <code>404</code> response if the requested file does not exist).<p>To do this with Express, you would use its <code>static()</code> <a href="https://expressjs.com/en/starter/static-files.html" target="_blank" rel="noopener">method</a> and your Express app’s <code>use()</code> method. <code>static()</code> receives the local directory where the static files exist. You can either pass this as the only argument to <code>use()</code>, in which case it will respond to requests for the same local directory, or you can pass it a first argument path if static file requests don’t refer to the literal location.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre><td class="code"><pre><span class="line">const express = require(&quot;express&quot;);</span><br><span class="line">const app = new express();</span><br><span class="line">// requests for /public/js/index.js will return public/js/index.js</span><br><span class="line">app.use(express.static(&quot;public&quot;));</span><br><span class="line">// requests for /static/js/index.js will return public/js/index.js</span><br><span class="line">app.use(&quot;/static&quot;, express.static(&quot;public&quot;));</span><br><span class="line">app.listen(&quot;8000&quot;);</span><br></pre></table></figure><p>Frameworks also need to know how to map requests to to how they should respond, similar to how routes work in a single-page application. When the framework gets a request, it will iterate over these handlers and use the first one that matches the request to respond.<p>In order for the framework to respond to any possible location, we need to give it a catch-all route handler that responds with the common HTML file.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre><td class="code"><pre><span class="line">const path = require(&quot;path&quot;);</span><br><span class="line">app.use(&quot;*&quot;, function(req, resp) &#123;</span><br><span class="line">  resp.sendFile(&quot;/public/index.html&quot;);</span><br><span class="line">&#125;);</span><br></pre></table></figure><p>The order of operations is important here. A catch-all route will match every location, so anything that shouldn’t be matched by it (i.e. static file and API requests) needs to be defined prior to the wildcard route.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre><td class="code"><pre><span class="line">// 1. match static files</span><br><span class="line">app.use(&quot;/static&quot;, express.static(&quot;public&quot;));</span><br><span class="line">// 2. match API requests</span><br><span class="line">app.use(&quot;/graphql&quot;, ...);</span><br><span class="line">// 3. finally, match everything else</span><br><span class="line">app.use(&quot;*&quot;, function(req, resp) &#123;</span><br><span class="line">  resp.sendFile(&quot;/public/index.html&quot;);</span><br><span class="line">&#125;);</span><br></pre></table></figure><h4 id="Server-Side-Rendering">Server-Side Rendering</h4><p>The technique outlines above sends a minimal HTML file, which will be “filled in” on the client-side to render the application. Server-side rendering (SSR) allows you to render each route’s HTML content on the server. The response will then be an HTML file that is already “filled in”.<p>Server-side rendering also only really makes sense to attempt if you are running a Node server because you can re-use client-side code on the server. Technically speaking, if you aren’t using Node, you could create the same UI for whatever framework your server uses, but that would require you to duplicate your render logic.<p>The advantages of using SSR is that your application will have a faster initial render for users and that it is easier for search engines to crawl your content. Whether an application really benefits has a variety of factors. For example, if you are using server-side rendering for search engine optimization, only public pages need to be server-side rendered. A private page page (one that is only visible to authorized users) would not benefit from server-side rendering since no search engines should attempt to index it.<p>Instead of returning an HTML file from the disk, server-side rendering will generate an HTML string when a request comes in. There are two parts to this HTML string: the base HTML and the route specific HTML.<p>The base HTML is a template that will be used for all requests. This should include any <code>&lt;script&gt;</code> tags that will be necessary for running the application on the client. The route specific HTML will be inserted into the template. Most of this should be inserted into a container element in the <code>&lt;body&gt;</code> of the template, but you may also want to insert elements into the <code>&lt;head&gt;</code>, such as a <code>&lt;title&gt;</code>.<p>The technique for rendering on the server will depend entirely on how you are rendering on the client. If you are using React, the <code>react-dom</code> package provides server methods for generating an HTML string.<p><strong>Note:</strong> If you do server-side rendering using React, on the client you will want to use <code>ReactDOM.hydrate()</code> instead of <code>ReactDOM.render()</code>.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre><td class="code"><pre><span class="line">function responseHTML(content) &#123;</span><br><span class="line">  return `&lt;!doctype html&gt;</span><br><span class="line">    &lt;html&gt;</span><br><span class="line">      &lt;head&gt;&lt;/head&gt;</span><br><span class="line">      &lt;body&gt;</span><br><span class="line">        &lt;div id=&quot;root&quot;&gt;$&#123;content&#125;&lt;/div&gt;</span><br><span class="line">        &lt;script src=&quot;/static/js/bundle.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">      &lt;/body&gt;</span><br><span class="line">    &lt;/html&gt;`;</span><br><span class="line">&#125;</span><br></pre></table></figure><p><strong>Important!</strong> Any static resource references in the template should be absolute. If you use a relative path (<code>static/js/bundle.js</code>) in the template, then requests for nested URLs (<code>/parent/child</code>) would attempt to load non-existent resource URLs (<code>/parent/static/js/bundle.js</code>).<p>When the application just sends the same HTML file for every request, it doesn’t matter what the requested path is, but with server-side rendering it is important to render based on the request URL.<p><strong>Note:</strong> With Express, the request object can be referenced to get the requested path. <code>req.path</code>, which is just the requested URL’s <code>pathname</code>, <em>can</em> be used to determine the route that matches. However, if the app renders content using the <code>search</code>/<code>hash</code>, <code>req.url</code> should be used.<p>To demo the actual rendering, we will use React and the <a href="https://curi.js.org/" target="_blank" rel="noopener">Curi router</a>, which makes server-side rendering very easy.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre><td class="code"><pre><span class="line">import React from &quot;react&quot;;</span><br><span class="line">import renderToString from &quot;react-dom/server&quot;;</span><br><span class="line">import curi from &quot;@curi/core&quot;;</span><br><span class="line">import InMemory from &quot;@hickory/in-memory&quot;;</span><br><span class="line">import &#123; CuriProvider &#125; from &quot;@curi/react&quot;;</span><br><span class="line">import routes from &quot;../client/routes&quot;;</span><br><span class="line">app.use(&quot;*&quot;, function(req, resp) &#123;</span><br><span class="line">  // 1. Use the request&apos;s URL to create the router.</span><br><span class="line">  // Curi will use the provided location to generate a response</span><br><span class="line">  // object</span><br><span class="line">  const history = InMemory(&#123; locations: [req.url] &#125;);</span><br><span class="line">  const router = curi(history, routes);</span><br><span class="line">  // 2. Render the application using React.</span><br><span class="line">  // The exact implementation here will vary, but Curi uses</span><br><span class="line">  // a render-invoked prop to render a &quot;body&quot; component</span><br><span class="line">  // from the response object provided by the router.</span><br><span class="line">  const content = renderToString(</span><br><span class="line">    &lt;CuriProvider&gt;</span><br><span class="line">      &#123;(&#123; response &#125;) =&gt; &lt;response.body response=&#123;response&#125; /&gt;&#125;</span><br><span class="line">    &lt;/CuriProvider&gt;</span><br><span class="line">  );</span><br><span class="line">  // 3. Insert the content into the template.</span><br><span class="line">  // We want to return the entire page&apos;s HTML, not just</span><br><span class="line">  // the content rendered by React</span><br><span class="line">  const html = responseHTML(content);</span><br><span class="line">  </span><br><span class="line">  // 4. Send the response HTML.</span><br><span class="line">  resp.send(html);</span><br><span class="line">&#125;);</span><br></pre></table></figure><p>That is the general gist of server-side rendering. Actual implementations vary by framework and router, but the idea is always the same.<h3 id="Recap">Recap</h3><p>If you are using a static file host, you will either need to use hash routing and a shared HTML file or generate an HTML file for every possible route in your application.<p>Web servers can be made more amenable to single-page applications if you can configure them. This allows you to respond with an HTML file for requests that don’t have a matching resource on the server.<p>Application servers make serving single-page applications easy by using catch-all routes to respond to requests for any location. It is important that these match any other possible URLs, such as static resource and API requests, first so that the catch-all doesn’t catch those. If your application server is running Node, you can take advantage of server-side rendering to pre-generate the page’s HTML content, but this isn’t always necessary.<ul><li><a href="https://medium.com/tag/react?source=post" target="_blank" rel="noopener">React</a></ul></div><div><div class="my_post_copyright"><script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script><script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js" integrity="sha256-iBcUE/x23aI6syuqF7EeT/+JFBxjPs5zeFJEXxumwb0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js" integrity="sha256-JirYRqbf+qzfqVtEE4GETyHlAbiCpC005yBTa4rj6xg=" crossorigin="anonymous"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css" integrity="sha256-zuyRv+YsWwh1XR5tsrZ7VCfGqUmmPmqBjIvJgQWoSDo=" crossorigin="anonymous"><p><span>本文标题:</span>单页面应用与服务器<p><span>文章作者:</span>kinboy<p><span>发布时间:</span>2018年09月28日 - 20:25:04<p><span>最后更新:</span>2019年07月15日 - 18:05:10<p><span>原始链接:</span><a href="/2018/09/28/Simple-Page Applications And Server/" title="单页面应用与服务器">http://kinboyw.github.io/2018/09/28/Simple-Page Applications And Server/</a><span class="copy-path" title="点击复制文章链接"></span><p><span>许可协议:</span> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</div><script>var clipboard=new Clipboard(".fa-clipboard");clipboard.on("success",$(function(){$(".fa-clipboard").click(function(){swal({title:"",text:"复制成功",html:!1,timer:500,showConfirmButton:!1})})}))</script></div><div><div><div style="text-align:center;color:#ccc;font-size:14px">------ Passage Ending ------</div></div></div><div><ul class="post-copyright"><li class="post-copyright-author"><strong>Post author:</strong> kinboy<li class="post-copyright-link"><strong>Post link:</strong> <a href="http://kinboyw.github.io/2018/09/28/Simple-Page Applications And Server/" title="单页面应用与服务器">http://kinboyw.github.io/2018/09/28/Simple-Page Applications And Server/</a><li class="post-copyright-license"><strong>Copyright Notice:</strong> All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.</ul></div><footer class="post-footer"><div class="post-tags"><a href="/tags/架构/" rel="tag"># 架构</a> <a href="/tags/单页应用/" rel="tag"># 单页应用</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2018/09/25/a-little-bit-of-history/" rel="next" title="浏览器的history">浏览器的history</a></div><div class="post-nav-prev post-nav-item"><a href="/2018/10/09/Use-Vimdiff-As-Git-Mergetool/" rel="prev" title="使用vimdiff作为git mergetool">使用vimdiff作为git mergetool</a></div></div></footer></div></article></div></div><div class="comments" id="comments"><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">Table of Contents<li class="sidebar-nav-overview" data-target="site-overview-wrap">Overview</ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="kinboy"><p class="site-author-name" itemprop="name">kinboy</div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">66</span> <span class="site-state-item-name">posts</span></a></div><div class="site-state-item site-state-categories"><a href="/categories/index.html"><span class="site-state-item-count">31</span> <span class="site-state-item-name">categories</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/index.html"><span class="site-state-item-count">52</span> <span class="site-state-item-name">tags</span></a></div></nav><div class="feed-link motion-element"><a href="/atom.xml" rel="alternate">RSS</a></div><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/kinboyw" target="_blank" title="GitHub">GitHub</a></span><span class="links-of-author-item"><a href="mailto:kinboy9275@gmail.com" target="_blank" title="E-Mail"> E-Mail</a></span></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SPAs-minimize-server-requests-but-they-aren’t-server-less"><span class="nav-number">1.</span> <span class="nav-text">SPAs minimize server requests, but they aren’t server-less</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Server-Types"><span class="nav-number">1.1.</span> <span class="nav-text">Server Types</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Purely-Static"><span class="nav-number">1.1.1.</span> <span class="nav-text">Purely Static</span></a><li class="nav-item nav-level-4"><a class="nav-link" href="#Configurable-Static"><span class="nav-number">1.1.2.</span> <span class="nav-text">Configurable Static</span></a><li class="nav-item nav-level-4"><a class="nav-link" href="#Dynamic"><span class="nav-number">1.1.3.</span> <span class="nav-text">Dynamic</span></a></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#Serving-Single-Page-Applications-From-Static-File-Hosts"><span class="nav-number">1.2.</span> <span class="nav-text">Serving Single-Page Applications From Static File Hosts</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#Serving-Single-Page-Applications-from-Configurable-Static-Servers"><span class="nav-number">1.3.</span> <span class="nav-text">Serving Single-Page Applications from Configurable Static Servers</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#Dynamically-Serving-Single-Page-Applications-with-Application-Servers"><span class="nav-number">1.4.</span> <span class="nav-text">Dynamically Serving Single-Page Applications with Application Servers</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Server-Side-Rendering"><span class="nav-number">1.4.1.</span> <span class="nav-text">Server-Side Rendering</span></a></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#Recap"><span class="nav-number">1.5.</span> <span class="nav-text">Recap</span></a></ol></ol></div></div></section><div class="back-to-top"><span id="scrollpercent"><span>0</span>%</span></div></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2019</span><span class="with-love"></span> <span class="author" itemprop="copyrightHolder">kinboy</span><br><img src="/images/beian.png"> <span style="width:300px;margin:0 auto;padding:20px 0"><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42011102002861" style="display:inline-block;text-decoration:none;height:20px;line-height:20px"><img src style="float:left"><p style="float:left;height:20px;line-height:20px;margin:0 0 0 5px;color:#939393">鄂公网安备 42011102002861号</p></a></span></div></div></footer></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type="text/javascript" src="/lib/three/three.min.js"></script><script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script><script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><script id="dsq-count-scr" src="https://kinboy-wang.disqus.com/count.js" async></script><script type="text/javascript">var disqus_config=function(){this.page.url="http://kinboyw.github.io/2018/09/28/Simple-Page Applications And Server/",this.page.identifier="2018/09/28/Simple-Page Applications And Server/",this.page.title="单页面应用与服务器"},d=document,s=d.createElement("script");s.src="https://kinboy-wang.disqus.com/embed.js",s.setAttribute("data-timestamp",""+ +new Date),(d.head||d.body).appendChild(s)</script><script type="text/javascript">// Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });</script><script>!function(){var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}()</script>

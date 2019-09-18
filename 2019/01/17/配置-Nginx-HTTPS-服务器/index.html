@@ -1,0 +1,316 @@
+<!DOCTYPE html><html class="theme-next gemini use-motion" lang="ZH | EN"><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="google-site-verification" content="AKuwh4i11uWg0wOl_cM7AI_dHqOHOLKYfCxKc8Lfv6E"><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4"><link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222"><meta name="keywords" content="Nginx,HTTPS,"><link rel="alternate" href="/atom.xml" title="Kinboy's note" type="application/atom+xml"><meta name="description" content="译自官方文档—— Configuring HTTPS servers 要配置 HTTPS 服务器，必须在 server 区的监听（listen）套接字上允许 ssl 参数，同时要声明服务器证书和私钥文件的位置： 123456789server &amp;#123;    listen              443 ssl;    server_name         www.example.com;"><meta name="keywords" content="Nginx,HTTPS"><meta property="og:type" content="article"><meta property="og:title" content="配置 Nginx HTTPS 服务器"><meta property="og:url" content="http://kinboyw.github.io/2019/01/17/配置-Nginx-HTTPS-服务器/index.html"><meta property="og:site_name" content="Kinboy&#39;s note"><meta property="og:description" content="译自官方文档—— Configuring HTTPS servers 要配置 HTTPS 服务器，必须在 server 区的监听（listen）套接字上允许 ssl 参数，同时要声明服务器证书和私钥文件的位置： 123456789server &amp;#123;    listen              443 ssl;    server_name         www.example.com;"><meta property="og:locale" content="ZH | EN"><meta property="og:updated_time" content="2019-07-15T10:05:10.428Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="配置 Nginx HTTPS 服务器"><meta name="twitter:description" content="译自官方文档—— Configuring HTTPS servers 要配置 HTTPS 服务器，必须在 server 区的监听（listen）套接字上允许 ssl 参数，同时要声明服务器证书和私钥文件的位置： 123456789server &amp;#123;    listen              443 ssl;    server_name         www.example.com;"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Gemini",version:"5.1.4",sidebar:{position:"left",display:"post",offset:12,b2t:!0,scrollpercent:!0,onmobile:!1},fancybox:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},duoshuo:{userId:"0",author:"Author"},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"I didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><link rel="canonical" href="http://kinboyw.github.io/2019/01/17/配置-Nginx-HTTPS-服务器/"><title>配置 Nginx HTTPS 服务器 | Kinboy's note</title><script type="text/javascript">var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?c9c2b9e915e6bb8ec323a2f98c0c98d8";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><body itemscope itemtype="http://schema.org/WebPage" lang="ZH | EN"><div class="container sidebar-position-left page-post-detail"><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"></span><span class="site-title">Kinboy's note</span><span class="logo-line-after"></span></a></div><h1 class="site-subtitle" itemprop="description">前端漫记</h1></div><div class="site-nav-toggle"><button></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><br>Home</a><li class="menu-item menu-item-about"><a href="/rscard/" rel="section"><br>About</a><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><br>Tags</a><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><br>Categories</a><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><br>Archives</a><li class="menu-item menu-item-top"><a href="/top/" rel="section"><br>Top</a><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><br>Search</a></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"></span><span class="popup-btn-close"></span><div class="local-search-input-wrapper"><input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input"></div></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-categories" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://kinboyw.github.io/2019/01/17/配置-Nginx-HTTPS-服务器/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="kinboy"><meta itemprop="description" content><meta itemprop="image" content="/images/avatar.png"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Kinboy's note"></span><header class="post-header"><h2 class="post-title" itemprop="name headline">配置 Nginx HTTPS 服务器</h2><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Posted on</span> <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-17T09:56:24+08:00">2019-01-17</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">In</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Nginx/" itemprop="url" rel="index"><span itemprop="name">Nginx</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span><a href="/2019/01/17/配置-Nginx-HTTPS-服务器/#comments" itemprop="discussionUrl"></a></span><div class="post-wordcount"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Words count in article&#58;</span> <span title="Words count in article">2.3k</span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">Reading time &asymp;</span> <span title="Reading time">9</span></div></div></header><div class="post-body" itemprop="articleBody"><p>译自官方文档—— <a href="http://nginx.org/en/docs/http/configuring_https_servers.html" target="_blank" rel="noopener">Configuring HTTPS servers</a><p>要配置 HTTPS 服务器，必须在 server 区的监听（listen）套接字上允许 ssl 参数，同时要声明服务器证书和私钥文件的位置：<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>              <span class="number">443</span> ssl;</span><br><span class="line">    <span class="attribute">server_name</span>         www.example.com;</span><br><span class="line">    <span class="attribute">ssl_certificate</span>     www.example.com.crt;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> www.example.com.key;</span><br><span class="line">    <span class="attribute">ssl_protocols</span>       TLSv1 TLSv1.<span class="number">1</span> TLSv1.<span class="number">2</span>;</span><br><span class="line">    <span class="attribute">ssl_ciphers</span>         HIGH:!aNULL:!MD5;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></table></figure><p>​ 服务器证书是一个公开的实体。它会被发送给所有连接到服务器的客户端。私钥是一个安全实体，应该被保存在一个限制访问的文件中，但是要允许 Nginx 的主线程可读。私钥也可以保存在和证书同一个文件中：<pre><code>ssl_certificate     www.example.com.cert;
+ssl_certificate_key www.example.com.cert;
+</code></pre><p>​ 这种情况下文件的访问权限也应当被限制。尽管证书和私钥被保存在同一个文件中，只有证书会被发送给客户端。<p>​ <code>ssl_protocols</code> 和 <code>ssl_ciphers</code> 指令可以用来限制只允许高版本和强加密的 SSL/TLS 的连接。Nginx 默认使用 <code>“ssl_protocols TLSv1 TLSv1.1 TLSv1.2”</code> 和 <code>“ssl_ciphers HIGH:!aNULL:!MD5”</code>，所以通常不需要特意配置它们。要知道这些指令的默认配置变过几次。</p><h3 id="HTTPS-server-optimization-HTTPS-服务器优化">HTTPS server optimization HTTPS 服务器优化</h3><p>​ SSL 操作消耗额外的 CPU 资源。在多处理器系统中应该启动多个工作进程，数量不少于可用的 CPU 内核。最消耗 CPU 的操作是 SSL 握手。有两种方法可以让每个客户端的握手次数降低到最小：第一种是通过允许 <code>keepalive</code> 连接，这样就可以实现连接复用，即通过一个连接发送多个请求；第二种是重用 SSL 会话参数来避免并发请求和自请求的 SSL 握手。这些会话被保存在一个被工作进程共享的 SSL 会话缓存中，可以通过 <code>ssl_session_cache</code> 指令来配置。1MB 缓存可以包含 4000 个会话。默认的缓存过期时间是 5 分钟。可以通过 <code>ssl_session_timeout</code> 指令增加过期时间。下面是一个简单的配置，通过设置 10MB 共享会话缓存来优化一个多核系统：<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre><td class="code"><pre><span class="line"><span class="attribute">worker_processes</span> auto;</span><br><br><span class="line"><span class="section">http</span> &#123;</span><br><span class="line">    <span class="attribute">ssl_session_cache</span>   shared:SSL:<span class="number">10m</span>;</span><br><span class="line">    <span class="attribute">ssl_session_timeout</span> <span class="number">10m</span>;</span><br><br><span class="line">    <span class="section">server</span> &#123;</span><br><span class="line">        <span class="attribute">listen</span>              <span class="number">443</span> ssl;</span><br><span class="line">        <span class="attribute">server_name</span>         www.example.com;</span><br><span class="line">        <span class="attribute">keepalive_timeout</span>   <span class="number">70</span>;</span><br><br><span class="line">        <span class="attribute">ssl_certificate</span>     www.example.com.crt;</span><br><span class="line">        <span class="attribute">ssl_certificate_key</span> www.example.com.key;</span><br><span class="line">        <span class="attribute">ssl_protocols</span>       TLSv1 TLSv1.<span class="number">1</span> TLSv1.<span class="number">2</span>;</span><br><span class="line">        <span class="attribute">ssl_ciphers</span>         HIGH:!aNULL:!MD5;</span><br><span class="line">        ...</span><br></pre></table></figure><h3 id="SSL-证书链">SSL 证书链</h3><p>​ 某些浏览器可能会抱怨由知名证书颁发机构签名的证书，而其他一些浏览器可能毫无问题的接受证书。发生这种情况是因为颁发机构使用中间证书对服务器进行了签名，该中间证书不存在于与特定浏览器一起分发的众所周知的可信任的证书颁发机构的证书库中。 这种情况下，颁发机构提供了一组链式证书，通过证书链应该能够链接到签名的服务器证书。在合并文件中，服务器证书必须出现在链式证书之前：<p><code>$ cat www.example.com.crt bundle.crt &gt; www.example.com.chained.crt</code><p>结果文件应该用在 <code>ssl_certificate</code> 指令中：<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>              <span class="number">443</span> ssl;</span><br><span class="line">    <span class="attribute">server_name</span>         www.example.com;</span><br><span class="line">    <span class="attribute">ssl_certificate</span>     www.example.com.chained.crt;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> www.example.com.key;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></table></figure><p>​ 如果服务器证书和链式证书用错误的顺序连接了，nginx将不能正常启动，并现实 错误信息：<blockquote><p>SSL_CTX_use_PrivateKey_file(“ … /<a href="http://www.example.com.key&quot;" target="_blank" rel="noopener">www.example.com.key&quot;</a>) failed<br>(SSL: error:0B080074:x509 certificate routines:<br>​ X509_check_private_key:key values mismatch)</blockquote><p>​ 因为 nginx 尝试用私钥和链式证书中的第一个证书而不是服务器证书。<p>​ 浏览器通常会保存接受到的由可信任颁发机构签发的中间证书，所以频繁使用的浏览器可能已经获取过中间证书，所以遇到没有包含链式证书的服务器证书就不会出现警告。为确保服务器发送了完整的证书链，可以用 openssl 命令行工具测试，例如：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl s_client -connect www.godaddy.com:443</span></span><br><span class="line">...</span><br><span class="line">Certificate chain</span><br><span class="line"> 0 s:/C=US/ST=Arizona/L=Scottsdale/1.3.6.1.4.1.311.60.2.1.3=US</span><br><span class="line">     /1.3.6.1.4.1.311.60.2.1.2=AZ/O=GoDaddy.com, Inc</span><br><span class="line">     /OU=MIS Department/CN=www.GoDaddy.com</span><br><span class="line">     /serialNumber=0796928-7/2.5.4.15=V1.0, Clause 5.(b)</span><br><span class="line">   i:/C=US/ST=Arizona/L=Scottsdale/O=GoDaddy.com, Inc.</span><br><span class="line">     /OU=http://certificates.godaddy.com/repository</span><br><span class="line">     /CN=Go Daddy Secure Certification Authority</span><br><span class="line">     /serialNumber=07969287</span><br><span class="line"> 1 s:/C=US/ST=Arizona/L=Scottsdale/O=GoDaddy.com, Inc.</span><br><span class="line">     /OU=http://certificates.godaddy.com/repository</span><br><span class="line">     /CN=Go Daddy Secure Certification Authority</span><br><span class="line">     /serialNumber=07969287</span><br><span class="line">   i:/C=US/O=The Go Daddy Group, Inc.</span><br><span class="line">     /OU=Go Daddy Class 2 Certification Authority</span><br><span class="line"> 2 s:/C=US/O=The Go Daddy Group, Inc.</span><br><span class="line">     /OU=Go Daddy Class 2 Certification Authority</span><br><span class="line">   i:/L=ValiCert Validation Network/O=ValiCert, Inc.</span><br><span class="line">     /OU=ValiCert Class 2 Policy Validation Authority</span><br><span class="line">     /CN=http://www.valicert.com//emailAddress=info@valicert.com</span><br><span class="line">...</span><br></pre></table></figure><p>​ 当用 SNI 测试配置的时候，指定 <code>-servername</code> 选项是很重要的，因为 openss 默认不使用 SNI 。<p>​ 在该示例中，<a href="http://www.godaddy.com" target="_blank" rel="noopener">www.godaddy.com</a> 服务器证书 #0 的主体由发行者（“ i ”）签名，发行者（“ i ”）本身是证书 #1 的主体，证书 #1 签名的发行者又是 证书 #2 的主体，证书 #2 是由知名发行方 ValiCert, Inc 签名的，ValiCert, Inc. 的证书保存在浏览器的内置证书库中。<p>​ 如果缺少证书链，浏览器只能看到服务器证书 #0。<h3 id="单-HTTP-HTTPS-服务器">单 HTTP/HTTPS 服务器</h3><p>可以配置一个单独的服务器来同时处理 HTTP 和 HTTPS 请求：<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>              <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">listen</span>              <span class="number">443</span> ssl;</span><br><span class="line">    <span class="attribute">server_name</span>         www.example.com;</span><br><span class="line">    <span class="attribute">ssl_certificate</span>     www.example.com.crt;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> www.example.com.key;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></table></figure><p>​ 早在 0.7.14 版本之前，还不能像上面那样为个别 socket 监听选择性启用 SSL。SSL 只能通过 <code>ssl</code> 指令用于整个 server 配置，使得不可能配置一个单独的 HTTP/HTTPS 服务器。于是在<code>listen</code> 指令中添加 <code>ssl</code> 参数来解决这个问题。但是不鼓励在现代版本中使用 <code>ssl</code> 指令。<h3 id="基于域名的-HTTPS-服务器">基于域名的 HTTPS 服务器</h3><p>当配置两个或者多个 HTTPS 服务器监听同一个 IP 地址时会出现的一个常见的问题：<blockquote><p>server {<br>​ listen 443 ssl;<br>​ server_name <a href="http://www.example.com" target="_blank" rel="noopener">www.example.com</a>;<br>​ ssl_certificate <a href="http://www.example.com.crt" target="_blank" rel="noopener">www.example.com.crt</a>;<br>​ …<br>}<p>server {<br>​ listen 443 ssl;<br>​ server_name <a href="http://www.example.org" target="_blank" rel="noopener">www.example.org</a>;<br>​ ssl_certificate <a href="http://www.example.org.crt" target="_blank" rel="noopener">www.example.org.crt</a>;<br>​ …<br>}</blockquote><p>​ 使用此配置,浏览器接受默认服务器的证书，即 <a href="http://www.example.com" target="_blank" rel="noopener">www.example.com</a> ，不论请求的服务器名称如何。这是由 SSL 协议的行为所致。SSL 连接是在浏览器发送 HTTP 请求之前建立的，nginx 不知道请求的服务器的名称。所以，它只能提供默认的服务器证书。<p>​ 解决这个问题的最古老也是最稳定的办法就是为每个 HTTPS 服务器分配一个单独的 IP 地址：<blockquote><p>server {<br>​ listen 192.168.1.1:443 ssl;<br>​ server_name <a href="http://www.example.com" target="_blank" rel="noopener">www.example.com</a>;<br>​ ssl_certificate <a href="http://www.example.com.crt" target="_blank" rel="noopener">www.example.com.crt</a>;<br>​ …<br>}<p>server {<br>​ listen 192.168.1.2:443 ssl;<br>​ server_name <a href="http://www.example.org" target="_blank" rel="noopener">www.example.org</a>;<br>​ ssl_certificate <a href="http://www.example.org.crt" target="_blank" rel="noopener">www.example.org.crt</a>;<br>​ …<br>}</blockquote><h3 id="具有多个域名的-SSL-证书">具有多个域名的 SSL 证书</h3><p>​ 也有其他的方法允许在多个 HTTPS 服务器之间共享一个单独的 IP 地址。但是，所有这些办法都有副作用。一种方法是在证书的 <code>SubjectAltName</code> 字段上使用多个域名，例如 <a href="http://www.example.com" target="_blank" rel="noopener">www.example.com</a> 和 <a href="http://www.example.org。但是，`SubjectAltName`" target="_blank" rel="noopener">www.example.org。但是，`SubjectAltName`</a> 字段的长度有限。<p>​ 另一个方法是让证书使用通配符域名，例如，<em>.example.org。一个通配符证书能够加固指定域名的所有子域名，但仅限于一个级别。证书匹配 <a href="http://www.example.org，但是不能匹配" target="_blank" rel="noopener">www.example.org，但是不能匹配</a> example.org 和 <a href="http://www.sub.example.org" target="_blank" rel="noopener">www.sub.example.org</a> 。 这两种方法也可以合并。一个证书可以在 <code>SubjectAltName</code> 字段中包含准确的和通配符的域名，例如，`example.org and</em> .example.org`。<p>​ 最好将多域名证书文件和对应的私钥文件放在 http 级别的配置区域，以使证书的单个内存拷贝能够在所有服务器配置中共享：<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre><td class="code"><pre><span class="line"><span class="attribute">ssl_certificate</span>     common.crt;</span><br><span class="line"><span class="attribute">ssl_certificate_key</span> common.key;</span><br><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>          <span class="number">443</span> ssl;</span><br><span class="line">    <span class="attribute">server_name</span>     www.example.com;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>          <span class="number">443</span> ssl;</span><br><span class="line">    <span class="attribute">server_name</span>     www.example.org;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></table></figure><h3 id="服务器域名指示（SNI）">服务器域名指示（SNI）</h3><p>​ 一个用于在单个 IP 地址上承载多个 HTTPS 服务器的更加通用的解决方案是使用 TLS Server Name Indicationj 扩展（SNI, RFC 6066），SNI 允许浏览器在 SSL 握手期间上传请求的服务器域名，于是服务器就能知道应该将哪个证书用于这个连接。SNI 现在已经被大多数现代浏览器支持，但是一些老版本的或者特定的浏览器还没有支持。<p>​ SNI 中只能传递域名，但是如果一个请求中包含了字面的 IP 地址，有些浏览器可能错误地传递这个服务器的 IP 地址。不能完全依赖 SNI。<p>​ 为了在 nginx 中使用 SNI，必须在构建 nginx 二进制的 OpenSSL 库以及在运行时动态链接到的库中支持它。OpenSSL 从 0.9.8f 版本开始支持 SNI ，需要在编译时指定编译选项 <code>”--enable-tlsext“</code>。从 OpenSSL 0.9.8j 版本开始，这个选项是默认开启的。如果 nginx 编译时支持了 SNI，运行 nginx 命令时加上 “-V” 开关会显示出来：<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre><td class="code"><pre><span class="line">$ nginx -V</span><br><span class="line">...</span><br><span class="line"><span class="attribute">TLS</span> SNI support enabled</span><br><span class="line">...</span><br></pre></table></figure><p>​ 然而，如果开启了 SNI 的 nginx 动态链接到了不支持 SNI 的 OpenSSL 二进制，nginx 会显示警告：<blockquote><p>nginx was built with SNI support, however, now it is linked<br>dynamically to an OpenSSL library which has no tlsext support,<br>therefore SNI is not available</blockquote></div><div><div class="my_post_copyright"><script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script><script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js" integrity="sha256-iBcUE/x23aI6syuqF7EeT/+JFBxjPs5zeFJEXxumwb0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js" integrity="sha256-JirYRqbf+qzfqVtEE4GETyHlAbiCpC005yBTa4rj6xg=" crossorigin="anonymous"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css" integrity="sha256-zuyRv+YsWwh1XR5tsrZ7VCfGqUmmPmqBjIvJgQWoSDo=" crossorigin="anonymous"><p><span>本文标题:</span>配置 Nginx HTTPS 服务器<p><span>文章作者:</span>kinboy<p><span>发布时间:</span>2019年01月17日 - 09:56:24<p><span>最后更新:</span>2019年07月15日 - 18:05:10<p><span>原始链接:</span><a href="/2019/01/17/配置-Nginx-HTTPS-服务器/" title="配置 Nginx HTTPS 服务器">http://kinboyw.github.io/2019/01/17/配置-Nginx-HTTPS-服务器/</a><span class="copy-path" title="点击复制文章链接"></span><p><span>许可协议:</span> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</div><script>var clipboard=new Clipboard(".fa-clipboard");clipboard.on("success",$(function(){$(".fa-clipboard").click(function(){swal({title:"",text:"复制成功",html:!1,timer:500,showConfirmButton:!1})})}))</script></div><div><div><div style="text-align:center;color:#ccc;font-size:14px">------ Passage Ending ------</div></div></div><div><ul class="post-copyright"><li class="post-copyright-author"><strong>Post author:</strong> kinboy<li class="post-copyright-link"><strong>Post link:</strong> <a href="http://kinboyw.github.io/2019/01/17/配置-Nginx-HTTPS-服务器/" title="配置 Nginx HTTPS 服务器">http://kinboyw.github.io/2019/01/17/配置-Nginx-HTTPS-服务器/</a><li class="post-copyright-license"><strong>Copyright Notice:</strong> All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.</ul></div><footer class="post-footer"><div class="post-tags"><a href="/tags/Nginx/" rel="tag"># Nginx</a> <a href="/tags/HTTPS/" rel="tag"># HTTPS</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2018/12/13/JavaScript原型图解/" rel="next" title="JavaScript原型图解">JavaScript原型图解</a></div><div class="post-nav-prev post-nav-item"><a href="/2019/02/13/JavaScript作用域/" rel="prev" title="JavaScript作用域">JavaScript作用域</a></div></div></footer></div></article></div></div><div class="comments" id="comments"><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">Table of Contents<li class="sidebar-nav-overview" data-target="site-overview-wrap">Overview</ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="kinboy"><p class="site-author-name" itemprop="name">kinboy</div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">66</span> <span class="site-state-item-name">posts</span></a></div><div class="site-state-item site-state-categories"><a href="/categories/index.html"><span class="site-state-item-count">31</span> <span class="site-state-item-name">categories</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/index.html"><span class="site-state-item-count">52</span> <span class="site-state-item-name">tags</span></a></div></nav><div class="feed-link motion-element"><a href="/atom.xml" rel="alternate">RSS</a></div><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/kinboyw" target="_blank" title="GitHub">GitHub</a></span><span class="links-of-author-item"><a href="mailto:kinboy9275@gmail.com" target="_blank" title="E-Mail"> E-Mail</a></span></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTPS-server-optimization-HTTPS-服务器优化"><span class="nav-number">1.</span> <span class="nav-text">HTTPS server optimization HTTPS 服务器优化</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#SSL-证书链"><span class="nav-number">2.</span> <span class="nav-text">SSL 证书链</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#单-HTTP-HTTPS-服务器"><span class="nav-number">3.</span> <span class="nav-text">单 HTTP/HTTPS 服务器</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#基于域名的-HTTPS-服务器"><span class="nav-number">4.</span> <span class="nav-text">基于域名的 HTTPS 服务器</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#具有多个域名的-SSL-证书"><span class="nav-number">5.</span> <span class="nav-text">具有多个域名的 SSL 证书</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#服务器域名指示（SNI）"><span class="nav-number">6.</span> <span class="nav-text">服务器域名指示（SNI）</span></a></ol></div></div></section><div class="back-to-top"><span id="scrollpercent"><span>0</span>%</span></div></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2019</span><span class="with-love"></span> <span class="author" itemprop="copyrightHolder">kinboy</span><br><img src="/images/beian.png"> <span style="width:300px;margin:0 auto;padding:20px 0"><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42011102002861" style="display:inline-block;text-decoration:none;height:20px;line-height:20px"><img src style="float:left"><p style="float:left;height:20px;line-height:20px;margin:0 0 0 5px;color:#939393">鄂公网安备 42011102002861号</p></a></span></div></div></footer></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type="text/javascript" src="/lib/three/three.min.js"></script><script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script><script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><script id="dsq-count-scr" src="https://kinboy-wang.disqus.com/count.js" async></script><script type="text/javascript">var disqus_config=function(){this.page.url="http://kinboyw.github.io/2019/01/17/配置-Nginx-HTTPS-服务器/",this.page.identifier="2019/01/17/配置-Nginx-HTTPS-服务器/",this.page.title="配置 Nginx HTTPS 服务器"},d=document,s=d.createElement("script");s.src="https://kinboy-wang.disqus.com/embed.js",s.setAttribute("data-timestamp",""+ +new Date),(d.head||d.body).appendChild(s)</script><script type="text/javascript">// Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });</script><script>!function(){var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}()</script>

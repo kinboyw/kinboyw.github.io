@@ -1,0 +1,314 @@
+<!DOCTYPE html><html class="theme-next gemini use-motion" lang="ZH | EN"><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="google-site-verification" content="AKuwh4i11uWg0wOl_cM7AI_dHqOHOLKYfCxKc8Lfv6E"><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4"><link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222"><meta name="keywords" content="FE,W3C,"><link rel="alternate" href="/atom.xml" title="Kinboy's note" type="application/atom+xml"><meta name="description" content="如何阅读W3C规范？ ​    看到这样一篇文章，作者是 J. David Eisenberg ，于 2001年9月28日发表于 CSS, HTML。  ​    J. David Eisenberg 是一位程序员兼教师，和他的猫, Marco Polo 和 Big Tony一起生活在 San Jose, CA 。写过一本关于 Scalable Vector Graphics（SVG）的书。对"><meta name="keywords" content="FE,W3C"><meta property="og:type" content="article"><meta property="og:title" content="如何阅读W3C规范"><meta property="og:url" content="http://kinboyw.github.io/2018/10/29/如何阅读W3C规范/index.html"><meta property="og:site_name" content="Kinboy&#39;s note"><meta property="og:description" content="如何阅读W3C规范？ ​    看到这样一篇文章，作者是 J. David Eisenberg ，于 2001年9月28日发表于 CSS, HTML。  ​    J. David Eisenberg 是一位程序员兼教师，和他的猫, Marco Polo 和 Big Tony一起生活在 San Jose, CA 。写过一本关于 Scalable Vector Graphics（SVG）的书。对"><meta property="og:locale" content="ZH | EN"><meta property="og:image" content="http://kinboyw.github.io/2018/10/29/如何阅读W3C规范/w3c.jpg"><meta property="og:updated_time" content="2019-07-15T10:05:10.393Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="如何阅读W3C规范"><meta name="twitter:description" content="如何阅读W3C规范？ ​    看到这样一篇文章，作者是 J. David Eisenberg ，于 2001年9月28日发表于 CSS, HTML。  ​    J. David Eisenberg 是一位程序员兼教师，和他的猫, Marco Polo 和 Big Tony一起生活在 San Jose, CA 。写过一本关于 Scalable Vector Graphics（SVG）的书。对"><meta name="twitter:image" content="http://kinboyw.github.io/2018/10/29/如何阅读W3C规范/w3c.jpg"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Gemini",version:"5.1.4",sidebar:{position:"left",display:"post",offset:12,b2t:!0,scrollpercent:!0,onmobile:!1},fancybox:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},duoshuo:{userId:"0",author:"Author"},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"I didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><link rel="canonical" href="http://kinboyw.github.io/2018/10/29/如何阅读W3C规范/"><title>如何阅读W3C规范 | Kinboy's note</title><script type="text/javascript">var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?c9c2b9e915e6bb8ec323a2f98c0c98d8";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><body itemscope itemtype="http://schema.org/WebPage" lang="ZH | EN"><div class="container sidebar-position-left page-post-detail"><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"></span><span class="site-title">Kinboy's note</span><span class="logo-line-after"></span></a></div><h1 class="site-subtitle" itemprop="description">前端漫记</h1></div><div class="site-nav-toggle"><button></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><br>Home</a><li class="menu-item menu-item-about"><a href="/rscard/" rel="section"><br>About</a><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><br>Tags</a><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><br>Categories</a><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><br>Archives</a><li class="menu-item menu-item-top"><a href="/top/" rel="section"><br>Top</a><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><br>Search</a></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"></span><span class="popup-btn-close"></span><div class="local-search-input-wrapper"><input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input"></div></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-categories" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://kinboyw.github.io/2018/10/29/如何阅读W3C规范/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="kinboy"><meta itemprop="description" content><meta itemprop="image" content="/images/avatar.png"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Kinboy's note"></span><header class="post-header"><h2 class="post-title" itemprop="name headline">如何阅读W3C规范</h2><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Posted on</span> <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-29T09:02:43+08:00">2018-10-29</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">In</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FE/" itemprop="url" rel="index"><span itemprop="name">FE</span></a></span> , <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FE/W3C/" itemprop="url" rel="index"><span itemprop="name">W3C</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span><a href="/2018/10/29/如何阅读W3C规范/#comments" itemprop="discussionUrl"></a></span><div class="post-wordcount"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Words count in article&#58;</span> <span title="Words count in article">2.3k</span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">Reading time &asymp;</span> <span title="Reading time">8</span></div></div></header><div class="post-body" itemprop="articleBody"><div style="max-width:400px;margin:auto"><img src="/2018/10/29/如何阅读W3C规范/w3c.jpg"></div><p><a href="https://alistapart.com/article/readspec" target="_blank" rel="noopener">如何阅读W3C规范</a>？<p>​ 看到这样一篇文章，作者是 <a href="https://alistapart.com/author/j.davideisenberg" target="_blank" rel="noopener">J. David Eisenberg</a> ，于 2001年9月28日发表于 <a href="https://alistapart.com/topic/css" target="_blank" rel="noopener">CSS</a>, <a href="https://alistapart.com/topic/html" target="_blank" rel="noopener">HTML</a>。<p>​ <a href="mailto:catcode@catcode.com" target="_blank" rel="noopener">J. David Eisenberg</a> 是一位程序员兼教师，和他的猫, Marco Polo 和 Big Tony一起生活在 San Jose, CA 。写过一本关于 <a href="http://www.oreilly.com/catalog/svgess/" target="_blank" rel="noopener">Scalable Vector Graphics（SVG）</a>的书。对 <a href="http://books.evc-cit.info/blog" target="_blank" rel="noopener">OpenDocument Format</a> 和 <a href="http://langintro.com/" target="_blank" rel="noopener">学外语</a>感兴趣。<p>​ 我将主题内容及要点翻译并罗列如下，原文请看 <a href="https://alistapart.com/article/readspec" target="_blank" rel="noopener">How to Read W3C Specs</a>。<p>​ World Wide Web Consoritium（W3C）是所有网络技术规范的守护者。作为 web 设计者，你应该访问过他们的网站(<a href="http://www.w3.org/" target="_blank" rel="noopener">w3.org</a>) 来寻找关于 XHTML 的问题的答案，或者关于一些更新的技术，例如 XSL Formatting Objects 或者 Scalable Vector Graphics。（文章发表时间较早，HTML5 还没诞生）<p>​ 你跑去看规范，然后立刻陷入混乱，说：“这根本没法看！”。实际上，它是可读的，只要你理解了一点关键信息</p><h3 id="规范不是用户手册">规范不是用户手册</h3><blockquote><p>The Bible was not meant to be read, but interpreted.<p>——<em>attribution unknown</em></blockquote><p>​ 当你寻找答案的时候，你其实需要的是用户手册或者指南，你想使用这项技术。而这并不是 W3C 规范的目的。“spec” 的目的是告诉那些要实现这个规范的程序员，必须要有哪些特性，以及如何实现这些特性。<p>​ 当你在使用最新的技术时，可能没有任何用户参考手册；唯一可用的文档就是技术规范。在这样的情况下，学习阅读规范就是很有必要的，而不是一个奢侈的事情了。<h3 id="规范的结构">规范的结构</h3><p>​ 大部分规范都有一个描述文档自身的章节。例如 <a href="http://www.w3.org/TR/html401/about.html" target="_blank" rel="noopener">HTML</a> 和 <a href="http://www.w3.org/TR/REC-CSS2/about.html" target="_blank" rel="noopener">CSS</a> 规范的第一节就是告诉你规范的各个部分是如何组织的，以及如何正确阅读规范。<h3 id="基本概念">基本概念</h3><blockquote><p>I hate definitions.<p>——<em>Benjamin Disraeli</em></blockquote><p>W3C 规范是用日本歌舞伎剧中的仪式化形式编写的，当你阅读规范时，你将会遇到这些词语<ul><li><p>normative<p>“this section is normative” 意味着你将阅读的内容是实现者应该遵循的细节，这部分一般会包含示例和解释。<li><p>user agent<p>一般是指用户用于访问该技术的程序的代名词。对于 HTML 来说，user agent 就是指浏览器；对 Scalable Vector Graphics（SVG）来说，它可能是像 <a href="http://xml.apache.org/batik/" target="_blank" rel="noopener">Batik</a> 这样的程序 或者 <a href="http://www.adobe.com/svg/" target="_blank" rel="noopener">Adobe’s SVG viewer</a> 这样的插件。<li><p>RFC<p><strong>R</strong>equest <strong>F</strong>or <strong>C</strong>omment, 一个代表了互联网标准的文档。<li><p><em>helping verbs</em><p>如果一个规范说它遵循了 <a href="http://www.ietf.org/rfc/rfc2119.txt" target="_blank" rel="noopener">RFC2119</a> ，则某些助动词就具有正式的含义。<code>must</code> 表示定义是绝对的要求，<code>must not</code> 表示定义是绝对的禁止，<code>should</code> 表示一项特性可以实现也可以不实现，但是如果你不实现它，最好要有充分的理由， <code>should not</code> 意味着如果你要加入一个特性，最好要有充分的理由。</ul><h3 id="略读">略读</h3><blockquote><p>Dear Aunt Martha: Thank you for the book on elephants. It told me more about elephants than I wanted to know.<p>——<em>A child’s thank-you letter</em></blockquote><p>​ 不必仔细阅读规范的每一个单词，如果你发现自己处于一个完全没有任何术语索引标签的区域，又看起来像法律文书或者计算机科学文章一样，那么就简单瞥一眼就够了。<p>​ 比如像下面的 XLS:FO 规范这些部分就完全是可以跳过的。（实际上，作为一个用户来说，这个规范真正需要仔细阅读的部分在第六章之前都不会到来。）<blockquote><p><strong>4.2.5 Stacking Constraints</strong>: This section defines the notion of block-stacking constraints and inline-stacking constraints involving areas. These are defined as ordered relations, i.e., if A and B have a stacking constraint it does not necessarily mean that… <em>Hey! Are you ready to skim yet?!</em></blockquote><p>​ 另一方面，有些地方你应该慢下来认真看。如果你看到插图，要看一下标签或者标注。他们通常会提到重要的信息，如果看到带有示例的部分，也要放慢节奏仔细阅读。<h3 id="命名空间">命名空间</h3><p>​ 在 XML 术语中，<strong>命名空间</strong> 使用来将不同标记语言混合在文档中的机制。例如我想在 HTML 文档中引入 数学标记语言（Math Markup Language），我就必须在文档的顶部元素中放入额外的声明，然后在数学元素前面添加 <code>ml:</code> 前缀<blockquote><p>Here is Einstein’s famous equation, E = MC2, with which we <em>all</em> are familiar.</blockquote><p>​ 最好遵循你在示例中看到的任何命名空间前缀。大部分情况下，如果你遇到了一个关于某项 XML 技术是 “命名空间感知” 的大篇幅讨论，你可以安全地跳过了。<h3 id="学会阅读-BNF">学会阅读 BNF</h3><p>​ BNF 代表 <strong>B</strong>ackus <strong>N</strong>aur <strong>F</strong>orm, 或者 <strong>B</strong>ackus <strong>N</strong>ormal <strong>F</strong>orm。它是一种表达计算机语言语法的紧凑方式，一直存在，并将永远存在。不同的声明使用不同风格的 BNF, 但是他们都会将冗长的英语描述翻译成符号格式。以三明治的构成为例：<blockquote><p>A sandwich consists of a lower slice of bread, mustard or mayonnaise; optional lettuce, an optional slice of tomato; two to four slices of either bologna, salami, or ham (in any combination); one or more slices of cheese, and a top slice of bread.</blockquote><blockquote><p>sandwich ::= lower_slice [ mustard | mayonnaise ] lettuce? tomato? [ bologna | salami | ham ] {2,4} cheese+ top_slice</blockquote><p>​ 定义的的组成部分都是顺序排列，空格分隔的。方括号表示分组，分组内的选项用竖线分隔。<p>​ 如果一个项目后面跟着一个问号（？），表示“一个或者没有”；如果后面跟着加号（+），表示“一个或者多个”；如果后面是星号（*），表示“零个或者多个”；如果后面跟着大括号内的数字，它就给出了这个项目可以出现的最少和最多的次数限制。<p>​ 括弧或者多组方括号用来将更加复杂的定义中的项目分组。有时候通用项目（例如“color”）包含在 <code>&lt;</code> 和 <code>&gt;</code> 中，或者固定项目将包含在引号中。<h3 id="学会阅读文档类型定义">学会阅读文档类型定义</h3><blockquote><p>The Grolier Encyclopedia® is the source authority for all answers and questions asked on Jeopardy®.<p>——<em>Credit on TV game show</em></blockquote><p>​ 我们一般会在文档中添加 <code>&lt;!DOCTYPE …&gt;</code> 标签声明来告诉浏览器你用的是 HTML 或者 XHTML 的哪个版本。这些声明就是文档类型声明（Document Type Definition），或者 DTD，定义了文档中合法的元素组合。<p>​ 阅读 DTD 是比较难的，但也不是不可能。并且它是值得一读的，因为 DTD 是判断在特定的标记语言中语法正确性的最高权威。<p>​ 关于如何阅读 DTD 文档的完整解释不在本文范围内，但是可以在<a href="http://www.cookwood.com/" target="_blank" rel="noopener">Elizabeth Castro</a> 的 <a href="http://www.amazon.com/exec/obidos/ASIN/0201710986/jeffreyzeldmanprA/" target="_blank" rel="noopener">XML for the World Wide Web</a> 视觉快速入门指南，或者 Erik Ray的 <a href="http://www.amazon.com/exec/obidos/ASIN/0596000464/jeffreyzeldmanprA/" target="_blank" rel="noopener">Learning XML</a> 中读到。这里有一些你可能在 DTD 中看到的简短示例：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre><td class="code"><pre><span class="line">&lt;!ENTITY %fontstyle &quot;(tt | i | b)&quot;&gt; </span><br><span class="line">&lt;!ENTITY %inline &quot;(#PCDATA | %fontstyle;)&quot;&gt; </span><br><span class="line">&lt;!ELEMENT div (p | %inline;)+&gt; </span><br><span class="line">&lt;!ATTLIST div align (left | right | center) #IMPLIED&gt;</span><br></pre></table></figure><p>这里是他们的英文解释：<blockquote><p>The font style elements are <code>&lt;code&gt;</code>, <code>&lt;i&gt;</code>, and <code>&lt;b&gt;</code>. Inline elements consist of text or font style elements. A <code>&lt;div&gt;</code> can contain one or more <code>&lt;p&gt;</code> or inline elements in any order. A <code>&lt;div&gt;</code> has an optional <code>align</code> attribute with values of <code>left</code>, <code>right</code>, or <code>center</code>.</blockquote><h3 id="IDLE-PAST-IDL-BE-BOUND-BY-BINDINGS">IDLE PAST IDL, BE BOUND BY BINDINGS</h3><p>​ 一些 XML 技术，例如 SVN 和 SMIL ，允许用户编写程序来动态控制文档，就像 JavaScript 让你可以控制 HTML 文档一样。他们的规范中会有一些章节描述脚本是如何与 Document Object Model 工作的。这部分用 <strong>IDL</strong> 来描述接口，<strong>I</strong>nterface <strong>D</strong>efinition <strong>L</strong>anguage。<p>​ IDL 是一类通用符号，用于描述用户代理用来访问编程环境的信息，即描述软件编程接口（API）的语言。IDL 不是一种编程语言；它是用一种紧凑的方式来描述接口的符号系统。IDL 接口定义很可能不是你要找的东西。<p>​ 你需要的东西，决定于你选择的编程语言，是 Java <em>binding</em> 还是 ECMAScript <em>bindings</em> 。<p>​ Bindings 是脚本中可用的对象，属性，和方法列表的奇特的术语。ECMAScript 是 European Computer Manufacturer’s Association standard version of JavaScript。<p>​ 如果你使用的是一些其他的像 Perl 或者 Python 这样的语言，你就要去其他地方看看相关的资料，例如 <a href="http://cpan.org/" target="_blank" rel="noopener">Comprehensive Perl Archive Network</a> 或者 <a href="http://www.python.org/sigs/xml-sig/" target="_blank" rel="noopener">Python XML Special Interest Group</a>.<h3 id="总结">总结</h3><ol><li>理解 W3C 规范是写给实现者的，而不是用户。<li>许多规范都有一个章节会告诉你规范是如何组织的，以及你应该如何阅读<li>了解规范使用的词汇表<li>记住你不必读懂每一个单词，跳过那些读不通的部分<li>避开关于命名空间的讨论<li>学会阅读 BNF——它在许多地方用到<li>学会阅读 DTD来解答语法问题<li>如果技术是可以编写脚本的，则信息在 binding 中。</ol><p>只要耐心和坚持，你就会惊讶与你可以从 W3C 规范中获得的信息量。<h3 id="作者的其他文章">作者的其他文章</h3><ul><li><a href="https://alistapart.com/article/usingxml" target="_blank" rel="noopener">Using XML</a><li><a href="https://alistapart.com/article/get-ready-for-html-5" target="_blank" rel="noopener">Get Ready for HTML 5</a><li><a href="https://alistapart.com/article/forgiving" target="_blank" rel="noopener">“Forgiving” Browsers Considered Harmful</a><li><a href="https://alistapart.com/article/dom2" target="_blank" rel="noopener">DOM Design Tricks</a></ul></div><div><div class="my_post_copyright"><script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script><script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js" integrity="sha256-iBcUE/x23aI6syuqF7EeT/+JFBxjPs5zeFJEXxumwb0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js" integrity="sha256-JirYRqbf+qzfqVtEE4GETyHlAbiCpC005yBTa4rj6xg=" crossorigin="anonymous"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css" integrity="sha256-zuyRv+YsWwh1XR5tsrZ7VCfGqUmmPmqBjIvJgQWoSDo=" crossorigin="anonymous"><p><span>本文标题:</span>如何阅读W3C规范<p><span>文章作者:</span>kinboy<p><span>发布时间:</span>2018年10月29日 - 09:02:43<p><span>最后更新:</span>2019年07月15日 - 18:05:10<p><span>原始链接:</span><a href="/2018/10/29/如何阅读W3C规范/" title="如何阅读W3C规范">http://kinboyw.github.io/2018/10/29/如何阅读W3C规范/</a><span class="copy-path" title="点击复制文章链接"></span><p><span>许可协议:</span> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</div><script>var clipboard=new Clipboard(".fa-clipboard");clipboard.on("success",$(function(){$(".fa-clipboard").click(function(){swal({title:"",text:"复制成功",html:!1,timer:500,showConfirmButton:!1})})}))</script></div><div><div><div style="text-align:center;color:#ccc;font-size:14px">------ Passage Ending ------</div></div></div><div><ul class="post-copyright"><li class="post-copyright-author"><strong>Post author:</strong> kinboy<li class="post-copyright-link"><strong>Post link:</strong> <a href="http://kinboyw.github.io/2018/10/29/如何阅读W3C规范/" title="如何阅读W3C规范">http://kinboyw.github.io/2018/10/29/如何阅读W3C规范/</a><li class="post-copyright-license"><strong>Copyright Notice:</strong> All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.</ul></div><footer class="post-footer"><div class="post-tags"><a href="/tags/FE/" rel="tag"># FE</a> <a href="/tags/W3C/" rel="tag"># W3C</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2018/10/29/SEO中的几个重要的-META-tag/" rel="next" title="SEO中的几个重要的 META tag">SEO中的几个重要的 META tag</a></div><div class="post-nav-prev post-nav-item"><a href="/2018/10/30/CSS Positioning/" rel="prev" title="CSS Positioning">CSS Positioning</a></div></div></footer></div></article></div></div><div class="comments" id="comments"><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">Table of Contents<li class="sidebar-nav-overview" data-target="site-overview-wrap">Overview</ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="kinboy"><p class="site-author-name" itemprop="name">kinboy</div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">66</span> <span class="site-state-item-name">posts</span></a></div><div class="site-state-item site-state-categories"><a href="/categories/index.html"><span class="site-state-item-count">31</span> <span class="site-state-item-name">categories</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/index.html"><span class="site-state-item-count">52</span> <span class="site-state-item-name">tags</span></a></div></nav><div class="feed-link motion-element"><a href="/atom.xml" rel="alternate">RSS</a></div><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/kinboyw" target="_blank" title="GitHub">GitHub</a></span><span class="links-of-author-item"><a href="mailto:kinboy9275@gmail.com" target="_blank" title="E-Mail"> E-Mail</a></span></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#规范不是用户手册"><span class="nav-number">1.</span> <span class="nav-text">规范不是用户手册</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#规范的结构"><span class="nav-number">2.</span> <span class="nav-text">规范的结构</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念"><span class="nav-number">3.</span> <span class="nav-text">基本概念</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#略读"><span class="nav-number">4.</span> <span class="nav-text">略读</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#命名空间"><span class="nav-number">5.</span> <span class="nav-text">命名空间</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#学会阅读-BNF"><span class="nav-number">6.</span> <span class="nav-text">学会阅读 BNF</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#学会阅读文档类型定义"><span class="nav-number">7.</span> <span class="nav-text">学会阅读文档类型定义</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#IDLE-PAST-IDL-BE-BOUND-BY-BINDINGS"><span class="nav-number">8.</span> <span class="nav-text">IDLE PAST IDL, BE BOUND BY BINDINGS</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">9.</span> <span class="nav-text">总结</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#作者的其他文章"><span class="nav-number">10.</span> <span class="nav-text">作者的其他文章</span></a></ol></div></div></section><div class="back-to-top"><span id="scrollpercent"><span>0</span>%</span></div></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2019</span><span class="with-love"></span> <span class="author" itemprop="copyrightHolder">kinboy</span><br><img src="/images/beian.png"> <span style="width:300px;margin:0 auto;padding:20px 0"><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42011102002861" style="display:inline-block;text-decoration:none;height:20px;line-height:20px"><img src style="float:left"><p style="float:left;height:20px;line-height:20px;margin:0 0 0 5px;color:#939393">鄂公网安备 42011102002861号</p></a></span></div></div></footer></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type="text/javascript" src="/lib/three/three.min.js"></script><script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script><script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><script id="dsq-count-scr" src="https://kinboy-wang.disqus.com/count.js" async></script><script type="text/javascript">var disqus_config=function(){this.page.url="http://kinboyw.github.io/2018/10/29/如何阅读W3C规范/",this.page.identifier="2018/10/29/如何阅读W3C规范/",this.page.title="如何阅读W3C规范"},d=document,s=d.createElement("script");s.src="https://kinboy-wang.disqus.com/embed.js",s.setAttribute("data-timestamp",""+ +new Date),(d.head||d.body).appendChild(s)</script><script type="text/javascript">// Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });</script><script>!function(){var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}()</script>

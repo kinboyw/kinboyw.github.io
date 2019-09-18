@@ -1,0 +1,314 @@
+<!DOCTYPE html><html class="theme-next gemini use-motion" lang="ZH | EN"><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="google-site-verification" content="AKuwh4i11uWg0wOl_cM7AI_dHqOHOLKYfCxKc8Lfv6E"><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4"><link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222"><meta name="keywords" content="javascript,"><link rel="alternate" href="/atom.xml" title="Kinboy's note" type="application/atom+xml"><meta name="description" content="For-in 循环是对象属性迭代技术中唯一一项可以跨浏览器的。 关于使用 for-in 循环迭代数组的危险性以及何时使用 hasOwnPropert 过滤器的文章有很多，但是美中不足的是，关于这些普遍使用的语言结构的文章又出奇的不完整。本文尝试着填补一些空白，希望能对读者有所帮助。 基础ES 5 规范详细说明了 for-in 语句的两种不同的语法： 1. for (var variable in"><meta name="keywords" content="javascript"><meta property="og:type" content="article"><meta property="og:title" content="探索 JavaScript For-in 循环"><meta property="og:url" content="http://kinboyw.github.io/2018/07/14/Explorer-JavaScript-For-in-loops/index.html"><meta property="og:site_name" content="Kinboy&#39;s note"><meta property="og:description" content="For-in 循环是对象属性迭代技术中唯一一项可以跨浏览器的。 关于使用 for-in 循环迭代数组的危险性以及何时使用 hasOwnPropert 过滤器的文章有很多，但是美中不足的是，关于这些普遍使用的语言结构的文章又出奇的不完整。本文尝试着填补一些空白，希望能对读者有所帮助。 基础ES 5 规范详细说明了 for-in 语句的两种不同的语法： 1. for (var variable in"><meta property="og:locale" content="ZH | EN"><meta property="og:updated_time" content="2019-07-15T10:05:10.339Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="探索 JavaScript For-in 循环"><meta name="twitter:description" content="For-in 循环是对象属性迭代技术中唯一一项可以跨浏览器的。 关于使用 for-in 循环迭代数组的危险性以及何时使用 hasOwnPropert 过滤器的文章有很多，但是美中不足的是，关于这些普遍使用的语言结构的文章又出奇的不完整。本文尝试着填补一些空白，希望能对读者有所帮助。 基础ES 5 规范详细说明了 for-in 语句的两种不同的语法： 1. for (var variable in"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Gemini",version:"5.1.4",sidebar:{position:"left",display:"post",offset:12,b2t:!0,scrollpercent:!0,onmobile:!1},fancybox:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},duoshuo:{userId:"0",author:"Author"},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"I didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><link rel="canonical" href="http://kinboyw.github.io/2018/07/14/Explorer-JavaScript-For-in-loops/"><title>探索 JavaScript For-in 循环 | Kinboy's note</title><script type="text/javascript">var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?c9c2b9e915e6bb8ec323a2f98c0c98d8";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script><body itemscope itemtype="http://schema.org/WebPage" lang="ZH | EN"><div class="container sidebar-position-left page-post-detail"><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"></span><span class="site-title">Kinboy's note</span><span class="logo-line-after"></span></a></div><h1 class="site-subtitle" itemprop="description">前端漫记</h1></div><div class="site-nav-toggle"><button></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><br>Home</a><li class="menu-item menu-item-about"><a href="/rscard/" rel="section"><br>About</a><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><br>Tags</a><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><br>Categories</a><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><br>Archives</a><li class="menu-item menu-item-top"><a href="/top/" rel="section"><br>Top</a><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><br>Search</a></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"></span><span class="popup-btn-close"></span><div class="local-search-input-wrapper"><input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input"></div></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://kinboyw.github.io/2018/07/14/Explorer-JavaScript-For-in-loops/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="kinboy"><meta itemprop="description" content><meta itemprop="image" content="/images/avatar.png"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Kinboy's note"></span><header class="post-header"><h2 class="post-title" itemprop="name headline">探索 JavaScript For-in 循环</h2><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Posted on</span> <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-14T19:23:42+08:00">2018-07-14</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">In</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/翻译/" itemprop="url" rel="index"><span itemprop="name">翻译</span></a></span> , <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FE/" itemprop="url" rel="index"><span itemprop="name">FE</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span><a href="/2018/07/14/Explorer-JavaScript-For-in-loops/#comments" itemprop="discussionUrl"></a></span><div class="post-wordcount"><span class="post-meta-item-icon"></span><span class="post-meta-item-text">Words count in article&#58;</span> <span title="Words count in article">2.4k</span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"></span> <span class="post-meta-item-text">Reading time &asymp;</span> <span title="Reading time">9</span></div></div></header><div class="post-body" itemprop="articleBody"><p>For-in 循环是对象属性迭代技术中唯一一项可以跨浏览器的。 关于使用 <code>for-in</code> 循环迭代数组的危险性以及何时使用 <code>hasOwnPropert</code> 过滤器的文章有很多，但是美中不足的是，关于这些普遍使用的语言结构的文章又出奇的不完整。本文尝试着填补一些空白，希望能对读者有所帮助。<h2 id="基础">基础</h2><p>ES 5 规范详细说明了 <code>for-in</code> 语句的两种不同的语法：<h3 id="1-for-var-variable-in-objectExpression-statement">1. for (var variable in objectExpression) {statement}</h3><p>第一种是我们熟悉的格式。等号右边的 <code>objectExpression</code> 可以是任意可计算为 JavaScript 对象的表达式。如果我们在等号右边给定了原始类型，那么它将会被包装成对象。然后逐一迭代包装对象的属性。在每一次迭代中，对象属性的名称将被赋值给声明的迭代变量，如果存在表达式，会对表达式进行计算。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">var</span> myObj = &#123;<span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span>&#125;, myKeys = [];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> property <span class="keyword">in</span> myObj) &#123;</span><br><span class="line">    myKeys.push(property);</span><br><span class="line">&#125;</span><br><span class="line">myKeys; <span class="comment">//['a','b','c'];</span></span><br></pre></table></figure><p>循环变量可以选择在 <code>for-in</code> 循环外部声明。只有当语句跨越多行并且语句为可选的情况下大括号才是必须的。因此下面的代码也是正确的，虽然看上去没什么意义，除非你就是对 <code>myObj</code> 的最后一个属性的名字感兴趣（稍后介绍更多关于迭代顺序的内容）。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">var</span> myObj = &#123;<span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span>&#125;, lastProperty;</span><br><span class="line"><span class="keyword">for</span> (lastProperty <span class="keyword">in</span> myObj);</span><br><span class="line">lastProperty; <span class="comment">//"c";</span></span><br></pre></table></figure><p>这里是另外一个例子，这一次 <code>objectExpression</code> 是一个原始类型：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">"hello!"</span>, spreadOut = <span class="string">""</span>;</span><br><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> index <span class="keyword">in</span> str) &#123;</span><br><span class="line">    (index &gt; <span class="number">0</span>) &amp;&amp; (spreadOut += <span class="string">" "</span>)</span><br><span class="line">    spreadOut += str[index];</span><br><span class="line">&#125;</span><br><br><span class="line">spreadOut; <span class="comment">//"h e l l o !"</span></span><br></pre></table></figure><p>请注意，和所有属性名称一样，在上面的例子中的循环变量 <code>index</code> 实际上都是字符型，所以我们不能像上面那样简单地判断是否为真。稍后我们会一起看看为什么 <code>String</code> 类型与 <code>Array</code> 类型并不总是用于 <code>for-in</code> 循环的最佳选择。<h3 id="2-for-LeftHandSideExpression-in-objectExpression-statement">2.for (LeftHandSideExpression in objectExpression) {statement}</h3><p>这种有趣的语法很少出现在文档中（MDC没有提及这种语法）。在 <code>ECMAScript</code> 术语中， <code>leftHandSideExpression</code> 是解析为属性引用的任意表达式（想象一下任何可以出现在赋值等号左侧的表达式）。在每一次迭代中，下一个属性的名字被赋值给 <code>leftHandSideExpression</code> 的计算结果。<code>leftHandSideExpression</code> 表达式在每次迭代时解析为不同引用是完全可行的，有时候这种方式非常有用，甚至更加优雅，例如，获取属性名称数组现在变得轻而易举。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">var</span> myObj = &#123;<span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span>&#125;, myKeys = [], i=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (myKeys[i++] <span class="keyword">in</span> myObj);</span><br><span class="line">myKeys; <span class="comment">//['a','b','c'];</span></span><br></pre></table></figure><p>哪些属性会被迭代？<br>这需要了解一些JavaScript的内部原理。对象是属性的集合，每一个属性都有他们自己的一系列内部特性 。（我们可以将其看作抽象属性 - 他们被用于JavaScript引擎，但是用户不能直接访问这些特性。ECMAScript 使用[[property]]这样的格式来表示内部特性。<p>[[Enumerable]]是这些特性的其中之一。<code>for-in</code> 语句会迭代[[Enumerable]]值为true的每一个属性。包括对象原型链继承过来的可枚举属性。[[Enumerable]]值为false的属性，以及被覆盖的属性（例如，被子孙对象的同名属性覆盖的原型对象属性）不会被被迭代。<p>实际上这意味着,<code>for-in</code>循环会默认选择非影子，用户定义的（包括继承属性)但非内置的属性。例如，Ojbect 对象的内置方法（toString）不会被枚举。<p>这也意味着，如果你习惯于扩展内置对象的原型，那么你的自定义扩展属性将会被枚举出来：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>], indexes = [];</span><br><span class="line"><span class="built_in">Array</span>.prototype.each = <span class="function"><span class="keyword">function</span>() </span>&#123;/blah/&#125;;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> index <span class="keyword">in</span> arr) &#123;</span><br><span class="line">    indexes.push(index);</span><br><span class="line">&#125;</span><br><span class="line">indexes; <span class="comment">//["0", "1", "2", "each"] whoops!</span></span><br></pre></table></figure><p>一些框架（例如，Prototype.js 以及 Mootools）添加了很多自定义原型扩展，并且使用 <code>for-in</code> 循环来迭代Array和String类型，这些通常都被认为不是什么好主意。使用常规 <code>for</code>循环来迭代Array和String类型是一个好的替代方法。另外,ES5 定义了一些自定义的Array迭代器（forEach，map等等）。不幸的是，这些作为替代方案的迭代策略没有一个对常规对象有效 - 这也是为什么扩展Object.prototype被认为是非常坏的实践。<p>关于 “DontEnum” bug<br>IE 9以下版本的浏览器会出现一些奇怪的迭代行为，因此内置影子属性（以及non-enumerable属性和ES3语法中的[[DontEnum]]属性）将不会被枚举出来。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">a: <span class="number">2</span>,</span><br><span class="line"><span class="comment">//shadow a non-enumerable</span></span><br><span class="line">toString: <span class="string">"I'm an obj"</span></span><br><span class="line">&#125;,</span><br><br><span class="line">result = [];</span><br><span class="line"><span class="keyword">for</span> (result[result.length] <span class="keyword">in</span> obj);</span><br><span class="line">result;</span><br><span class="line"><span class="comment">//IE&lt;9 -&gt; ["a"]</span></span><br><span class="line"><span class="comment">//Other browsers -&gt; ["a", "toString"]</span></span><br></pre></table></figure><p>我能阻止一些属性被迭代吗？<br>答案是可以。有许多标准技术可以将不需要的属性成员从<code>for-in</code>循环中过滤出来。<h3 id="1-Object-prototype-hasOwnProperty">1. Object.prototype.hasOwnProperty</h3><p>这个方法会调用属性的内置方法[[GetOwnProperty]]来确定给定的属性是不是直接定义在对象上的（而不是定义在原型链上某处的）。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>], indexes = [];</span><br><span class="line"><span class="built_in">Array</span>.prototype.each = <span class="function"><span class="keyword">function</span>() </span>&#123;<span class="comment">/*blah*/</span>&#125;;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> index <span class="keyword">in</span> arr) &#123;</span><br><span class="line">    <span class="keyword">if</span> (arr.hasOwnProperty(index)) &#123;</span><br><span class="line">        indexes.push(index);</span><br><span class="line">&#125;</span><br><span class="line">indexes; <span class="comment">//["0", "1", "2"]</span></span><br></pre></table></figure><p>JSLint 希望你总是将<code>for-in</code>语句的循环体用if语句包裹起来，即使是枚举一个常规对象的时候（不要紧，你可以简单地使用一个 &amp;&amp; 替代 if! 语句来充当断言条件）。<p>如果你是一个偏执狂，你或者其他人可能会覆盖 <code>hasOwnProperty</code> 地本地定义，那么你直接调用原型引用。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre><td class="code"><pre><span class="line"><span class="comment">//snip...</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> index <span class="keyword">in</span> arr) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">Object</span>.prototype.hasOwnProperty.call(arr, index)) &#123;</span><br><span class="line">            indexes.push(index);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></table></figure><h3 id="2-Object-defineProperty">2. Object.defineProperty</h3><p>ES5 介绍了Object对象上的一些方法，允许使用自定义内部特性来定义属性（不支持FireFox&lt;4 和 IE&lt;9的版本）。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty( obj, <span class="string">"value"</span>, &#123;</span><br><span class="line">  value: <span class="literal">true</span>,</span><br><span class="line">  writable: <span class="literal">false</span>,</span><br><span class="line">  enumerable: <span class="literal">true</span>,</span><br><span class="line">  configurable: <span class="literal">true</span></span><br><span class="line">&#125;);</span><br></pre></table></figure><p>我们可以通过据此设置[[Enumerable]]特性的值来达到从<code>for-in</code>循环中隐藏一些自定义原型扩展的目的。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>], indexes = [];</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(<span class="built_in">Array</span>.prototype, <span class="string">"each"</span>, &#123;</span><br><span class="line">    value: <span class="function"><span class="keyword">function</span>() </span>&#123;<span class="comment">/*blah*/</span>&#125;,</span><br><span class="line">    writable: <span class="literal">false</span>,</span><br><span class="line">    enumerable: <span class="literal">false</span>,</span><br><span class="line">    configurable: <span class="literal">false</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> index <span class="keyword">in</span> arr) &#123;</span><br><span class="line">    indexes.push(index);</span><br><span class="line">&#125;</span><br><span class="line">indexes; <span class="comment">//["0", "1", "2"]</span></span><br></pre></table></figure><p>迭代顺序如何确定？<br>ECMA 标准没有声明枚举顺序，但是非数组是对象的实际标准是按照被属性赋值的的顺序来进行枚举。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span>&#125;, result = [];</span><br><span class="line">obj.e; <span class="comment">//referenced but not assigned</span></span><br><span class="line">obj.f = <span class="string">'bar'</span>; <span class="comment">//1st assignment</span></span><br><span class="line">obj.e = <span class="number">4</span>;</span><br><span class="line">obj.dd = <span class="number">5</span>;</span><br><span class="line">obj.f = <span class="string">'foo'</span>; <span class="comment">//2nd assignment</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> prop <span class="keyword">in</span> obj) &#123;</span><br><span class="line">    result.push(prop);</span><br><span class="line">&#125;</span><br><span class="line">result.toString(); <span class="comment">//"a,b,c,f,e,dd"</span></span><br></pre></table></figure><p>然而目前有许多问题你需要注意：<br>在IE浏览器环境中删除属性<br>在IE中删除一个属性，然后重新定义它，不会更新属性在迭代顺序中的位置，这与其他主流浏览器中观察到的行为相悖：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">3</span>&#125;, result = [];</span><br><span class="line"><span class="keyword">delete</span> obj.b;</span><br><span class="line">obj.b = <span class="number">4</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> prop <span class="keyword">in</span> obj) &#123;</span><br><span class="line">    result.push(prop);</span><br><span class="line">&#125;</span><br><span class="line">result.toString(); </span><br><span class="line"><span class="comment">//IE -&gt;"a,b,c"</span></span><br><span class="line"><span class="comment">//Other browsers -&gt; "a,c,b"</span></span><br></pre></table></figure><p>Chrome中数字命名的属性<br>Chrome 浏览器会优先处理数字命名的key，以数字顺序而不是插入顺序遍历。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;<span class="number">3</span>:<span class="string">'a'</span>, <span class="number">2</span>:<span class="string">'b'</span>, <span class="string">'foo'</span>:<span class="string">'c'</span>, <span class="number">1</span>:<span class="string">'d'</span>&#125;, result = [];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> prop <span class="keyword">in</span> obj) &#123;</span><br><span class="line">    result.push(prop);</span><br><span class="line">&#125;</span><br><span class="line">result.toString();</span><br><span class="line"><span class="comment">//Chrome -&amp;gt; "1,2,3,foo"</span></span><br><span class="line"><span class="comment">//Other browsers -&amp;gt; "3,2,foo,1"</span></span><br></pre></table></figure><p>这个被记录下来的bug，有大量充满争议的评论在讨论这个bug是否应该被修复。我认为这个bug应该被修复。根据定义，常规对象的属性确定是无序的，并且ECMA也没有定义出一个标准 - 但 John Resig 和 Charles Kendrick 指出，ECMA标准的缺失不能成为借口 - 标准通常都是遵循实现的，而不是反过来 - 在这个例子中，chrome的处理是不合适的。<p>关于 <code>in</code> 操作符<br>这个漂亮的 <code>for-in</code> 表达式使用内置的[[HasProperty]]方法来检查一个给定的对象中是否存在某个命名的属性：<p><code>propertyNameExpression</code>中的 <code>objectExpression</code><p>它像下面的伪代码中这样工作：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="comment">//resolve [propertyNameExpression];</span></span><br><span class="line"><span class="keyword">var</span> obj = <span class="comment">//resolve [objectExpression];</span></span><br><span class="line"><span class="keyword">return</span> obj.[[HasProperty]](name);</span><br></pre></table></figure><p>这里有一个使用方法的例子：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">a</span>:<span class="number">1</span>, <span class="attr">b</span>:<span class="number">2</span>, <span class="attr">c</span>:<span class="literal">undefined</span>, <span class="attr">d</span>:<span class="number">4</span>&#125;, aa = &#123;&#125;;</span><br><span class="line"><span class="string">'b'</span> <span class="keyword">in</span> obj; <span class="comment">//true</span></span><br><span class="line"><span class="string">'c'</span> <span class="keyword">in</span> obj; <span class="comment">//true ('undefined' but still exists)</span></span><br><span class="line"><span class="string">'e'</span> <span class="keyword">in</span> obj; <span class="comment">//false (does not exist)</span></span><br><span class="line"><span class="keyword">delete</span> obj.c;</span><br><span class="line"><span class="string">'c'</span> <span class="keyword">in</span> obj; <span class="comment">//false (no longer exists)</span></span><br><span class="line">obj.e;</span><br><span class="line"><span class="string">'e'</span> <span class="keyword">in</span> obj; <span class="comment">//false (referenced but not assigned)</span></span><br><span class="line"><span class="comment">//resolving expressions</span></span><br><span class="line">aa.o = obj;</span><br><span class="line">aa.a = <span class="string">'a'</span>;</span><br><span class="line">aa.a <span class="keyword">in</span> aa.o; <span class="comment">//true</span></span><br></pre></table></figure><p>请注意，’c’是如何在 o.c 值为 undefined 的情况下从obj对象中返回true的。内部方法[[HasProperty]]将会对任意赋值的对象返回true，不管值为多少。这一点在区分那些被刻意赋值为undefined的属性与只是简单的不存在的属性的时候很有用。<br>和 <code>for-in</code> 循环相似的是，in 操作符会搜索对象的原型链。与 <code>for-in</code> 循环不同的是，in 操作符不能区分可枚举属性与不可枚举属性：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="literal">true</span>,<span class="literal">false</span>,<span class="literal">false</span>];</span><br><span class="line"><span class="number">1</span> <span class="keyword">in</span> arr; <span class="comment">//true</span></span><br><span class="line"><span class="string">'slice'</span> <span class="keyword">in</span> arr; <span class="comment">//true</span></span><br><span class="line"><span class="string">'toString'</span> <span class="keyword">in</span> arr; <span class="comment">//true</span></span><br></pre></table></figure><p>这就是全部了，请随意在评论中提出建议，纰漏以及投诉。<p>–本文为译文 <a href="https://javascriptweblog.wordpress.com/2011/01/04/exploring-javascript-for-in-loops/" target="_blank" rel="noopener">原文链接</a></div><div><div class="my_post_copyright"><script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script><script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js" integrity="sha256-iBcUE/x23aI6syuqF7EeT/+JFBxjPs5zeFJEXxumwb0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js" integrity="sha256-JirYRqbf+qzfqVtEE4GETyHlAbiCpC005yBTa4rj6xg=" crossorigin="anonymous"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css" integrity="sha256-zuyRv+YsWwh1XR5tsrZ7VCfGqUmmPmqBjIvJgQWoSDo=" crossorigin="anonymous"><p><span>本文标题:</span>探索 JavaScript For-in 循环<p><span>文章作者:</span>kinboy<p><span>发布时间:</span>2018年07月14日 - 19:23:42<p><span>最后更新:</span>2019年07月15日 - 18:05:10<p><span>原始链接:</span><a href="/2018/07/14/Explorer-JavaScript-For-in-loops/" title="探索 JavaScript For-in 循环">http://kinboyw.github.io/2018/07/14/Explorer-JavaScript-For-in-loops/</a><span class="copy-path" title="点击复制文章链接"></span><p><span>许可协议:</span> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</div><script>var clipboard=new Clipboard(".fa-clipboard");clipboard.on("success",$(function(){$(".fa-clipboard").click(function(){swal({title:"",text:"复制成功",html:!1,timer:500,showConfirmButton:!1})})}))</script></div><div><div><div style="text-align:center;color:#ccc;font-size:14px">------ Passage Ending ------</div></div></div><div><ul class="post-copyright"><li class="post-copyright-author"><strong>Post author:</strong> kinboy<li class="post-copyright-link"><strong>Post link:</strong> <a href="http://kinboyw.github.io/2018/07/14/Explorer-JavaScript-For-in-loops/" title="探索 JavaScript For-in 循环">http://kinboyw.github.io/2018/07/14/Explorer-JavaScript-For-in-loops/</a><li class="post-copyright-license"><strong>Copyright Notice:</strong> All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> unless stating additionally.</ul></div><footer class="post-footer"><div class="post-tags"><a href="/tags/javascript/" rel="tag"># javascript</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/2018/07/11/ike-scan扫描服务端的ike加密算法/" rel="next" title="ike-scan扫描ipsec vpn服务端ike加密算法">ike-scan扫描ipsec vpn服务端ike加密算法</a></div><div class="post-nav-prev post-nav-item"><a href="/2018/07/17/How-Does-Browser-Work/" rel="prev" title="浏览器是如何工作的">浏览器是如何工作的</a></div></div></footer></div></article></div></div><div class="comments" id="comments"><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">Table of Contents<li class="sidebar-nav-overview" data-target="site-overview-wrap">Overview</ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="kinboy"><p class="site-author-name" itemprop="name">kinboy</div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"><a href="/archives/"><span class="site-state-item-count">66</span> <span class="site-state-item-name">posts</span></a></div><div class="site-state-item site-state-categories"><a href="/categories/index.html"><span class="site-state-item-count">31</span> <span class="site-state-item-name">categories</span></a></div><div class="site-state-item site-state-tags"><a href="/tags/index.html"><span class="site-state-item-count">52</span> <span class="site-state-item-name">tags</span></a></div></nav><div class="feed-link motion-element"><a href="/atom.xml" rel="alternate">RSS</a></div><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/kinboyw" target="_blank" title="GitHub">GitHub</a></span><span class="links-of-author-item"><a href="mailto:kinboy9275@gmail.com" target="_blank" title="E-Mail"> E-Mail</a></span></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-for-var-variable-in-objectExpression-statement"><span class="nav-number">1.1.</span> <span class="nav-text">1. for (var variable in objectExpression) {statement}</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#2-for-LeftHandSideExpression-in-objectExpression-statement"><span class="nav-number">1.2.</span> <span class="nav-text">2.for (LeftHandSideExpression in objectExpression) {statement}</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Object-prototype-hasOwnProperty"><span class="nav-number">1.3.</span> <span class="nav-text">1. Object.prototype.hasOwnProperty</span></a><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Object-defineProperty"><span class="nav-number">1.4.</span> <span class="nav-text">2. Object.defineProperty</span></a></ol></ol></div></div></section><div class="back-to-top"><span id="scrollpercent"><span>0</span>%</span></div></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2019</span><span class="with-love"></span> <span class="author" itemprop="copyrightHolder">kinboy</span><br><img src="/images/beian.png"> <span style="width:300px;margin:0 auto;padding:20px 0"><a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42011102002861" style="display:inline-block;text-decoration:none;height:20px;line-height:20px"><img src style="float:left"><p style="float:left;height:20px;line-height:20px;margin:0 0 0 5px;color:#939393">鄂公网安备 42011102002861号</p></a></span></div></div></footer></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type="text/javascript" src="/lib/three/three.min.js"></script><script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script><script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><script id="dsq-count-scr" src="https://kinboy-wang.disqus.com/count.js" async></script><script type="text/javascript">var disqus_config=function(){this.page.url="http://kinboyw.github.io/2018/07/14/Explorer-JavaScript-For-in-loops/",this.page.identifier="2018/07/14/Explorer-JavaScript-For-in-loops/",this.page.title="探索 JavaScript For-in 循环"},d=document,s=d.createElement("script");s.src="https://kinboy-wang.disqus.com/embed.js",s.setAttribute("data-timestamp",""+ +new Date),(d.head||d.body).appendChild(s)</script><script type="text/javascript">// Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });</script><script>!function(){var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}()</script>
